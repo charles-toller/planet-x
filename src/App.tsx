@@ -1,9 +1,9 @@
 import React, {useCallback, useState} from 'react';
 import './App.css';
 import NoteWheel, {Sector} from "./NoteWheel";
-import {cometSectors, ObjectTypes, ObjId} from "./GameTypes";
+import {ObjectTypes, ObjId} from "./GameTypes";
 import {DataGrid, GridColDef, GridRowModel, GridRowsProp, useGridApiRef} from "@mui/x-data-grid";
-import {Card} from "@mui/material";
+import {Button, Card} from "@mui/material";
 
 const baseSectors: Sector[] = new Array(18).fill(null).map((_, i) => ({
     x: [],
