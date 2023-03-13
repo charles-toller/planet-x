@@ -68,9 +68,10 @@ export default function NoteWheel({isAdvanced, leftSector, onObjectClicked, sect
                 b.y += b.height / 2;
                 const clientX = ((m.a * b.x) + (m.c * b.y) + m.e);
                 const clientY = ((m.b * b.x) + (m.d * b.y) + m.f);
-                const x = ((clientX - svgRect.x) / svgRect.width) * viewportWidth;
-                const y = ((clientY - svgRect.y) / svgRect.height) * viewportHeight;
-                return <text x={x - 9} y={y + 10} fontSize={25} style={{fill: "rgb(151, 0, 0)", cursor: "default", userSelect: "none", pointerEvents: "none"}}>X</text>
+                const x = (clientX / svgRect.width) * viewportWidth;
+                const y = (clientY / svgRect.height) * viewportHeight;
+                return <circle cx={x} cy={y} r={9} />
+                // return <text x={x - 9} y={y + 10} fontSize={25} style={{fill: "rgb(151, 0, 0)", cursor: "default", userSelect: "none", pointerEvents: "none"}}>X</text>
             }),
             sector.o.map((t) => {
                 const loc: SVGGraphicsElement = docRef.querySelector(`#${t}${i+1}`)!;
@@ -80,15 +81,15 @@ export default function NoteWheel({isAdvanced, leftSector, onObjectClicked, sect
                 b.y += b.height / 2;
                 const clientX = ((m.a * b.x) + (m.c * b.y) + m.e);
                 const clientY = ((m.b * b.x) + (m.d * b.y) + m.f);
-                const x = ((clientX - svgRect.x) / svgRect.width) * viewportWidth;
-                const y = ((clientY - svgRect.y) / svgRect.height) * viewportHeight;
-                return <text x={x - 11} y={y + 10} fontSize={30} style={{cursor: "default", userSelect: "none", pointerEvents: "none"}}>O</text>
+                const x = (clientX / svgRect.width) * viewportWidth;
+                const y = (clientY / svgRect.height) * viewportHeight;
+                return <circle cx={x} cy={y} r={11} fill="none" stroke="black" strokeWidth={2.5} />
+                // return <text x={x - 11} y={y + 10} fontSize={30} style={{cursor: "default", userSelect: "none", pointerEvents: "none"}}>O</text>
             }),
         ]).flat(2);
     }, [sectors, svgRef, docRef]);
     const positionRef = useRef<Positions | null>(null);
     const onSvgClick = useCallback((e: MouseEvent) => {
-        console.log('click handler');
         const positions = positionRef.current;
         if (positions == null) return;
         let id: ObjId | null = null;
@@ -106,6 +107,7 @@ export default function NoteWheel({isAdvanced, leftSector, onObjectClicked, sect
         if (id != null) {
             onObjectClicked?.(id);
         }
+        e.preventDefault();
     }, [onObjectClicked]);
     useEffect(() => {
         if (docRef == null) return;
