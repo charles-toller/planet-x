@@ -1,9 +1,11 @@
-import React, {useCallback, useState} from 'react';
+import React, {Dispatch, SetStateAction, useCallback, useState} from 'react';
 import './App.css';
 import NoteWheel, {Sector} from "./NoteWheel";
 import {ObjectTypes, ObjId} from "./GameTypes";
 import {DataGrid, GridColDef, GridRowModel, GridRowsProp, useGridApiRef} from "@mui/x-data-grid";
 import {Button, Card} from "@mui/material";
+import {TargetIcon} from "./Icons";
+import {Actions} from "./Actions";
 
 const baseSectors: Sector[] = new Array(18).fill(null).map((_, i) => ({
     x: [],
@@ -52,8 +54,33 @@ const bottomInitialRows: GridRowsProp = [
 
 ];
 
+function usePersistentState<T>(localStorageKey: string, initialValue: T): [T, Dispatch<SetStateAction<T>>, () => void] {
+    const localValue = localStorage.getItem(localStorageKey);
+    let passInitialValue = initialValue;
+    if (localValue !== null) {
+        passInitialValue = JSON.parse(localValue);
+    }
+    const [state, setState] = useState(passInitialValue);
+    const savedSetState = useCallback((action: SetStateAction<T>) => {
+        setState((prevState) => {
+            let value: T;
+            if (typeof action === 'function') {
+                value = (action as any)(prevState);
+            } else {
+                value = action;
+            }
+            localStorage.setItem(localStorageKey, JSON.stringify(value));
+            return value;
+        });
+    }, [setState, localStorageKey]);
+    const resetState = useCallback(() => {
+        savedSetState(initialValue);
+    }, [savedSetState, initialValue]);
+    return [state, savedSetState, resetState];
+}
+
 function App() {
-    const [sectors, setSectors] = useState(baseSectors);
+    const [sectors, setSectors, resetSectors] = usePersistentState('sectors', baseSectors);
     const onObjectClick = useCallback((obj: ObjId) => {
         const sectorIndex = parseInt(obj.slice(1)) - 1;
         const objType = obj.slice(0, 1) as ObjectTypes;
@@ -75,7 +102,7 @@ function App() {
             newSectors[sectorIndex].o = [...newSectors[sectorIndex].o].filter((a) => a !== objType);
             setSectors(newSectors);
         }
-    }, [sectors]);
+    }, [sectors, setSectors]);
     const apiRef = useGridApiRef();
     const processRowUpdate = useCallback((updatedRow: GridRowModel) => {
         const lastRowId = apiRef.current.getAllRowIds().map((a) => Number(a)).sort((a, b) => b - a)[0];
@@ -93,6 +120,7 @@ function App() {
             <div className="App-header">
                 <NoteWheel leftSector={1} isAdvanced={true} sectors={sectors} onObjectClicked={onObjectClick}/>
                 <div style={{width: "50%", padding: "20px", height: "calc(100vh - 40px)"}}>
+                    <Actions />
                     <Card>
                         <DataGrid autoHeight columns={topColumnDefs} rows={topInitialRows} apiRef={apiRef} processRowUpdate={processRowUpdate} onProcessRowUpdateError={(err) => console.error(err)} hideFooter={true} />
                     </Card>
