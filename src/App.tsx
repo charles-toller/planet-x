@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useCallback, useState} from 'react';
+import React, {Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState} from 'react';
 import './App.css';
 import NoteWheel, {Sector} from "./NoteWheel";
 import {ObjectTypes, ObjId} from "./GameTypes";
@@ -6,7 +6,10 @@ import {DataGrid, GridColDef, GridRowModel, GridRowsProp, useGridApiRef} from "@
 import {Button, Card} from "@mui/material";
 import {TargetIcon} from "./Icons";
 import {Actions} from "./Actions";
-
+import * as tar from 'tar-stream';
+import {inflate} from "pako";
+import {Game} from "./Game";
+const extract = tar.extract;
 const baseSectors: Sector[] = new Array(18).fill(null).map((_, i) => ({
     x: [],
     o: []
@@ -79,8 +82,46 @@ function usePersistentState<T>(localStorageKey: string, initialValue: T): [T, Di
     return [state, savedSetState, resetState];
 }
 
+function useFetchGame(gameId: string | null): Game | null {
+    const [game, setGame] = useState<Game | null>(null);
+    useEffect(() => {
+        if (gameId == null) return;
+        const e = extract();
+        e.on('entry', (header, stream, next) => {
+            if (header.name === `maps/${gameId}.json`) {
+                let data = '';
+                const decoder = new TextDecoder();
+                stream.on('data', (d) => {
+                    data += decoder.decode(d);
+                });
+                stream.on('end', () => {
+                    const nGame = JSON.parse(data);
+                    setGame(nGame);
+                    // @ts-ignore
+                    window.game = nGame;
+                    next();
+                });
+            }
+            else {
+                stream.resume();
+                stream.on('end', () => next());
+            }
+        });
+        fetch(new URL('/maps.tar.gz', import.meta.url)).then((body) => body.arrayBuffer()).then((buffer) => {
+            try {
+                e.write(inflate(buffer));
+            } catch (err) {
+                e.write(new Uint8Array(buffer));
+            }
+        });
+    }, [gameId]);
+    return game;
+}
+
 function App() {
     const [sectors, setSectors, resetSectors] = usePersistentState('sectors', baseSectors);
+    const [gameId, setGameId] = usePersistentState<string | null>('gameId', null);
+    const game = useFetchGame(gameId);
     const onObjectClick = useCallback((obj: ObjId) => {
         const sectorIndex = parseInt(obj.slice(1)) - 1;
         const objType = obj.slice(0, 1) as ObjectTypes;
@@ -120,7 +161,7 @@ function App() {
             <div className="App-header">
                 <NoteWheel leftSector={1} isAdvanced={true} sectors={sectors} onObjectClicked={onObjectClick}/>
                 <div style={{width: "50%", padding: "20px", height: "calc(100vh - 40px)"}}>
-                    <Actions />
+                    <Actions resetGame={() => resetSectors()} game={game}/>
                     <Card>
                         <DataGrid autoHeight columns={topColumnDefs} rows={topInitialRows} apiRef={apiRef} processRowUpdate={processRowUpdate} onProcessRowUpdateError={(err) => console.error(err)} hideFooter={true} />
                     </Card>
