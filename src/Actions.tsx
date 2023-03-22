@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useCallback, useState} from 'react';
-import {Button, Card, ToggleButton, ToggleButtonGroup} from "@mui/material";
+import {Button, ButtonGroup, Card, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {
     AsteroidIcon,
     CometIcon,
@@ -11,13 +11,16 @@ import {
     TargetIcon
 } from "./Icons";
 import {Abc, RestartAlt, WifiFindTwoTone} from "@mui/icons-material";
-import {Game, ObjectType} from "./Game";
+import {ConferenceKey, Game, ObjectType} from "./Game";
+import {getNObjectsName, is, researchLookup, researchName} from "./Research";
 
 type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "resetGame";
 
 interface ActionsProps {
     resetGame: () => unknown;
-    game: Game | null;
+    game: Game;
+    setAction: (action: string, result: string) => unknown;
+    setResearch: (researchKey: ConferenceKey, research: string) => unknown;
 }
 export function Actions(props: ActionsProps) {
     const [selected, setSelected] = useState<ActionType | null>("survey");
@@ -25,7 +28,7 @@ export function Actions(props: ActionsProps) {
         setSelected(newSelected);
     }, []);
     return (
-        <Card>
+        <Card sx={{marginBottom: "20px", padding: "20px"}}>
             <ToggleButtonGroup value={selected} exclusive onChange={handleChange}>
                 <ToggleButton value="survey"><WifiFindTwoTone sx={{mr: 1}} /> Survey</ToggleButton>
                 <ToggleButton value="target"><TargetIcon sx={{mr: 1}} /> Target</ToggleButton>
@@ -35,10 +38,28 @@ export function Actions(props: ActionsProps) {
             </ToggleButtonGroup>
             <div>
                 {selected === "resetGame" && <ResetGame resetGame={props.resetGame} />}
-                {selected === "survey" && <Survey startSector={1} game={props.game} />}
+                {selected === "survey" && <Survey startSector={1} game={props.game} setAction={props.setAction} />}
+                {selected === "research" && <Research game={props.game} setResearch={props.setResearch} />}
             </div>
         </Card>
     );
+}
+
+function Research(props: Pick<ActionsProps, 'game' | 'setResearch'>) {
+    const research = useCallback((key: ConferenceKey) => {
+        const info = props.game?.conf[key];
+        if (info === undefined) return;
+        props.setResearch(key, researchLookup[info.body.type](info.body as any) + ".");
+    }, [props.setResearch, props.game]);
+    return (
+        <>
+            <ButtonGroup orientation="vertical">
+                {Object.entries(props.game?.conf ?? {}).map(([key, val]) => (
+                    <Button variant="outlined" onClick={research.bind(null, key as ConferenceKey)}>{key}: {researchName(val.title)}</Button>
+                ))}
+            </ButtonGroup>
+        </>
+    )
 }
 function ResetGame(props: Pick<ActionsProps, 'resetGame'>) {
     return (
@@ -46,8 +67,7 @@ function ResetGame(props: Pick<ActionsProps, 'resetGame'>) {
     )
 }
 
-type SurveyType = "asteroid" | "dwarfPlanet" | "comet" | "gasCloud" | "empty";
-function Survey(props: {startSector: number; game: Game | null}) {
+function Survey(props: Pick<ActionsProps, 'game' | 'setAction'> & {startSector: number}) {
     const [selectedType, setSelectedType] = useState<ObjectType | null>(ObjectType.ASTEROID);
     const handleTypeChange = useCallback((event: React.MouseEvent<HTMLElement>, newSelected: ObjectType | null) => {
         setSelectedType(newSelected);
@@ -74,7 +94,10 @@ function Survey(props: {startSector: number; game: Game | null}) {
     const [result, setResult] = useState<string | null>(null);
     const onSubmit = useCallback(() => {
         const count = Object.entries(props.game?.obj ?? {}).filter(([key, value]) => sectorRange.includes(Number(key)) && (selectedType === ObjectType.EMPTY ? value === ObjectType.EMPTY || value === ObjectType.PLANET_X : value === selectedType)).length;
-        setResult(`There are ${count} ${ObjectType[selectedType!]} in sectors ${sectorRange[0]}-${sectorRange[sectorRange.length - 1]}`);
+        const min = sectorRange[0];
+        const max = sectorRange[sectorRange.length - 1];
+        setResult(`There ${is(count)} ${count} ${getNObjectsName(selectedType!, count)} in sectors ${min}-${max}.`);
+        props.setAction(`${researchName([selectedType!], true)} ${min}-${max}`, String(count));
     }, [props.game, selectedType, sectorRange]);
     return (
         <>
