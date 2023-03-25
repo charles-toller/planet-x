@@ -8,7 +8,7 @@ export function SetGameId() {
     const [_, setGameId] = useRecoilState(gameIdState);
     const [tempGameId, setTempGameId] = useState("");
     const cb = useCallback((e: React.FormEvent) => {
-        setGameId(tempGameId);
+        setGameId(tempGameId.toUpperCase());
         e.preventDefault()
     }, [tempGameId]);
     return (

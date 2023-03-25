@@ -13,16 +13,15 @@ import {
 import {Abc, RestartAlt, WifiFindTwoTone} from "@mui/icons-material";
 import {ConferenceKey, Game, ObjectType} from "./Game";
 import {getNObjectsName, is, researchLookup, researchName} from "./Research";
-import {useRecoilState, useRecoilValue} from "recoil";
-import {availableSectors, sectorClamp, sectorState} from "./atoms";
+import {useRecoilValue} from "recoil";
+import {availableSectors} from "./atoms";
+import {tableActions} from "./tables";
 
 type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "resetGame";
 
 interface ActionsProps {
     resetGame: () => unknown;
     game: Game;
-    setAction: (action: string, result: string) => unknown;
-    setResearch: (researchKey: ConferenceKey, research: string) => unknown;
 }
 export function Actions(props: ActionsProps) {
     const [selected, setSelected] = useState<ActionType | null>("survey");
@@ -40,30 +39,29 @@ export function Actions(props: ActionsProps) {
             </ToggleButtonGroup>
             <div>
                 {selected === "resetGame" && <ResetGame resetGame={props.resetGame} />}
-                {selected === "survey" && <Survey game={props.game} setAction={props.setAction} />}
-                {selected === "research" && <Research setAction={props.setAction} game={props.game} setResearch={props.setResearch} />}
-                {selected === "target" && <Target setAction={props.setAction} game={props.game} />}
+                {selected === "survey" && <Survey game={props.game}/>}
+                {selected === "research" && <Research game={props.game} />}
+                {selected === "target" && <Target game={props.game} />}
             </div>
         </Card>
     );
 }
 
-function Research(props: Pick<ActionsProps, 'game' | 'setResearch' | 'setAction'>) {
-    const [startSector, setStartSector] = useRecoilState(sectorState);
+function Research(props: Pick<ActionsProps, 'game'>) {
+    const {setResearch, setAction} = useRecoilValue(tableActions);
     const research = useCallback((key: ConferenceKey) => {
         const info = props.game?.conf[key];
         if (info === undefined) return;
-        props.setResearch(key, researchLookup[info.body.type](info.body as any) + ".");
+        setResearch(key, researchLookup[info.body.type](info.body as any) + ".");
         if (!key.startsWith("X")) {
-            props.setAction(`Research ${key}`, "");
-            setStartSector(sectorClamp(startSector + 1));
+            setAction(`Research ${key}`, "", 1);
         }
-    }, [props.setResearch, props.game]);
+    }, [setResearch, props.game]);
     return (
         <>
             <ButtonGroup orientation="vertical">
                 {Object.entries(props.game?.conf ?? {}).map(([key, val]) => (
-                    <Button variant="outlined" onClick={research.bind(null, key as ConferenceKey)}>{key}: {researchName(val.title)}</Button>
+                    <Button variant="outlined" onClick={research.bind(null, key as ConferenceKey)} key={key}>{key}: {researchName(val.title)}</Button>
                 ))}
             </ButtonGroup>
         </>
@@ -77,9 +75,8 @@ function ResetGame(props: Pick<ActionsProps, 'resetGame'>) {
 
 const sectorCountToTime: number[] = [4, 4, 4, 4, 3, 3, 3, 2, 2, 2];
 
-function Survey(props: Pick<ActionsProps, 'game' | 'setAction'>) {
+function Survey(props: Pick<ActionsProps, 'game'>) {
     const [selectedType, setSelectedType] = useState<ObjectType | null>(ObjectType.ASTEROID);
-    const [startSector, setStartSector] = useRecoilState(sectorState);
     const sectorArray = useRecoilValue(availableSectors);
     const handleTypeChange = useCallback((event: React.MouseEvent<HTMLElement>, newSelected: ObjectType | null) => {
         setSelectedType(newSelected);
@@ -104,13 +101,13 @@ function Survey(props: Pick<ActionsProps, 'game' | 'setAction'>) {
         }
     }, [sectorRange, setSectors]);
     const [result, setResult] = useState<string | null>(null);
+    const {setAction} = useRecoilValue(tableActions);
     const onSubmit = useCallback(() => {
         const count = Object.entries(props.game?.obj ?? {}).filter(([key, value]) => sectorRange.includes(Number(key)) && (selectedType === ObjectType.EMPTY ? value === ObjectType.EMPTY || value === ObjectType.PLANET_X : value === selectedType)).length;
         const min = sectorRange[0];
         const max = sectorRange[sectorRange.length - 1];
         setResult(`There ${is(count)} ${count} ${getNObjectsName(selectedType!, count)} in sectors ${min}-${max}.`);
-        props.setAction(`${researchName([selectedType!], true)} ${min}-${max}`, String(count));
-        setStartSector(sectorClamp(startSector + sectorCountToTime[sectorRange.length]));
+        setAction(`${researchName([selectedType!], true)} ${min}-${max}`, String(count), sectorCountToTime[sectorRange.length]);
         setSectors([]);
     }, [props.game, selectedType, sectorRange]);
     return (
@@ -133,15 +130,14 @@ function Survey(props: Pick<ActionsProps, 'game' | 'setAction'>) {
     )
 }
 
-function Target(props: Pick<ActionsProps, 'game' | 'setAction'>) {
+function Target(props: Pick<ActionsProps, 'game'>) {
     const [sector, setSector] = useState<number | null>(null);
-    const [startSector, setStartSector] = useRecoilState(sectorState);
     const sectorArray = useRecoilValue(availableSectors);
+    const {setAction} = useRecoilValue(tableActions);
     const onSubmit = useCallback(() => {
         if (sector === null) return;
         const type = props.game.obj[sector];
-        props.setAction(`T ${sector}`, researchName([type], true));
-        setStartSector(sectorClamp(startSector + 4));
+        setAction(`T ${sector}`, researchName([type], true), 4);
         setSector(null);
     }, [props.game, sector]);
     return (

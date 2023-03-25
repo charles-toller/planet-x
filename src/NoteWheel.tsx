@@ -70,7 +70,7 @@ export default function NoteWheel({isAdvanced, leftSector, onObjectClicked, sect
                 const clientY = ((m.b * b.x) + (m.d * b.y) + m.f);
                 const x = (clientX / svgRect.width) * viewportWidth;
                 const y = (clientY / svgRect.height) * viewportHeight;
-                return <circle key={`${i}x`} cx={x} cy={y} r={9} />
+                return <circle key={`${i}${t}x`} cx={x} cy={y} r={9} />
                 // return <text x={x - 9} y={y + 10} fontSize={25} style={{fill: "rgb(151, 0, 0)", cursor: "default", userSelect: "none", pointerEvents: "none"}}>X</text>
             }),
             sector.o.map((t) => {
@@ -83,7 +83,7 @@ export default function NoteWheel({isAdvanced, leftSector, onObjectClicked, sect
                 const clientY = ((m.b * b.x) + (m.d * b.y) + m.f);
                 const x = (clientX / svgRect.width) * viewportWidth;
                 const y = (clientY / svgRect.height) * viewportHeight;
-                return <circle key={`${i}o`} cx={x} cy={y} r={11} fill="none" stroke="black" strokeWidth={2.5} />
+                return <circle key={`${i}${t}o`} cx={x} cy={y} r={11} fill="none" stroke="black" strokeWidth={2.5} />
                 // return <text x={x - 11} y={y + 10} fontSize={30} style={{cursor: "default", userSelect: "none", pointerEvents: "none"}}>O</text>
             }),
         ]).flat(2);
