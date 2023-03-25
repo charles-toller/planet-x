@@ -3393,7 +3393,7 @@ __metadata:
     pako: ^2.1.0
     react: ^17.0.2
     react-dom: ^17.0.2
-    tar-stream: "portal:../tar-stream"
+    tar-stream: "npm:tar-stream-browser@^3.0.0"
     typescript: ^4.5.4
     vite: ^4.2.0
     vite-plugin-html: ^3.2.0
@@ -3937,15 +3937,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar-stream@portal:../tar-stream::locator=planet-x%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "tar-stream@portal:../tar-stream::locator=planet-x%40workspace%3A."
+"tar-stream@npm:tar-stream-browser@^3.0.0":
+  version: 3.0.0
+  resolution: "tar-stream-browser@npm:3.0.0"
   dependencies:
     b4a: ^1.6.1
     bl: ^6.0.0
     streamx: ^2.12.5
+  checksum: 26252fe4284013099433b45ce53f40e4ddcc880777f6575e12f98421a3fd7debc9feee83b0b6a15165ac286457153416537907e65ae1a684328b385cd40c27c0
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "tar@npm:^6.1.11, tar@npm:^6.1.2":
   version: 6.1.13
