@@ -13,6 +13,8 @@ import {
 import {Abc, RestartAlt, WifiFindTwoTone} from "@mui/icons-material";
 import {ConferenceKey, Game, ObjectType} from "./Game";
 import {getNObjectsName, is, researchLookup, researchName} from "./Research";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {availableSectors, sectorClamp, sectorState} from "./atoms";
 
 type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "resetGame";
 
@@ -38,18 +40,24 @@ export function Actions(props: ActionsProps) {
             </ToggleButtonGroup>
             <div>
                 {selected === "resetGame" && <ResetGame resetGame={props.resetGame} />}
-                {selected === "survey" && <Survey startSector={1} game={props.game} setAction={props.setAction} />}
-                {selected === "research" && <Research game={props.game} setResearch={props.setResearch} />}
+                {selected === "survey" && <Survey game={props.game} setAction={props.setAction} />}
+                {selected === "research" && <Research setAction={props.setAction} game={props.game} setResearch={props.setResearch} />}
+                {selected === "target" && <Target setAction={props.setAction} game={props.game} />}
             </div>
         </Card>
     );
 }
 
-function Research(props: Pick<ActionsProps, 'game' | 'setResearch'>) {
+function Research(props: Pick<ActionsProps, 'game' | 'setResearch' | 'setAction'>) {
+    const [startSector, setStartSector] = useRecoilState(sectorState);
     const research = useCallback((key: ConferenceKey) => {
         const info = props.game?.conf[key];
         if (info === undefined) return;
         props.setResearch(key, researchLookup[info.body.type](info.body as any) + ".");
+        if (!key.startsWith("X")) {
+            props.setAction(`Research ${key}`, "");
+            setStartSector(sectorClamp(startSector + 1));
+        }
     }, [props.setResearch, props.game]);
     return (
         <>
@@ -64,11 +72,15 @@ function Research(props: Pick<ActionsProps, 'game' | 'setResearch'>) {
 function ResetGame(props: Pick<ActionsProps, 'resetGame'>) {
     return (
         <Button onClick={props.resetGame}>Reset Game</Button>
-    )
+    );
 }
 
-function Survey(props: Pick<ActionsProps, 'game' | 'setAction'> & {startSector: number}) {
+const sectorCountToTime: number[] = [4, 4, 4, 4, 3, 3, 3, 2, 2, 2];
+
+function Survey(props: Pick<ActionsProps, 'game' | 'setAction'>) {
     const [selectedType, setSelectedType] = useState<ObjectType | null>(ObjectType.ASTEROID);
+    const [startSector, setStartSector] = useRecoilState(sectorState);
+    const sectorArray = useRecoilValue(availableSectors);
     const handleTypeChange = useCallback((event: React.MouseEvent<HTMLElement>, newSelected: ObjectType | null) => {
         setSelectedType(newSelected);
     }, []);
@@ -81,9 +93,9 @@ function Survey(props: Pick<ActionsProps, 'game' | 'setAction'> & {startSector: 
             setSectors(newSelected);
         }
         else if (sectorRange.length === 1 && newSelected.length === 2) {
-            const low = Math.min(...sectorRange, ...newSelected);
-            const high = Math.max(...sectorRange, ...newSelected);
-            setSectors(new Array(high - low + 1).fill(0).map((_, i) => low + i));
+            const lowIdx = Math.min(...sectorRange.map((a) => sectorArray.indexOf(a)), ...newSelected.map((a) => sectorArray.indexOf(a)));
+            const highIdx = Math.max(...sectorRange.map((a) => sectorArray.indexOf(a)), ...newSelected.map((a) => sectorArray.indexOf(a)));
+            setSectors(new Array(highIdx - lowIdx + 1).fill(0).map((_, i) => sectorArray[i + lowIdx]));
         }
         else if (sectorRange.length > 1) {
             const newSelect = newSelected.filter((a) => !sectorRange.includes(a));
@@ -98,6 +110,8 @@ function Survey(props: Pick<ActionsProps, 'game' | 'setAction'> & {startSector: 
         const max = sectorRange[sectorRange.length - 1];
         setResult(`There ${is(count)} ${count} ${getNObjectsName(selectedType!, count)} in sectors ${min}-${max}.`);
         props.setAction(`${researchName([selectedType!], true)} ${min}-${max}`, String(count));
+        setStartSector(sectorClamp(startSector + sectorCountToTime[sectorRange.length]));
+        setSectors([]);
     }, [props.game, selectedType, sectorRange]);
     return (
         <>
@@ -109,13 +123,35 @@ function Survey(props: Pick<ActionsProps, 'game' | 'setAction'> & {startSector: 
                 <ToggleButton value={ObjectType.EMPTY}><EmptySectorIcon /></ToggleButton>
             </ToggleButtonGroup>
             <ToggleButtonGroup value={sectorRange} onChange={handleSectorsChange}>
-                {new Array(9).fill(null).map((_, i) => {
-                    const n = i + props.startSector;
-                    return (<ToggleButton key={n} value={n}>{n}</ToggleButton>);
+                {sectorArray.map((sectorNumber) => {
+                    return (<ToggleButton key={sectorNumber} value={sectorNumber}>{sectorNumber}</ToggleButton>);
                 })}
             </ToggleButtonGroup>
             <Button variant="outlined" onClick={onSubmit}>Submit</Button>
             {result && <p>{result}</p>}
+        </>
+    )
+}
+
+function Target(props: Pick<ActionsProps, 'game' | 'setAction'>) {
+    const [sector, setSector] = useState<number | null>(null);
+    const [startSector, setStartSector] = useRecoilState(sectorState);
+    const sectorArray = useRecoilValue(availableSectors);
+    const onSubmit = useCallback(() => {
+        if (sector === null) return;
+        const type = props.game.obj[sector];
+        props.setAction(`T ${sector}`, researchName([type], true));
+        setStartSector(sectorClamp(startSector + 4));
+        setSector(null);
+    }, [props.game, sector]);
+    return (
+        <>
+            <ToggleButtonGroup exclusive={true} value={sector} onChange={(_, newValue) => setSector(newValue)}>
+                {sectorArray.map((sectorNumber) => {
+                    return (<ToggleButton key={sectorNumber} value={sectorNumber}>{sectorNumber}</ToggleButton>);
+                })}
+            </ToggleButtonGroup>
+            <Button variant="outlined" onClick={onSubmit}>Submit</Button>
         </>
     )
 }

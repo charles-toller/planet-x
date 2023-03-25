@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {Dispatch, SetStateAction, useCallback, useEffect, useState} from 'react';
 import './App.css';
 import NoteWheel, {Sector} from "./NoteWheel";
 import {ObjectTypes, ObjId} from "./GameTypes";
@@ -9,8 +9,11 @@ import * as tar from 'tar-stream';
 import {inflate} from "pako";
 import {ConferenceKey, Game} from "./Game";
 import {researchName} from "./Research";
+import {RecoilRoot, useRecoilState} from "recoil";
+import {gameIdState, resetPersistentAtoms} from "./atoms";
+import {SetGameId} from "./SetGameId";
 const extract = tar.extract;
-const baseSectors: Sector[] = new Array(18).fill(null).map((_, i) => ({
+const baseSectors: Sector[] = new Array(18).fill(null).map((_) => ({
     x: [],
     o: []
 }));
@@ -71,7 +74,7 @@ const bottomInitialRows: GridRowsProp<BottomRowModel> = [
 ];
 
 function usePersistentState<T>(localStorageKey: string, initialValue: T): [T, Dispatch<SetStateAction<T>>, () => void] {
-    const localValue = localStorage.getItem(localStorageKey);
+    const localValue = sessionStorage.getItem(localStorageKey);
     let passInitialValue = initialValue;
     if (localValue !== null) {
         passInitialValue = JSON.parse(localValue);
@@ -85,7 +88,7 @@ function usePersistentState<T>(localStorageKey: string, initialValue: T): [T, Di
             } else {
                 value = action;
             }
-            localStorage.setItem(localStorageKey, JSON.stringify(value));
+            sessionStorage.setItem(localStorageKey, JSON.stringify(value));
             return value;
         });
     }, [setState, localStorageKey]);
@@ -134,9 +137,17 @@ function useFetchGame(gameId: string | null): Game | null {
     return game;
 }
 
+function AppWrapper() {
+    return (
+        <RecoilRoot>
+            <App />
+        </RecoilRoot>
+    )
+}
+
 function App() {
     const [sectors, setSectors, resetSectors] = usePersistentState('sectors', baseSectors);
-    const [gameId, setGameId, resetGameId] = usePersistentState<string | null>('gameId', 'M4A2');
+    const [gameId] = useRecoilState(gameIdState);
     const game = useFetchGame(gameId);
     const [topRows, setTopRows, resetTopRows] = usePersistentState('topRows', topInitialRows);
     const [bottomRows, setBottomRows, resetBottomRows] = usePersistentState('bottomRows', bottomInitialRows);
@@ -149,10 +160,10 @@ function App() {
     }, [game]);
     const reset = useCallback(() => {
         resetSectors();
-        resetGameId();
         resetTopRows();
         resetBottomRows();
-    }, [resetSectors, resetGameId, resetTopRows, resetBottomRows]);
+        resetPersistentAtoms();
+    }, [resetSectors, resetTopRows, resetBottomRows]);
     const onObjectClick = useCallback((obj: ObjId) => {
         const sectorIndex = parseInt(obj.slice(1)) - 1;
         const objType = obj.slice(0, 1) as ObjectTypes;
@@ -191,6 +202,10 @@ function App() {
         setTopRows((topRows) => topRows.map((row) => row.id === formattedRow.id ? formattedRow : row));
         return formattedRow;
     }, [apiRef]);
+    const processBottomRowUpdate = useCallback((updatedRow: GridRowModel<BottomRowModel>) => {
+        setBottomRows((bottomRows) => bottomRows.map((row) => row.id === updatedRow.id ? updatedRow : row));
+        return updatedRow;
+    }, []);
     const setResearch = useCallback((researchKey: ConferenceKey, research: string) => {
         setBottomRows((bottomRows) => bottomRows.map((row) => row.researchId === researchKey ? {...row, notes: research} : row));
     }, []);
@@ -223,11 +238,12 @@ function App() {
                 <NoteWheel leftSector={1} isAdvanced={true} sectors={sectors} onObjectClicked={onObjectClick}/>
                 <div style={{width: "50%", padding: "20px", height: "calc(100vh - 40px)"}}>
                     {game && <Actions resetGame={() => reset()} game={game} setResearch={setResearch} setAction={setAction}/>}
+                    {!game && <SetGameId />}
                     <Card>
                         <DataGrid autoHeight columns={topColumnDefs} rows={topRows} apiRef={apiRef} processRowUpdate={processTopRowUpdate} onProcessRowUpdateError={(err) => console.error(err)} hideFooter={true} />
                     </Card>
                     <Card sx={{marginTop: "20px"}}>
-                        <DataGrid autoHeight columns={bottomColumnDefs} rows={bottomRows} hideFooter={true} />
+                        <DataGrid autoHeight columns={bottomColumnDefs} rows={bottomRows} hideFooter={true} processRowUpdate={processBottomRowUpdate} />
                     </Card>
                 </div>
             </div>
@@ -235,4 +251,4 @@ function App() {
     );
 }
 
-export default App;
+export default AppWrapper;
