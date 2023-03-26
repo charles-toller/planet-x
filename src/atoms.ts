@@ -2,7 +2,8 @@ import {atom, AtomEffect, selector} from "recoil";
 import {Sector} from "./NoteWheel";
 import {inflate} from "pako";
 import * as tar from "tar-stream";
-import {Game} from "./Game";
+import {Game, ObjectType} from "./Game";
+
 const extract = tar.extract;
 
 const resetSet = new Set<() => unknown>();
@@ -112,4 +113,19 @@ export const gameState = selector({
         if (gameId === null) return null;
         return fetchGame(gameId);
     }
+});
+
+export interface TheoryObj {
+    self: [number, ObjectType][];
+    p2: [number, ObjectType][];
+    p3: [number, ObjectType][];
+    p4: [number, ObjectType][];
+    isChecked: boolean;
+}
+
+export const theoriesState = atom({
+    key: 'theories',
+    effects: [
+        persistentAtomEffect('theories', [] as TheoryObj[])
+    ]
 });

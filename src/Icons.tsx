@@ -1,5 +1,7 @@
 import {createSvgIcon, SvgIcon, SvgIconProps} from "@mui/material";
 import React from "react";
+import {ReactComponent as BotIconSvg} from "./assets/bot.svg";
+
 function createSvgIconLocal(viewBox: string, ...args: Parameters<typeof createSvgIcon>) {
     const Component = createSvgIcon(...args);
     return (props: Partial<SvgIconProps>) => (
@@ -86,4 +88,17 @@ export const TimeIcon = createSvgIconLocal(
         style={{fillOpacity: 1, fillRule: "nonzero", stroke: "none", strokeWidth: 0.352778}}
         id="path6399" />,
     "Time"
+);
+
+export const ConferenceIcon = createSvgIconLocal(
+    "-1.8 0 11.871612 11.876101",
+    <path
+        d="M 9.0074064,11.8761 V 6.7576473 H 8.5925397 V 6.6158307 L 9.1492231,4.622989 H 10.081615 V 11.8761 Z M 5.0718176,6.832789 h 0.45085 L 4.4343482,5.2601057 3.4017676,6.832789 H 4.1200232 V 7.2226084 H 2.288401 V 6.832789 H 2.9315149 L 4.2258565,4.915089 2.5946121,2.5966335 H 2.1130704 V 2.2068141 h 2.505075 V 2.5966335 H 4.0614621 L 5.1247343,4.1358029 6.1573148,2.5966335 H 5.4196565 L 5.4058981,2.2068141 h 1.7674167 l 0.013758,0.3898194 H 6.6303898 L 5.3501593,4.4779974 H 5.3364009 L 6.972937,6.8440779 h 0.3534833 l 0.013758,0.3894666 H 5.0883982 Z m 0.9158111,0 H 6.5136203 L 3.5855649,2.5966335 H 3.0623954 Z M 8.2947953,7.4702584 H 7.8774592 V 7.4367445 C 6.3869731,9.1452473 3.7937037,9.3219889 2.0848482,7.8315029 0.37634548,6.3410168 0.19960382,3.7477474 1.6900899,2.0392447 3.180576,0.33074192 5.7738454,0.15400026 7.4823481,1.6444863 8.1586231,2.233978 8.6228786,3.0291391 8.8042064,3.9075557 h 0.587375 C 8.9357925,1.3343947 6.480812,-0.38222195 3.907651,0.07321415 1.3344899,0.52865025 -0.3824795,2.9839835 0.07330937,5.5571446 0.52874548,8.1303056 2.9840788,9.8469223 5.5572398,9.3914862 6.620512,9.2031028 7.5878287,8.6570028 8.2976175,7.8431445 Z"
+        style={{fillOpacity: 1, fillRule: "nonzero", stroke: "none", strokeWidth: 0.352778}}
+        id="path1155" />,
+    "Conference"
+);
+
+export const BotIcon = (props: Partial<SvgIconProps>) => (
+    <SvgIcon component={BotIconSvg} inheritViewBox {...props} />
 );

@@ -5,6 +5,7 @@ export enum ObjectType {
     COMET,
     GAS_CLOUD,
     PLANET_X = 9,
+    BOT = 10,
 }
 export type ConferenceKey = "A" | "B" | "C" | "D" | "E" | "F" | "X1" | "X2";
 export interface Game {
