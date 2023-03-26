@@ -3,7 +3,7 @@ import {useCallback, useState} from 'react';
 import {
     Button,
     ButtonGroup,
-    Card,
+    Card, CardHeader,
     Chip, FormControl, InputLabel, MenuItem,
     Paper, Select, SelectChangeEvent, Table, TableBody, TableCell,
     TableContainer, TableHead,
@@ -24,7 +24,7 @@ import {Abc, RestartAlt, WifiFindTwoTone} from "@mui/icons-material";
 import {ConferenceKey, Game, ObjectType} from "./Game";
 import {getNObjectsName, is, researchLookup, researchName} from "./Research";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {availableSectors, theoriesState, TheoryObj} from "./atoms";
+import {availableSectors, sectorClamp, sectorState, theoriesState, TheoryObj} from "./atoms";
 import {tableActions} from "./tables";
 import produce from "immer";
 
@@ -39,8 +39,10 @@ export function Actions(props: ActionsProps) {
     const handleChange = useCallback((event: React.MouseEvent<HTMLElement>, newSelected: ActionType | null) => {
         setSelected(newSelected);
     }, []);
+    const sector = useRecoilValue(sectorState);
     return (
-        <Card sx={{marginBottom: "20px", padding: "20px"}}>
+        <Card sx={{marginBottom: "20px", padding: "0 0 20px 0"}}>
+            <CardHeader title={`Sectors ${sector}-${sectorClamp(sector + 8)}`}/>
             <ToggleButtonGroup value={selected} exclusive onChange={handleChange}>
                 <ToggleButton value="survey"><WifiFindTwoTone sx={{mr: 1}} /> Survey</ToggleButton>
                 <ToggleButton value="target"><TargetIcon sx={{mr: 1}} /> Target</ToggleButton>
