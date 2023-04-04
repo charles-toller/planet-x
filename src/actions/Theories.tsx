@@ -249,15 +249,12 @@ function TheoriesMenu({anchorEl, onClose}: {anchorEl: HTMLElement | null; onClos
             }
         };
     }, [onClose, anchorEl]);
-    return (
-        <Menu
-            anchorEl={anchorEl}
-            open={menuOpen}
-            onClose={handleClose["noAction"]}
-            MenuListProps={{
-                'aria-labelledby': 'basic-button',
-            }}
-        >
+    const [wasMenuOpen, setWasMenuOpen] = useState<boolean>(false);
+    if (!wasMenuOpen && menuOpen) {
+        setWasMenuOpen(true);
+    }
+    const children = useMemo(() => (
+        <>
             {menuSection !== "self" && ([ObjectType.GAS_CLOUD, ObjectType.DWARF_PLANET, ObjectType.ASTEROID, ObjectType.COMET] as const).map((objectType) => {
                 const IconType = objectTypeToIcon[objectType];
                 return <MenuItem onClick={handleClose[fnLookup[objectType]]}>
@@ -269,8 +266,25 @@ function TheoriesMenu({anchorEl, onClose}: {anchorEl: HTMLElement | null; onClos
                     </ListItemText>
                 </MenuItem>;
             })}
-            {!menuTarget?.[2] && <MenuItem onClick={handleClose["verify"]}>Verify</MenuItem>}
+            {menuTarget?.[2] === false && <MenuItem onClick={handleClose["verify"]}>Verify</MenuItem>}
             <MenuItem onClick={handleClose["noAction"]}>Cancel</MenuItem>
+        </>
+    ), [menuOpen || wasMenuOpen]);
+    return (
+        <Menu
+            anchorEl={anchorEl}
+            open={menuOpen}
+            onClose={handleClose["noAction"]}
+            MenuListProps={{
+                'aria-labelledby': 'basic-button',
+            }}
+            TransitionProps={{
+                onExited: () => {
+                    setWasMenuOpen(false);
+                }
+            }}
+        >
+            {children}
         </Menu>
     )
 }
