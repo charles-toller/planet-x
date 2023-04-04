@@ -1,6 +1,8 @@
 import {createSvgIcon, SvgIcon, SvgIconProps} from "@mui/material";
 import React from "react";
 import {ReactComponent as BotIconSvg} from "./assets/bot.svg";
+import {ObjectType} from "./Game";
+import {Person} from "@mui/icons-material";
 
 function createSvgIconLocal(viewBox: string, ...args: Parameters<typeof createSvgIcon>) {
     const Component = createSvgIcon(...args);
@@ -102,3 +104,13 @@ export const ConferenceIcon = createSvgIconLocal(
 export const BotIcon = (props: Partial<SvgIconProps>) => (
     <SvgIcon component={BotIconSvg} inheritViewBox {...props} />
 );
+export const objectTypeToIcon = {
+    [ObjectType.PLANET_X]: PlanetXIcon,
+    [ObjectType.COMET]: CometIcon,
+    [ObjectType.EMPTY]: EmptySectorIcon,
+    [ObjectType.GAS_CLOUD]: GasCloudIcon,
+    [ObjectType.DWARF_PLANET]: DwarfPlanetIcon,
+    [ObjectType.ASTEROID]: AsteroidIcon,
+    [ObjectType.BOT]: BotIcon,
+    [ObjectType.PLAYER]: Person,
+} satisfies { [key in ObjectType]: any };

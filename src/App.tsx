@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import './App.css';
 import NoteWheel from "./NoteWheel";
 import {ObjectTypes, ObjId} from "./GameTypes";
-import {Actions} from "./Actions";
+import {Actions} from "./actions/Actions";
 import {RecoilRoot, useRecoilState, useRecoilValueLoadable} from "recoil";
 import {gameState, resetPersistentAtoms, sectorsState} from "./atoms";
 import {SetGameId} from "./SetGameId";

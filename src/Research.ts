@@ -8,6 +8,7 @@ const singularWord: {[key in ObjectType]: string} = {
     [ObjectType.GAS_CLOUD]: "gas cloud",
     [ObjectType.PLANET_X]: "Planet X",
     [ObjectType.BOT]: "Bot",
+    [ObjectType.PLAYER]: "Player",
 };
 const pluralWord: {[key in ObjectType]: string} = {
     [ObjectType.EMPTY]: "empty sectors",
@@ -17,8 +18,9 @@ const pluralWord: {[key in ObjectType]: string} = {
     [ObjectType.GAS_CLOUD]: "gas clouds",
     [ObjectType.PLANET_X]: "Planet X",
     [ObjectType.BOT]: "Bot",
+    [ObjectType.PLAYER]: "Player",
 };
-const titlePluralWords: {[key in ObjectType]: string} = {
+export const titlePluralWords: {[key in ObjectType]: string} = {
     [ObjectType.EMPTY]: "Empty Sectors",
     [ObjectType.ASTEROID]: "Asteroids",
     [ObjectType.DWARF_PLANET]: "Dwarf Planets",
@@ -26,6 +28,7 @@ const titlePluralWords: {[key in ObjectType]: string} = {
     [ObjectType.GAS_CLOUD]: "Gas Clouds",
     [ObjectType.PLANET_X]: "Planet X",
     [ObjectType.BOT]: "Bot",
+    [ObjectType.PLAYER]: "Player",
 };
 const article: {[key in ObjectType]: string} = {
     [ObjectType.EMPTY]: "an",
@@ -35,6 +38,7 @@ const article: {[key in ObjectType]: string} = {
     [ObjectType.GAS_CLOUD]: "a",
     [ObjectType.PLANET_X]: "a",
     [ObjectType.BOT]: "a",
+    [ObjectType.PLAYER]: "a",
 }
 export function getNObjectsName(obj: ObjectType, n: number) {
     if (n === 1) return singularWord[obj];

@@ -3,6 +3,7 @@ import {Sector} from "./NoteWheel";
 import {inflate} from "pako";
 import * as tar from "tar-stream";
 import {Game, ObjectType} from "./Game";
+import {WritableDraft} from "immer/dist/types/types-external";
 
 const extract = tar.extract;
 
@@ -79,10 +80,12 @@ export const gameIdState = atom({
 function fetchGame(gameId: string): Promise<Game> {
     return new Promise((resolve) => {
         const e = extract();
+        // @ts-ignore
         e.on('entry', (header, stream, next) => {
             if (header.name === `maps/${gameId}.json`) {
                 let data = '';
                 const decoder = new TextDecoder();
+                // @ts-ignore
                 stream.on('data', (d) => {
                     data += decoder.decode(d);
                 });
@@ -98,8 +101,10 @@ function fetchGame(gameId: string): Promise<Game> {
         });
         fetch(new URL('/maps.tar.gz', import.meta.url)).then((body) => body.arrayBuffer()).then((buffer) => {
             try {
+                // @ts-ignore
                 e.write(inflate(buffer));
             } catch (err) {
+                // @ts-ignore
                 e.write(new Uint8Array(buffer));
             }
         });
@@ -116,12 +121,13 @@ export const gameState = selector({
 });
 
 export interface TheoryObj {
-    self: [number, ObjectType][];
-    p2: [number, ObjectType][];
-    p3: [number, ObjectType][];
-    p4: [number, ObjectType][];
-    isChecked: boolean;
+    self: [sector: number, type: ObjectType, verified: boolean][];
+    p2: [sector: number, type: ObjectType, verified: boolean][];
+    p3: [sector: number, type: ObjectType, verified: boolean][];
+    p4: [sector: number, type: ObjectType, verified: boolean][];
 }
+
+export const theoryKeys = ["self", "p2", "p3", "p4"] as const;
 
 export const theoriesState = atom({
     key: 'theories',
@@ -129,3 +135,13 @@ export const theoriesState = atom({
         persistentAtomEffect('theories', [] as TheoryObj[])
     ]
 });
+
+export function verifyAllTheories(draft: WritableDraft<TheoryObj[]>) {
+    draft.forEach((row) => {
+        for (const key of theoryKeys) {
+            row[key].forEach((theory) => {
+                theory[2] = true;
+            });
+        }
+    });
+}
