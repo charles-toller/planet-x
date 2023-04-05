@@ -151,7 +151,7 @@ export function forwardVerifyTheories(game: Game, draft: WritableDraft<TheoryObj
     const correctSectors = draft.flatMap((row, rowNumber) =>
         Object.values(row).flatMap((section) =>
             section
-                .filter((theory) => (theory[2] || rowNumber <= checkIdx) && theory[1] === game.obj[theory[0]])
+                .filter((theory) => (theory[2] || rowNumber <= checkIdx) && (theory[1] === ObjectType.BOT || theory[1] === game.obj[theory[0]]))
                 .map((theory) => theory[0])
         )
     )
