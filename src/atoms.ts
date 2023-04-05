@@ -145,3 +145,27 @@ export function verifyAllTheories(draft: WritableDraft<TheoryObj[]>) {
         }
     });
 }
+
+export function forwardVerifyTheories(game: Game, draft: WritableDraft<TheoryObj[]>) {
+    const checkIdx = draft.length - 3;
+    const correctSectors = draft.flatMap((row, rowNumber) =>
+        Object.values(row).flatMap((section) =>
+            section
+                .filter((theory) => (theory[2] || rowNumber <= checkIdx) && theory[1] === game.obj[theory[0]])
+                .map((theory) => theory[0])
+        )
+    )
+    draft.forEach((row, rowNumber) => {
+        Object.values(row).forEach((section) => {
+            section.forEach((theory) => {
+                if (theory[2]) return;
+                if (rowNumber <= checkIdx || correctSectors.includes(theory[0])) {
+                    theory[2] = true;
+                    if (theory[1] === ObjectType.BOT) {
+                        theory[1] = game.obj[theory[0]];
+                    }
+                }
+            });
+        });
+    });
+}
