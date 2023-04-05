@@ -138,8 +138,9 @@ export function Tables() {
     const processTopRowUpdate = useCallback((updatedRow: GridRowModel<TopRowModel>) => {
         const lastRowId = apiRef.current.getAllRowIds().map((a) => Number(a)).sort((a, b) => b - a)[0];
         const lastRow = apiRef.current.getRow(lastRowId);
+        let addRow = false;
         if ((updatedRow.id === lastRowId && Boolean(updatedRow.p2 || updatedRow.p3 || updatedRow.p4)) || Boolean(lastRow.p2 || lastRow.p3 || lastRow.p4)) {
-            apiRef.current.updateRows([{id: lastRowId + 1}]);
+            addRow = true;
         }
         const formattedRow = {
             ...updatedRow,
@@ -147,7 +148,21 @@ export function Tables() {
             p3: formatActionValue(updatedRow.p3 ?? ""),
             p4: formatActionValue(updatedRow.p4 ?? "")
         };
-        setTopRows((topRows) => topRows.map((row) => row.id === formattedRow.id ? formattedRow : row));
+        setTopRows((topRows) => {
+            let formattedRows = topRows.map((row) => row.id === formattedRow.id ? formattedRow : row);
+            if (addRow) {
+                const newRowId = Math.max(...formattedRows.map((row) => row.id)) + 1;
+                formattedRows.push({
+                    id: newRowId,
+                    action: "",
+                    result: "",
+                    p2: "",
+                    p3: "",
+                    p4: "",
+                });
+            }
+            return formattedRows;
+        });
         return formattedRow;
     }, [apiRef]);
     const processBottomRowUpdate = useCallback((updatedRow: GridRowModel<BottomRowModel>) => {
