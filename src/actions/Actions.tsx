@@ -10,6 +10,7 @@ import {Theories} from "./Theories";
 import {Target} from "./Target";
 import {Survey} from "./Survey";
 import {Research} from "./Research";
+import {LocatePlanetX} from "./LocatePlanetX";
 
 type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "theories" | "resetGame";
 
@@ -40,6 +41,7 @@ export function Actions(props: ActionsProps) {
                 {selected === "research" && <Research game={props.game} />}
                 {selected === "target" && <Target game={props.game} />}
                 {selected === "theories" && <Theories game={props.game} />}
+                {selected === "locatePlanetX" && <LocatePlanetX game={props.game}/>}
             </div>
         </Card>
     );
