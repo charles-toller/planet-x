@@ -39,7 +39,7 @@ export function persistentAtomEffect<T>(storageKey: string, defaultValue: T): At
 
 export function sectorClamp(sector: number): number {
     let newSector = sector % 18;
-    if (newSector === 0) newSector = 18;
+    while (newSector <= 0) newSector += 18;
     return newSector;
 }
 
@@ -69,6 +69,13 @@ export const sectorsState = atom({
         persistentAtomEffect('sectors', baseSectors)
     ]
 });
+
+export const playerPositionState = atom({
+    key: 'playerPosition',
+    effects: [
+        persistentAtomEffect('playerPosition', [1, 1, 1] as [number, number, number])
+    ]
+})
 
 export const gameIdState = atom({
     key: 'gameId',

@@ -1,17 +1,53 @@
-import {Card} from "@mui/material";
-import {DataGrid, GridColDef, GridRowModel, GridRowsProp, useGridApiRef} from "@mui/x-data-grid";
+import {Button, ButtonGroup, Card, Chip} from "@mui/material";
+import {
+    DataGrid,
+    GridColDef,
+    GridRowModel,
+    GridRowsProp,
+    useGridApiRef
+} from "@mui/x-data-grid";
 import React, {useCallback} from "react";
-import {atom, noWait, selector, useRecoilState} from "recoil";
-import {gameState, persistentAtomEffect, sectorClamp, sectorState} from "./atoms";
+import {atom, noWait, selector, useRecoilState, useSetRecoilState} from "recoil";
+import {gameState, persistentAtomEffect, playerPositionState, sectorClamp, sectorState} from "./atoms";
 import {ConferenceKey} from "./Game";
 import {researchName} from "./Research";
+import {Add, Remove} from "@mui/icons-material";
+import produce from "immer";
+
+const playerHeader = (playerNumber: number) => {
+    return () => {
+        const [playerPositions, setPlayerPositions] = useRecoilState(playerPositionState);
+        const increasePlayerPositions = useCallback((e: React.MouseEvent) => {
+            setPlayerPositions(produce(draft => {
+                draft[playerNumber - 2] = sectorClamp(draft[playerNumber - 2] + 1);
+            }));
+            e.stopPropagation();
+        }, []);
+        const decreasePlayerPositions = useCallback((e: React.MouseEvent) => {
+            setPlayerPositions(produce(draft => {
+                draft[playerNumber - 2] = sectorClamp(draft[playerNumber - 2] - 1);
+            }));
+            e.stopPropagation();
+        }, []);
+        return (
+            <>
+                {`Player ${playerNumber} `}
+                <Chip label={playerPositions[playerNumber - 2]} sx={{margin: "0 1ex"}}/>
+                <ButtonGroup variant="contained" size="small">
+                    <Button onClick={increasePlayerPositions}><Add /></Button>
+                    <Button onClick={decreasePlayerPositions}><Remove /></Button>
+                </ButtonGroup>
+            </>
+        );
+    }
+}
 
 const topColumnDefs: GridColDef[] = [
     {field: 'action', headerName: 'Action', flex: 1},
     {field: 'result', headerName: 'Result', flex: 0.5},
-    {field: 'p2', headerName: 'Player 2', flex: 1, editable: true},
-    {field: 'p3', headerName: 'Player 3', flex: 1, editable: true},
-    {field: 'p4', headerName: 'Player 4', flex: 1, editable: true},
+    {field: 'p2', headerName: 'Player 2', flex: 1, editable: true, renderHeader: playerHeader(2)},
+    {field: 'p3', headerName: 'Player 3', flex: 1, editable: true, renderHeader: playerHeader(3)},
+    {field: 'p4', headerName: 'Player 4', flex: 1, editable: true, renderHeader: playerHeader(4)},
 ]
 
 interface TopRowModel {
@@ -86,12 +122,24 @@ export const bottomRowsState = selector({
     }
 })
 
-const reg = /\s*([egdac])\s*(\d+)\s*-\s*(\d+)/;
+const surveyReg = /^\s*([egdac])\s*(\d+)\s*-\s*(\d+)\s*$/i;
+const researchReg = /^\s*r\s*([abcdef])\s*$/i;
+const targetReg = /^\s*t\s*(\d+)\s*$/i;
 
 function formatActionValue(input: string): string {
-    const [_, type, start, end] = reg.exec(input) ?? [];
-    if (!type || !start || !end) return input;
-    return `${type.toUpperCase()} ${start}-${end}`;
+    const [, type, start, end] = surveyReg.exec(input) ?? [];
+    if (type && start && end) {
+        return `${type.toUpperCase()} ${start}-${end}`;
+    }
+    const [, researchType] = researchReg.exec(input) ?? [];
+    if (researchType) {
+        return `Research ${researchType.toUpperCase()}`;
+    }
+    const [, targetSector] = targetReg.exec(input) ?? [];
+    if (targetSector) {
+        return `Target ${targetSector}`;
+    }
+    return input;
 }
 
 export const tableActions = selector({
@@ -130,12 +178,37 @@ export const tableActions = selector({
         };
     },
 });
+type SectorMovement = {p2?: number; p3?: number; p4?: number};
+function getNewActions(oldRow: GridRowModel<TopRowModel>, newRow: Pick<GridRowModel<TopRowModel>, 'p2' | 'p3' | 'p4'>): SectorMovement {
+    const ret: SectorMovement = {};
+    for (const key of (["p2", "p3", "p4"] as const)) {
+        let regResult;
+        if (oldRow[key] === "" && newRow[key] !== "") {
+            if (newRow[key].startsWith("Research")) {
+                ret[key] = 1;
+            } else if (newRow[key].startsWith("Target")) {
+                ret[key] = 4;
+            } else if ((regResult = surveyReg.exec(newRow[key])) != null) {
+                let numSectors = Number(regResult[3]) - Number(regResult[2]) + 1;
+                if (numSectors > 6) {
+                    ret[key] = 2;
+                } else if (numSectors > 3) {
+                    ret[key] = 3;
+                } else {
+                    ret[key] = 4;
+                }
+            }
+        }
+    }
+    return ret;
+}
 
 export function Tables() {
     const [topRows, setTopRows] = useRecoilState(topRowsState);
     const [bottomRows, setBottomRows] = useRecoilState(bottomRowsState);
+    const setPlayerPositions = useSetRecoilState(playerPositionState)
     const apiRef = useGridApiRef();
-    const processTopRowUpdate = useCallback((updatedRow: GridRowModel<TopRowModel>) => {
+    const processTopRowUpdate = useCallback((updatedRow: GridRowModel<TopRowModel>, oldRow: GridRowModel<TopRowModel>) => {
         const lastRowId = apiRef.current.getAllRowIds().map((a) => Number(a)).sort((a, b) => b - a)[0];
         const lastRow = apiRef.current.getRow(lastRowId);
         let addRow = false;
@@ -163,6 +236,8 @@ export function Tables() {
             }
             return formattedRows;
         });
+        const sectorCounts = getNewActions(oldRow, formattedRow);
+        setPlayerPositions((oldPlayerPositions) => [oldPlayerPositions[0] + (sectorCounts.p2 ?? 0), oldPlayerPositions[1] + (sectorCounts.p3 ?? 0), oldPlayerPositions[2] + (sectorCounts.p4 ?? 0)]);
         return formattedRow;
     }, [apiRef]);
     const processBottomRowUpdate = useCallback((updatedRow: GridRowModel<BottomRowModel>) => {
