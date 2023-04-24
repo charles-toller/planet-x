@@ -14,7 +14,7 @@ code {
 
 @font-face {
   font-family: "Teko";
-  src: url("./Teko-Regular.ttf") format("truetype");
+  src: url("/Teko-Regular.ttf") format("truetype");
   size-adjust: 160%;
 }
 
