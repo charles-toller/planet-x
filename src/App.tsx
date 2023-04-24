@@ -8,6 +8,7 @@ import {gameState, resetPersistentAtoms, sectorsState} from "./atoms";
 import {SetGameId} from "./SetGameId";
 import produce from "immer";
 import {Tables} from "./tables";
+import {createTheme, ThemeProvider} from "@mui/material";
 function AppWrapper() {
     return (
         <RecoilRoot>
@@ -15,6 +16,12 @@ function AppWrapper() {
         </RecoilRoot>
     )
 }
+
+const theme = createTheme({
+    typography: {
+        fontFamily: "Teko",
+    }
+})
 
 function App() {
     const [sectors, setSectors] = useRecoilState(sectorsState);
@@ -40,14 +47,16 @@ function App() {
     }, [sectors, setSectors]);
     return (
         <div className="App">
-            <div className="App-header">
-                <NoteWheel leftSector={1} isAdvanced={true} sectors={sectors} onObjectClicked={onObjectClick}/>
-                <div style={{width: "50%", padding: "20px"}}>
-                    {game && <Actions resetGame={() => reset()} game={game} />}
-                    {!game && <SetGameId />}
-                    <Tables />
+            <ThemeProvider theme={theme}>
+                <div className="App-header">
+                    <NoteWheel leftSector={1} isAdvanced={true} sectors={sectors} onObjectClicked={onObjectClick}/>
+                    <div style={{width: "50%", padding: "20px"}}>
+                        {game && <Actions resetGame={() => reset()} game={game} />}
+                        {!game && <SetGameId />}
+                        <Tables />
+                    </div>
                 </div>
-            </div>
+            </ThemeProvider>
         </div>
     );
 }
