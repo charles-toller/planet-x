@@ -19,7 +19,7 @@ code {
 }
 @font-face {
   font-family: "Teko";
-  src: url("./Inter-Regular.ttf") format("truetype");
+  src: url("/Inter-Regular.ttf") format("truetype");
   unicode-range: U+2713;
   size-adjust: 160%;
 }
