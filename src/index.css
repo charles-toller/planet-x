@@ -17,6 +17,12 @@ code {
   src: url("/Teko-Regular.ttf") format("truetype");
   size-adjust: 160%;
 }
+@font-face {
+  font-family: "Teko";
+  src: url("./Inter-Regular.ttf") format("truetype");
+  unicode-range: U+2713;
+  size-adjust: 160%;
+}
 
 * {
   letter-spacing: 0.03ex;
