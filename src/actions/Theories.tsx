@@ -31,6 +31,7 @@ import {ActionsProps} from "./Actions";
 interface CustomSelectProps<T> {
     value: T;
     onChange: (newValue: T) => unknown;
+    prohibitedOptions?: T[];
 }
 
 function SectorSelect(props: CustomSelectProps<number | null>) {
@@ -43,7 +44,7 @@ function SectorSelect(props: CustomSelectProps<number | null>) {
             <Select value={props.value === null ? "" : String(props.value)} onChange={onChange} label="Sector">
                 <MenuItem value=""><em>None</em></MenuItem>
                 {new Array(18).fill(0).map((_, i) => (
-                    <MenuItem value={i + 1}>{i + 1}</MenuItem>
+                    <MenuItem disabled={props.prohibitedOptions?.includes(i + 1) ?? false} value={i + 1}>{i + 1}</MenuItem>
                 ))}
             </Select>
         </FormControl>
@@ -116,6 +117,13 @@ export function Theories(props: Pick<ActionsProps, 'game'>) {
     const onMenuClose = useCallback(() => {
         setAnchorEl(null);
     }, []);
+    const verifiedSectors = useMemo(() => {
+        return theories.flatMap((theoryRow) => {
+            return theoryKeys.flatMap((key) => {
+                return theoryRow[key].filter((theory) => theory[2]).map((theory) => theory[0]);
+            });
+        }).filter((a, i, arr) => arr.indexOf(a) === i);
+    }, [theories]);
     return <div>
         <TableContainer component={Paper}>
             <Table>
@@ -163,7 +171,7 @@ export function Theories(props: Pick<ActionsProps, 'game'>) {
                                                                       draft[key] = draft[key].slice(0, idx);
                                                                   }
                                                               })))
-                                                          }}/>
+                                                          }} prohibitedOptions={verifiedSectors} />
                                             <TheorySelect value={newTheories[key][idx]?.[1] ?? null}
                                                           onChange={(value) => {
                                                               setNewTheories((produce((draft) => {

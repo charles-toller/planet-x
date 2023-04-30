@@ -4,6 +4,7 @@ import {inflate} from "pako";
 import * as tar from "tar-stream";
 import {Game, ObjectType} from "./Game";
 import {WritableDraft} from "immer/dist/types/types-external";
+import {topRowsState} from "./tables";
 
 const extract = tar.extract;
 
@@ -176,3 +177,67 @@ export function forwardVerifyTheories(game: Game, draft: WritableDraft<TheoryObj
         });
     });
 }
+
+interface Score {
+    gameOverReady: boolean;
+    firstPlace: number;
+    asteroids: number;
+    comets: number;
+    gasClouds: number;
+    dwarfPlanets: number;
+    planetX: boolean;
+    subtotal: number;
+}
+
+export const scoreState = selector({
+    key: 'score',
+    get: ({get}) => {
+        const theories = get(theoriesState);
+        const topRow = get(topRowsState);
+        const game = get(gameState);
+        if (game == null) return null;
+        const outputScore: Score = {
+            gameOverReady: true,
+            firstPlace: 0,
+            asteroids: 0,
+            comets: 0,
+            gasClouds: 0,
+            dwarfPlanets: 0,
+            planetX: false,
+            subtotal: 0
+        };
+        outputScore.gameOverReady = theories.every((theoryRow) => theoryKeys.every((key) => theoryRow[key].every((theory) => theory[2])));
+        theories.forEach((theoryRow, rowNumber) => {
+            theoryRow.self.forEach((theory) => {
+                if (!theory[2]) return;
+                if (game.obj[theory[0]] === theory[1]) {
+                    // Theory correct
+                    if (theories.findIndex((theoryRow) => theoryKeys.some((key) => theoryRow[key].some((other) => theory[0] === other[0] && theory[1] === other[1]))) >= rowNumber) {
+                        // First place (or tied for such)
+                        outputScore.firstPlace++;
+                    }
+                    switch (theory[1]) {
+                        case ObjectType.ASTEROID:
+                            outputScore.asteroids += 2;
+                            break;
+                        case ObjectType.DWARF_PLANET:
+                            outputScore.dwarfPlanets += 2;
+                            break;
+                        case ObjectType.COMET:
+                            outputScore.comets += 3;
+                            break;
+                        case ObjectType.GAS_CLOUD:
+                            outputScore.gasClouds += 4;
+                            break;
+                    }
+                }
+            });
+        });
+        if (topRow.some((row) => row.action === "Locate Planet X" && row.result === "\u2713")) {
+            // Player successfully located Planet X
+            outputScore.planetX = true;
+        }
+        outputScore.subtotal = Object.values(outputScore).reduce((sum, value) => sum + (typeof value === 'number' ? value : 0), 0);
+        return outputScore;
+    },
+});

@@ -1,16 +1,35 @@
 import * as React from 'react';
 import {useCallback, useState} from 'react';
-import {Button, Card, CardHeader, ToggleButton, ToggleButtonGroup} from "@mui/material";
-import {PlanetXIcon, TargetIcon, TheoryIcon} from "../Icons";
+import {
+    Button,
+    Card,
+    CardHeader,
+    Table, TableBody, TableCell,
+    TableContainer,
+    TableHead, TableRow,
+    ToggleButton,
+    ToggleButtonGroup
+} from "@mui/material";
+import {
+    AsteroidIcon,
+    CometIcon,
+    DwarfPlanetIcon, FirstPlaceIcon,
+    GasCloudIcon,
+    PlanetXIcon,
+    TargetIcon,
+    TheoryIcon
+} from "../Icons";
 import {Abc, RestartAlt, WifiFindTwoTone} from "@mui/icons-material";
 import {Game} from "../Game";
-import {useRecoilValue} from "recoil";
-import {sectorClamp, sectorState} from "../atoms";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {scoreState, sectorClamp, sectorState, theoriesState, verifyAllTheories} from "../atoms";
 import {Theories} from "./Theories";
 import {Target} from "./Target";
 import {Survey} from "./Survey";
 import {Research} from "./Research";
 import {LocatePlanetX} from "./LocatePlanetX";
+import {ReactComponent as PlanetXScoreSvg} from "../assets/planetxscore.svg";
+import produce from "immer";
 
 type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "theories" | "resetGame";
 
@@ -48,8 +67,54 @@ export function Actions(props: ActionsProps) {
 }
 
 function ResetGame(props: Pick<ActionsProps, 'resetGame'>) {
+    const score = useRecoilValue(scoreState);
+    const [planetXValue, setPlanetXValue] = useState<number>(0);
+    const onPlanetXValueChange = useCallback((event: React.MouseEvent<HTMLElement>, newSelected: number | null) => {
+        setPlanetXValue(newSelected ?? 0);
+    }, []);
+    const setTheories = useSetRecoilState(theoriesState);
+    const verifyTheories = useCallback(() => {
+        setTheories(produce(verifyAllTheories));
+    }, []);
     return (
-        <Button onClick={props.resetGame}>Reset Game</Button>
+        <div>
+            {score && !score.gameOverReady && <Button onClick={verifyTheories}>Complete Game</Button>}
+            {score && score.gameOverReady && <TableContainer component={Card} variant="outlined" sx={{width: "95%", marginLeft: "2.5%", marginTop: "10px", marginBottom: "10px"}}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell><FirstPlaceIcon /></TableCell>
+                            <TableCell><AsteroidIcon /></TableCell>
+                            <TableCell><CometIcon /></TableCell>
+                            <TableCell><GasCloudIcon /></TableCell>
+                            <TableCell><DwarfPlanetIcon /></TableCell>
+                            <TableCell><PlanetXScoreSvg style={{height: "1.5rem"}} /></TableCell>
+                            <TableCell>Total</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>{score.firstPlace}</TableCell>
+                            <TableCell>{score.asteroids}</TableCell>
+                            <TableCell>{score.comets}</TableCell>
+                            <TableCell>{score.gasClouds}</TableCell>
+                            <TableCell>{score.dwarfPlanets}</TableCell>
+                            <TableCell>
+                                {score.planetX && <ToggleButtonGroup exclusive value={planetXValue} onChange={onPlanetXValueChange}>
+                                    <ToggleButton value={2}>2</ToggleButton>
+                                    <ToggleButton value={4}>4</ToggleButton>
+                                    <ToggleButton value={6}>6</ToggleButton>
+                                    <ToggleButton value={8}>8</ToggleButton>
+                                    <ToggleButton value={10}>10</ToggleButton>
+                                </ToggleButtonGroup>}
+                            </TableCell>
+                            <TableCell>{score.subtotal + planetXValue}</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>}
+            {score && score.gameOverReady && <Button onClick={props.resetGame}>Reset Game</Button>}
+        </div>
     );
 }
 

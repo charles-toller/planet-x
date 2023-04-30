@@ -1,6 +1,7 @@
 import {createSvgIcon, SvgIcon, SvgIconProps} from "@mui/material";
 import React from "react";
 import {ReactComponent as BotIconSvg} from "./assets/bot.svg";
+import {ReactComponent as FirstPlaceSvg} from "./assets/firstplace.svg";
 import {ObjectType} from "./Game";
 import {Person} from "@mui/icons-material";
 
@@ -103,6 +104,10 @@ export const ConferenceIcon = createSvgIconLocal(
 
 export const BotIcon = (props: Partial<SvgIconProps>) => (
     <SvgIcon component={BotIconSvg} inheritViewBox {...props} />
+);
+
+export const FirstPlaceIcon = (props: Partial<SvgIconProps>) => (
+    <SvgIcon component={FirstPlaceSvg} inheritViewBox {...props} />
 );
 export const objectTypeToIcon = {
     [ObjectType.PLANET_X]: PlanetXIcon,
