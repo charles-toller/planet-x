@@ -107,6 +107,7 @@ function ResetGame(props: Pick<ActionsProps, 'resetGame'>) {
                                     <ToggleButton value={8}>8</ToggleButton>
                                     <ToggleButton value={10}>10</ToggleButton>
                                 </ToggleButtonGroup>}
+                                {!score.planetX && 0}
                             </TableCell>
                             <TableCell>{score.subtotal + planetXValue}</TableCell>
                         </TableRow>
