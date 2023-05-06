@@ -1,4 +1,4 @@
-import {atom, AtomEffect, selector} from "recoil";
+import {atom, AtomEffect, DefaultValue, selector} from "recoil";
 import {Sector} from "./NoteWheel";
 import {inflate} from "pako";
 import * as tar from "tar-stream";
@@ -137,11 +137,65 @@ export interface TheoryObj {
 
 export const theoryKeys = ["self", "p2", "p3", "p4"] as const;
 
-export const theoriesState = atom({
+const _theoriesState = atom({
     key: 'theories',
     effects: [
         persistentAtomEffect('theories', [] as TheoryObj[])
     ]
+});
+
+export const theoriesState = selector({
+    key: 'theoriesSelector',
+    get: ({get}) => {
+        return get(_theoriesState);
+    },
+    set: ({get, set}, newValue) => {
+        const game = get(gameState);
+        if (newValue instanceof DefaultValue || game == null) {
+            set(_theoriesState, newValue);
+            return;
+        }
+        const oldValue = get(_theoriesState);
+        const newIncorrectCount: {[key in (typeof theoryKeys)[number]]: number} = {
+            self: 0,
+            p2: 0,
+            p3: 0,
+            p4: 0,
+        };
+        oldValue.forEach((row, rowNumber) => theoryKeys.forEach((key) => row[key].forEach((theory, theoryNumber) => {
+            const n = newValue[rowNumber][key][theoryNumber];
+            if (n[2] && n[1] !== theory[1]) {
+                // Theory type changed
+                if (theory[1] === ObjectType.PLAYER && n[1] !== game.obj[theory[0]]) {
+                    // Used to be player theory, now incorrect
+                    newIncorrectCount[key]++;
+                } else if (theory[1] !== ObjectType.PLAYER) {
+                    if (n[1] === game.obj[theory[0]]) {
+                        // Used to be incorrect, now correct (misclick)
+                        newIncorrectCount[key]--;
+                    } else {
+                        // Used to be correct, now incorrect
+                        newIncorrectCount[key]++;
+                    }
+                }
+            } else if (n[2] && !theory[2]) {
+                // This theory is now verified
+                if (n[1] === ObjectType.BOT || n[1] === ObjectType.PLAYER) {
+                    return;
+                }
+                if (n[1] !== game.obj[theory[0]]) {
+                    newIncorrectCount[key]++;
+                }
+            }
+        })));
+        set(sectorState, (oldSectorNumber) => {
+            return oldSectorNumber + newIncorrectCount.self;
+        });
+        set(playerPositionState, (oldPlayerPositions) => {
+            return [oldPlayerPositions[0] + newIncorrectCount.p2, oldPlayerPositions[1] + newIncorrectCount.p3, oldPlayerPositions[2] + newIncorrectCount.p4] as [number, number, number];
+        });
+        set(_theoriesState, newValue);
+    }
 });
 
 export function verifyAllTheories(draft: WritableDraft<TheoryObj[]>) {
