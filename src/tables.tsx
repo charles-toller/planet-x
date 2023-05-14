@@ -190,6 +190,7 @@ function getNewActions(oldRow: GridRowModel<TopRowModel>, newRow: Pick<GridRowMo
                 ret[key] = 4;
             } else if ((regResult = surveyReg.exec(newRow[key])) != null) {
                 let numSectors = Number(regResult[3]) - Number(regResult[2]) + 1;
+                while (numSectors < 1) numSectors += 18;
                 if (numSectors > 6) {
                     ret[key] = 2;
                 } else if (numSectors > 3) {
