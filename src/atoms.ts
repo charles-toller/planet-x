@@ -44,12 +44,21 @@ export function sectorClamp(sector: number): number {
     return newSector;
 }
 
-export const sectorState = atom({
-    key: 'sector',
+const _sectorState = atom({
+    key: '_sector',
     effects: [
         persistentAtomEffect('sector', 1)
     ]
 });
+
+export const sectorState = selector({
+    key: 'sector',
+    get: ({get}) => get(_sectorState),
+    set: ({get, set}, newValue) => {
+        if (newValue instanceof DefaultValue) set(_sectorState, newValue);
+        else set(_sectorState, sectorClamp(newValue));
+    }
+})
 
 export const availableSectors = selector({
     key: 'availableSectors',
@@ -71,12 +80,24 @@ export const sectorsState = atom({
     ]
 });
 
-export const playerPositionState = atom({
-    key: 'playerPosition',
+const _playerPositionState = atom({
+    key: '_playerPosition',
     effects: [
         persistentAtomEffect('playerPosition', [1, 1, 1] as [number, number, number])
     ]
-})
+});
+
+export const playerPositionState = selector({
+    key: 'playerPosition',
+    get: ({get}) => get(_playerPositionState),
+    set: ({get, set}, newValue) => {
+        if (newValue instanceof DefaultValue) {
+            set(_playerPositionState, newValue);
+            return
+        }
+        set(_playerPositionState, newValue.map((num) => sectorClamp(num)) as [number, number, number]);
+    }
+});
 
 export const gameIdState = atom({
     key: 'gameId',
