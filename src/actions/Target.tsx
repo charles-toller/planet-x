@@ -2,10 +2,10 @@ import * as React from "react";
 import {useCallback, useState} from "react";
 import {useRecoilValue} from "recoil";
 import {availableSectors} from "../atoms";
-import {tableActions} from "../tables";
 import {researchName} from "../Research";
 import {Button, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {ActionsProps} from "./Actions";
+import {tableActions} from "../tableState";
 
 export function Target(props: Pick<ActionsProps, 'game'>) {
     const [sector, setSector] = useState<number | null>(null);

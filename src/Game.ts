@@ -19,5 +19,30 @@ export interface Game {
             Y?: ObjectType;
             N?: number;
         }
-    }}
+    }};
+    solo?: {
+        turns: Array<BotActionSurvey | BotActionTarget | BotActionLocate | BotActionResearch>;
+        theories: Array<{sector: number; time: number}>;
+    };
+}
+
+interface BotActionSurvey {
+    action: ObjectType;
+    x: number;
+    y: number;
+    time: number;
+}
+interface BotActionTarget {
+    action: "T";
+    sector: number;
+    time: number;
+}
+interface BotActionLocate {
+    action: "X";
+    time: number;
+}
+interface BotActionResearch {
+    action: "R";
+    conf: string;
+    time: number;
 }

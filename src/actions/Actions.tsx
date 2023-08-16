@@ -11,7 +11,7 @@ import {
     ToggleButtonGroup
 } from "@mui/material";
 import {
-    AsteroidIcon,
+    AsteroidIcon, BotIcon,
     CometIcon,
     DwarfPlanetIcon, FirstPlaceIcon,
     GasCloudIcon,
@@ -21,7 +21,7 @@ import {
 } from "../Icons";
 import {Abc, RestartAlt, WifiFindTwoTone} from "@mui/icons-material";
 import {Game} from "../Game";
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {useRecoilValue, useSetRecoilState} from "recoil";
 import {scoreState, sectorClamp, sectorState, theoriesState, verifyAllTheories} from "../atoms";
 import {Theories} from "./Theories";
 import {Target} from "./Target";
@@ -30,8 +30,9 @@ import {Research} from "./Research";
 import {LocatePlanetX} from "./LocatePlanetX";
 import {ReactComponent as PlanetXScoreSvg} from "../assets/planetxscore.svg";
 import produce from "immer";
+import {Bot} from "./Bot";
 
-type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "theories" | "resetGame";
+type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "theories" | "bot" | "resetGame";
 
 export interface ActionsProps {
     resetGame: () => unknown;
@@ -52,6 +53,7 @@ export function Actions(props: ActionsProps) {
                 <ToggleButton value="research"><Abc sx={{mr: 1}} /> Research</ToggleButton>
                 <ToggleButton value="locatePlanetX"><PlanetXIcon sx={{mr: 1}} /> Locate Planet X</ToggleButton>
                 <ToggleButton value="theories"><TheoryIcon sx={{mr: 1}} /> Theories</ToggleButton>
+                <ToggleButton value="bot"><BotIcon sx={{mr: 1}} /> Bot</ToggleButton>
                 <ToggleButton value="resetGame"><RestartAlt sx={{mr: 1}} /> Reset Game</ToggleButton>
             </ToggleButtonGroup>
             <div>
@@ -60,6 +62,7 @@ export function Actions(props: ActionsProps) {
                 {selected === "research" && <Research game={props.game} />}
                 {selected === "target" && <Target game={props.game} />}
                 {selected === "theories" && <Theories game={props.game} />}
+                {selected === "bot" && <Bot game={props.game}/>}
                 {selected === "locatePlanetX" && <LocatePlanetX game={props.game}/>}
             </div>
         </Card>

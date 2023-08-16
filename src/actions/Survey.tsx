@@ -3,13 +3,13 @@ import {useCallback, useState} from "react";
 import {ObjectType} from "../Game";
 import {useRecoilValue} from "recoil";
 import {availableSectors} from "../atoms";
-import {tableActions} from "../tables";
 import {getNObjectsName, is, researchName} from "../Research";
 import {Button, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {AsteroidIcon, CometIcon, DwarfPlanetIcon, EmptySectorIcon, GasCloudIcon} from "../Icons";
 import {ActionsProps} from "./Actions";
+import {tableActions} from "../tableState";
 
-const sectorCountToTime: number[] = [4, 4, 4, 4, 3, 3, 3, 2, 2, 2];
+export const sectorCountToTime: number[] = [4, 4, 4, 4, 3, 3, 3, 2, 2, 2];
 
 export function Survey(props: Pick<ActionsProps, 'game'>) {
     const [selectedType, setSelectedType] = useState<ObjectType | null>(ObjectType.ASTEROID);

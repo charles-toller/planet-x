@@ -1,42 +1,14 @@
-import {atom, AtomEffect, DefaultValue, selector} from "recoil";
+import {atom, DefaultValue, selector} from "recoil";
 import {Sector} from "./NoteWheel";
 import {inflate} from "pako";
 import * as tar from "tar-stream";
 import {Game, ObjectType} from "./Game";
 import {WritableDraft} from "immer/dist/types/types-external";
-import {topRowsState} from "./tables";
+
+import {topRowsState} from "./tableState";
+import {persistentAtomEffect} from "./persistentAtomEffect";
 
 const extract = tar.extract;
-
-const resetSet = new Set<() => unknown>();
-
-export function resetPersistentAtoms() {
-    for (const fn of resetSet) {
-        fn();
-    }
-}
-
-export function persistentAtomEffect<T>(storageKey: string, defaultValue: T): AtomEffect<T> {
-    return ({setSelf, onSet}) => {
-        const storedValue = sessionStorage.getItem(storageKey);
-        if (storedValue) {
-            setSelf(JSON.parse(storedValue));
-        } else {
-            setSelf(defaultValue);
-        }
-        onSet((newValue) => {
-            sessionStorage.setItem(storageKey, JSON.stringify(newValue));
-        });
-        const reset = () => {
-            setSelf(defaultValue);
-            sessionStorage.removeItem(storageKey);
-        };
-        resetSet.add(reset);
-        return () => {
-            resetSet.delete(reset);
-        };
-    }
-}
 
 export function sectorClamp(sector: number): number {
     let newSector = sector % 18;

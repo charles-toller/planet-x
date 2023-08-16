@@ -1,11 +1,11 @@
 import {useRecoilValue} from "recoil";
-import {tableActions} from "../tables";
 import * as React from "react";
 import {useCallback} from "react";
 import {ConferenceKey} from "../Game";
 import {researchLookup, researchName} from "../Research";
 import {Button, ButtonGroup} from "@mui/material";
 import {ActionsProps} from "./Actions";
+import {tableActions} from "../tableState";
 
 export function Research(props: Pick<ActionsProps, 'game'>) {
     const {setResearch, setAction} = useRecoilValue(tableActions);

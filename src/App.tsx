@@ -4,11 +4,12 @@ import NoteWheel from "./NoteWheel";
 import {ObjectTypes, ObjId} from "./GameTypes";
 import {Actions} from "./actions/Actions";
 import {RecoilRoot, useRecoilState, useRecoilValueLoadable} from "recoil";
-import {gameState, resetPersistentAtoms, sectorsState} from "./atoms";
+import {gameState, sectorsState} from "./atoms";
 import {SetGameId} from "./SetGameId";
 import produce from "immer";
 import {Tables} from "./tables";
 import {createTheme, ThemeProvider} from "@mui/material";
+import {resetPersistentAtoms} from "./persistentAtomEffect";
 function AppWrapper() {
     return (
         <RecoilRoot>

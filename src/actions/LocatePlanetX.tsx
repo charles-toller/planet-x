@@ -3,7 +3,6 @@ import {useCallback, useState} from "react";
 import {ObjectType} from "../Game";
 import {sectorClamp} from "../atoms";
 import {useRecoilValue} from "recoil";
-import {tableActions} from "../tables";
 import {
     Button,
     FormControl,
@@ -17,6 +16,7 @@ import {
 } from "@mui/material";
 import {AsteroidIcon, CometIcon, EmptySectorIcon, GasCloudIcon, PlanetXIcon} from "../Icons";
 import {ActionsProps} from "./Actions";
+import {tableActions} from "../tableState";
 
 function AdjacentSectorSelect({value, onUpdate, sectorNum}: {
     sectorNum: number;

@@ -1,18 +1,11 @@
 import {Button, ButtonGroup, Card, Chip} from "@mui/material";
-import {
-    DataGrid,
-    GridColDef,
-    GridRowModel,
-    GridRowsProp,
-    useGridApiRef
-} from "@mui/x-data-grid";
+import {DataGrid, GridColDef, GridRowModel, useGridApiRef} from "@mui/x-data-grid";
 import React, {useCallback} from "react";
-import {atom, noWait, selector, useRecoilState, useSetRecoilState} from "recoil";
-import {gameState, persistentAtomEffect, playerPositionState, sectorClamp, sectorState} from "./atoms";
-import {ConferenceKey} from "./Game";
-import {researchName} from "./Research";
+import {useRecoilState, useSetRecoilState} from "recoil";
+import {playerPositionState, sectorClamp} from "./atoms";
 import {Add, Remove} from "@mui/icons-material";
 import produce from "immer";
+import {BottomRowModel, bottomRowsState, getNewActions, surveyReg, TopRowModel, topRowsState} from "./tableState";
 
 const playerHeader = (playerNumber: number) => {
     return () => {
@@ -50,15 +43,6 @@ const topColumnDefs: GridColDef[] = [
     {field: 'p4', headerName: 'Player 4', flex: 1, editable: true, renderHeader: playerHeader(4)},
 ]
 
-interface TopRowModel {
-    id: number;
-    action: string;
-    p2: string;
-    p3: string;
-    p4: string;
-    result: string;
-}
-
 const bottomColumnDefs: GridColDef[] = [
     {field: 'researchId', width: 50, headerName: ""},
     {field: 'researchType', width: 100, headerName: ""},
@@ -66,63 +50,6 @@ const bottomColumnDefs: GridColDef[] = [
     {field: 'otherNotes', flex: 1, editable: true, headerName: "Other Notes"},
 ];
 
-interface BottomRowModel {
-    id: number;
-    notes: string;
-    otherNotes: string;
-    researchId: string;
-    researchType: string;
-}
-
-const topInitialRows: GridRowsProp<TopRowModel> = [
-    {action: "", p2: "", p3: "", p4: "", id: 1, result: ""},
-];
-
-const bottomInitialRows: GridRowsProp<BottomRowModel> = [
-    {id: 1, notes: "", otherNotes: "", researchId: "A", researchType: ""},
-    {id: 2, notes: "", otherNotes: "", researchId: "B", researchType: ""},
-    {id: 3, notes: "", otherNotes: "", researchId: "C", researchType: ""},
-    {id: 4, notes: "", otherNotes: "", researchId: "D", researchType: ""},
-    {id: 5, notes: "", otherNotes: "", researchId: "E", researchType: ""},
-    {id: 6, notes: "", otherNotes: "", researchId: "F", researchType: ""},
-    {id: 7, notes: "", otherNotes: "", researchId: "X1", researchType: ""},
-    {id: 8, notes: "", otherNotes: "", researchId: "X2", researchType: ""},
-];
-
-export const topRowsState = atom({
-    key: 'topRows',
-    effects: [
-        persistentAtomEffect('topRows', topInitialRows),
-    ],
-});
-
-const baseBottomRowsState = atom({
-    key: 'baseBottomRows',
-    effects: [
-        persistentAtomEffect('baseBottomRows', bottomInitialRows),
-    ],
-});
-/*
-setBottomRows((bottomRows) => bottomRows.map((row) => ({
-            ...row,
-            researchType: researchName(game?.conf[row.researchId as ConferenceKey].title!, true)
-        })))
-* */
-export const bottomRowsState = selector({
-    key: 'bottomRows',
-    get: ({get}) => {
-        const game = get(noWait(gameState)).valueMaybe();
-        return get(baseBottomRowsState).map((row) => ({
-            ...row,
-            researchType: researchName(game?.conf[row.researchId as ConferenceKey].title ?? [], true),
-        }));
-    },
-    set: ({set}, newValue) => {
-        set(baseBottomRowsState, newValue);
-    }
-})
-
-const surveyReg = /^\s*([egdac])\s*(\d+)\s*-\s*(\d+)\s*$/i;
 const researchReg = /^\s*r\s*([abcdef])\s*$/i;
 const targetReg = /^\s*t\s*(\d+)\s*$/i;
 
@@ -140,68 +67,6 @@ function formatActionValue(input: string): string {
         return `Target ${targetSector}`;
     }
     return input;
-}
-
-export const tableActions = selector({
-    key: 'tableActions',
-    get: ({getCallback}) => {
-        const setAction = getCallback(({set}) => async (action: string, result: string, sectors: number) => {
-            set(sectorState, (currentSector) => sectorClamp(currentSector + sectors));
-            set(topRowsState, (topRows) => {
-                const newTopRows = [...topRows];
-                let index = newTopRows.findIndex((row) => row.action === "");
-                if (index === -1) {
-                    newTopRows.push({
-                        id: newTopRows[newTopRows.length - 1].id + 1,
-                        action: "",
-                        result: "",
-                        p2: "",
-                        p3: "",
-                        p4: "",
-                    });
-                    index = newTopRows.length - 1;
-                }
-                newTopRows[index] = {
-                    ...newTopRows[index],
-                    action,
-                    result,
-                };
-                return newTopRows;
-            });
-        });
-        const setResearch = getCallback(({set}) => async (researchKey: ConferenceKey, research: string) => {
-            set(bottomRowsState, (bottomRows) => bottomRows.map((row) => row.researchId === researchKey ? {...row, notes: research} : row))
-        });
-        return {
-            setAction,
-            setResearch,
-        };
-    },
-});
-type SectorMovement = {p2?: number; p3?: number; p4?: number};
-function getNewActions(oldRow: GridRowModel<TopRowModel>, newRow: Pick<GridRowModel<TopRowModel>, 'p2' | 'p3' | 'p4'>): SectorMovement {
-    const ret: SectorMovement = {};
-    for (const key of (["p2", "p3", "p4"] as const)) {
-        let regResult;
-        if (oldRow[key] === "" && newRow[key] !== "") {
-            if (newRow[key].startsWith("Research")) {
-                ret[key] = 1;
-            } else if (newRow[key].startsWith("Target")) {
-                ret[key] = 4;
-            } else if ((regResult = surveyReg.exec(newRow[key])) != null) {
-                let numSectors = Number(regResult[3]) - Number(regResult[2]) + 1;
-                while (numSectors < 1) numSectors += 18;
-                if (numSectors > 6) {
-                    ret[key] = 2;
-                } else if (numSectors > 3) {
-                    ret[key] = 3;
-                } else {
-                    ret[key] = 4;
-                }
-            }
-        }
-    }
-    return ret;
 }
 
 export function Tables() {
