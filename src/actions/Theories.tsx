@@ -126,7 +126,12 @@ export function Theories(props: Pick<ActionsProps, 'game' | 'sectors'>) {
     }, [theories]);
     const guessTheory = useCallback((sector: number): ObjectType | null => {
         if (props.sectors[sector].o.length) {
-            return objectTypeStringToEnum(props.sectors[sector].o[0]);
+            const obj = objectTypeStringToEnum(props.sectors[sector].o[0]);
+            if (obj === 0 || obj > 8) {
+                // empty or invalid
+                return null;
+            }
+            return obj;
         }
         return null;
     }, [props.sectors]);
