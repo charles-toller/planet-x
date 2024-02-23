@@ -1,3 +1,5 @@
+import {ObjectTypes} from "./GameTypes";
+
 export enum ObjectType {
     EMPTY,
     ASTEROID,
@@ -7,6 +9,22 @@ export enum ObjectType {
     PLANET_X = 9,
     BOT = 10,
     PLAYER = 11,
+}
+export function objectTypeStringToEnum(str: ObjectTypes): ObjectType {
+    switch (str) {
+        case "a":
+            return ObjectType.ASTEROID;
+        case "c":
+            return ObjectType.COMET;
+        case "d":
+            return ObjectType.DWARF_PLANET;
+        case "e":
+            return ObjectType.EMPTY;
+        case "g":
+            return ObjectType.GAS_CLOUD;
+        case "x":
+            return ObjectType.PLANET_X;
+    }
 }
 export type ConferenceKey = "A" | "B" | "C" | "D" | "E" | "F" | "X1" | "X2";
 export interface Game {

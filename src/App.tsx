@@ -52,7 +52,7 @@ function App() {
                 <div className="App-header">
                     <NoteWheel leftSector={1} isAdvanced={true} sectors={sectors} onObjectClicked={onObjectClick}/>
                     <div style={{width: "50%", padding: "20px"}}>
-                        {game && <Actions resetGame={() => reset()} game={game} />}
+                        {game && <Actions resetGame={() => reset()} game={game} sectors={sectors} />}
                         {!game && <SetGameId />}
                         <Tables />
                     </div>

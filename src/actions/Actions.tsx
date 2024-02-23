@@ -31,12 +31,14 @@ import {LocatePlanetX} from "./LocatePlanetX";
 import {ReactComponent as PlanetXScoreSvg} from "../assets/planetxscore.svg";
 import produce from "immer";
 import {Bot} from "./Bot";
+import {Sector} from "../NoteWheel";
 
 type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "theories" | "bot" | "resetGame";
 
 export interface ActionsProps {
     resetGame: () => unknown;
     game: Game;
+    sectors: Sector[];
 }
 export function Actions(props: ActionsProps) {
     const [selected, setSelected] = useState<ActionType | null>("survey");
@@ -61,7 +63,7 @@ export function Actions(props: ActionsProps) {
                 {selected === "survey" && <Survey game={props.game}/>}
                 {selected === "research" && <Research game={props.game} />}
                 {selected === "target" && <Target game={props.game} />}
-                {selected === "theories" && <Theories game={props.game} />}
+                {selected === "theories" && <Theories game={props.game} sectors={props.sectors} />}
                 {selected === "bot" && <Bot game={props.game}/>}
                 {selected === "locatePlanetX" && <LocatePlanetX game={props.game}/>}
             </div>

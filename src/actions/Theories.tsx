@@ -1,4 +1,4 @@
-import {Game, ObjectType} from "../Game";
+import {Game, ObjectType, objectTypeStringToEnum} from "../Game";
 import * as React from "react";
 import {useCallback, useMemo, useState} from "react";
 import {
@@ -90,7 +90,7 @@ function produceTheoryFromInput(input: Array<[number, ObjectType | null]>): Arra
         .map((input) => [...input, false]);
 }
 
-export function Theories(props: Pick<ActionsProps, 'game'>) {
+export function Theories(props: Pick<ActionsProps, 'game' | 'sectors'>) {
     const [theories, setTheories] = useRecoilState(theoriesState);
     const [newTheories, setNewTheories] = useState<WorkingTheories>(initialWorkingTheories);
     const submitTheories = useCallback(() => {
@@ -124,6 +124,12 @@ export function Theories(props: Pick<ActionsProps, 'game'>) {
             });
         }).filter((a, i, arr) => arr.indexOf(a) === i);
     }, [theories]);
+    const guessTheory = useCallback((sector: number): ObjectType | null => {
+        if (props.sectors[sector].o.length) {
+            return objectTypeStringToEnum(props.sectors[sector].o[0]);
+        }
+        return null;
+    }, [props.sectors]);
     return <div>
         <TableContainer component={Paper}>
             <Table>
@@ -166,7 +172,7 @@ export function Theories(props: Pick<ActionsProps, 'game'>) {
                                                           onChange={(value) => {
                                                               setNewTheories((produce((draft) => {
                                                                   if (value !== null) {
-                                                                      draft[key][idx] = [value, null]
+                                                                      draft[key][idx] = [value, key === 'self' ? guessTheory(value - 1) : ObjectType.PLAYER];
                                                                   } else {
                                                                       draft[key] = draft[key].slice(0, idx);
                                                                   }
