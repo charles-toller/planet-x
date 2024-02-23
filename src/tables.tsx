@@ -113,10 +113,10 @@ export function Tables() {
     return (
         <>
             <Card>
-                <DataGrid autoHeight columns={topColumnDefs} rows={topRows} apiRef={apiRef} processRowUpdate={processTopRowUpdate} onProcessRowUpdateError={(err) => console.error(err)} hideFooter={true} />
+                <DataGrid disableColumnMenu={true} autoHeight columns={topColumnDefs} rows={topRows} apiRef={apiRef} processRowUpdate={processTopRowUpdate} onProcessRowUpdateError={(err) => console.error(err)} hideFooter={true} />
             </Card>
             <Card sx={{marginTop: "20px"}}>
-                <DataGrid autoHeight columns={bottomColumnDefs} rows={bottomRows} hideFooter={true} processRowUpdate={processBottomRowUpdate} />
+                <DataGrid disableColumnMenu={true} autoHeight columns={bottomColumnDefs} rows={bottomRows} hideFooter={true} processRowUpdate={processBottomRowUpdate} />
             </Card>
         </>
     )
