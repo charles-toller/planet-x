@@ -53,7 +53,7 @@ export function Actions(props: ActionsProps) {
                 <ToggleButton value="research"><Abc sx={{mr: 1}} /> Research</ToggleButton>
                 <ToggleButton value="locatePlanetX"><PlanetXIcon sx={{mr: 1}} /> Locate Planet X</ToggleButton>
                 <ToggleButton value="theories"><TheoryIcon sx={{mr: 1}} /> Theories</ToggleButton>
-                <ToggleButton value="bot"><BotIcon sx={{mr: 1}} /> Bot</ToggleButton>
+                {/*<ToggleButton value="bot"><BotIcon sx={{mr: 1}} /> Bot</ToggleButton>*/}
                 <ToggleButton value="resetGame"><RestartAlt sx={{mr: 1}} /> Reset Game</ToggleButton>
             </ToggleButtonGroup>
             <div>
