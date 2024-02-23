@@ -120,7 +120,7 @@ export function Theories(props: Pick<ActionsProps, 'game'>) {
     const verifiedSectors = useMemo(() => {
         return theories.flatMap((theoryRow) => {
             return theoryKeys.flatMap((key) => {
-                return theoryRow[key].filter((theory) => theory[2]).map((theory) => theory[0]);
+                return theoryRow[key].filter((theory) => theory[2] && props.game.obj[theory[0]] === theory[1]).map((theory) => theory[0]);
             });
         }).filter((a, i, arr) => arr.indexOf(a) === i);
     }, [theories]);
