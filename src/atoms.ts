@@ -8,37 +8,34 @@ import {WritableDraft} from "immer/dist/types/types-external";
 import {topRowsState} from "./tableState";
 import {persistentAtomEffect} from "./persistentAtomEffect";
 import {store} from "./store/store";
+import {
+    recoilPlayerPositionStateSelector,
+    recoilSectorStateSelector,
+    updatePlayerPosition
+} from "./store/playerSectorPosition";
 
 const extract = tar.extract;
 
-export function sectorClamp(sector: number): number {
-    let newSector = sector % 18;
-    while (newSector <= 0) newSector += 18;
+export function sectorClamp(sector: number, size = 18): number {
+    let newSector = sector % size;
+    while (newSector <= 0) newSector += size;
     return newSector;
 }
 
-const _sectorState = atom({
-    key: '_sector',
-    effects: [
-        persistentAtomEffect('sector', 1)
-    ]
-});
-
-export const sectorState = selector({
+export const sectorState = atom<number>({
     key: 'sector',
-    get: ({get}) => get(_sectorState),
-    set: ({get, set}, newValue) => {
-        if (newValue instanceof DefaultValue) set(_sectorState, newValue);
-        else set(_sectorState, sectorClamp(newValue));
-    }
-})
-
-export const availableSectors = selector({
-    key: 'availableSectors',
-    get: ({get}) => {
-        const startSector = get(sectorState);
-        return new Array(9).fill(0).map((_, i) => sectorClamp(startSector + i));
-    }
+    default: 1,
+    effects: [
+        ({setSelf, onSet}) => {
+            setSelf(recoilSectorStateSelector(store.getState()));
+            onSet((newValue) => {
+                store.dispatch(updatePlayerPosition([0, newValue]));
+            });
+            return store.subscribe(() => {
+                setSelf(recoilSectorStateSelector(store.getState()));
+            });
+        }
+    ]
 });
 
 const baseSectors: Sector[] = new Array(18).fill(null).map((_) => ({
@@ -53,29 +50,24 @@ export const sectorsState = atom({
     ]
 });
 
-const _playerPositionState = atom({
-    key: '_playerPosition',
-    effects: [
-        persistentAtomEffect('playerPosition', [1, 1, 1] as [number, number, number])
-    ]
-});
-
-export const playerPositionState = selector({
+export const playerPositionState = atom<[number, number, number]>({
     key: 'playerPosition',
-    get: ({get}) => get(_playerPositionState),
-    set: ({get, set}, newValue) => {
-        if (newValue instanceof DefaultValue) {
-            set(_playerPositionState, newValue);
-            return
-        }
-        set(_playerPositionState, newValue.map((num) => sectorClamp(num)) as [number, number, number]);
-    }
-});
-
-export const gameIdState = atom({
-    key: 'gameId',
+    default: [1, 1, 1],
     effects: [
-        persistentAtomEffect<string | null>('gameId', null)
+        ({setSelf, onSet}) => {
+            setSelf(recoilPlayerPositionStateSelector(store.getState()));
+            onSet((newValue, oldValue) => {
+                newValue.forEach((playerPosition, i) => {
+                    const playerID = i + 1;
+                    if (oldValue instanceof DefaultValue || playerPosition !== oldValue[i]) {
+                        store.dispatch(updatePlayerPosition([playerID, playerPosition]));
+                    }
+                });
+            });
+            return store.subscribe(() => {
+                setSelf(recoilPlayerPositionStateSelector(store.getState()));
+            });
+        }
     ]
 });
 

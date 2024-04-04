@@ -32,6 +32,8 @@ import {ReactComponent as PlanetXScoreSvg} from "../assets/planetxscore.svg";
 import produce from "immer";
 import {Bot} from "./Bot";
 import {Sector} from "../NoteWheel";
+import {useSelector} from "react-redux";
+import {recoilSectorStateSelector} from "../store/playerSectorPosition";
 
 type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "theories" | "bot" | "resetGame";
 
@@ -45,7 +47,7 @@ export function Actions(props: ActionsProps) {
     const handleChange = useCallback((event: React.MouseEvent<HTMLElement>, newSelected: ActionType | null) => {
         setSelected(newSelected);
     }, []);
-    const sector = useRecoilValue(sectorState);
+    const sector = useSelector(recoilSectorStateSelector);
     return (
         <Card sx={{marginBottom: "20px", padding: "0 0 20px 0"}}>
             <CardHeader title={`Sectors ${sector}-${sectorClamp(sector + 8)}`}/>

@@ -1,15 +1,16 @@
 import * as React from "react";
 import {useCallback, useState} from "react";
 import {useRecoilValue} from "recoil";
-import {availableSectors} from "../atoms";
 import {researchName} from "../Research";
 import {Button, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {ActionsProps} from "./Actions";
 import {tableActions} from "../tableState";
+import {useSelector} from "react-redux";
+import {availableSectorsSelector} from "../store/playerSectorPosition";
 
 export function Target(props: Pick<ActionsProps, 'game'>) {
     const [sector, setSector] = useState<number | null>(null);
-    const sectorArray = useRecoilValue(availableSectors);
+    const sectorArray = useSelector(availableSectorsSelector);
     const {setAction} = useRecoilValue(tableActions);
     const onSubmit = useCallback(() => {
         if (sector === null) return;

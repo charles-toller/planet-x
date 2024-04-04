@@ -1,25 +1,28 @@
 import {Button, ButtonGroup, Card, Chip} from "@mui/material";
 import {DataGrid, GridColDef, GridRowModel, useGridApiRef} from "@mui/x-data-grid";
 import React, {useCallback} from "react";
-import {useRecoilState, useSetRecoilState} from "recoil";
-import {playerPositionState, sectorClamp} from "./atoms";
+import {useRecoilState} from "recoil";
 import {Add, Remove} from "@mui/icons-material";
-import produce from "immer";
 import {BottomRowModel, bottomRowsState, getNewActions, surveyReg, TopRowModel, topRowsState} from "./tableState";
+import {
+    adjustPlayerPosition,
+    recoilPlayerPositionStateSelector
+} from "./store/playerSectorPosition";
+import {useDispatch, useSelector} from "react-redux";
 
 const playerHeader = (playerNumber: number) => {
     return () => {
-        const [playerPositions, setPlayerPositions] = useRecoilState(playerPositionState);
+        const playerPositions = useSelector(recoilPlayerPositionStateSelector);
+        const dispatch = useDispatch();
+        const modifyPlayerPosition = useCallback((amount: number) => {
+            dispatch(adjustPlayerPosition([playerNumber - 1, amount]));
+        }, [dispatch, playerNumber]);
         const increasePlayerPositions = useCallback((e: React.MouseEvent) => {
-            setPlayerPositions(produce(draft => {
-                draft[playerNumber - 2] = sectorClamp(draft[playerNumber - 2] + 1);
-            }));
+            modifyPlayerPosition(1);
             e.stopPropagation();
         }, []);
         const decreasePlayerPositions = useCallback((e: React.MouseEvent) => {
-            setPlayerPositions(produce(draft => {
-                draft[playerNumber - 2] = sectorClamp(draft[playerNumber - 2] - 1);
-            }));
+            modifyPlayerPosition(-1);
             e.stopPropagation();
         }, []);
         return (
@@ -72,7 +75,7 @@ function formatActionValue(input: string): string {
 export function Tables() {
     const [topRows, setTopRows] = useRecoilState(topRowsState);
     const [bottomRows, setBottomRows] = useRecoilState(bottomRowsState);
-    const setPlayerPositions = useSetRecoilState(playerPositionState)
+    const dispatch = useDispatch();
     const apiRef = useGridApiRef();
     const processTopRowUpdate = useCallback((updatedRow: GridRowModel<TopRowModel>, oldRow: GridRowModel<TopRowModel>) => {
         const lastRowId = apiRef.current.getAllRowIds().map((a) => Number(a)).sort((a, b) => b - a)[0];
@@ -103,7 +106,9 @@ export function Tables() {
             return formattedRows;
         });
         const sectorCounts = getNewActions(oldRow, formattedRow);
-        setPlayerPositions((oldPlayerPositions) => [oldPlayerPositions[0] + (sectorCounts.p2 ?? 0), oldPlayerPositions[1] + (sectorCounts.p3 ?? 0), oldPlayerPositions[2] + (sectorCounts.p4 ?? 0)]);
+        dispatch(adjustPlayerPosition([1, sectorCounts.p2 ?? 0]));
+        dispatch(adjustPlayerPosition([2, sectorCounts.p3 ?? 0]));
+        dispatch(adjustPlayerPosition([3, sectorCounts.p4 ?? 0]));
         return formattedRow;
     }, [apiRef]);
     const processBottomRowUpdate = useCallback((updatedRow: GridRowModel<BottomRowModel>) => {

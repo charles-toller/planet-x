@@ -9,4 +9,5 @@ export interface ReduxGameState {
         gameId: null;
         game: null;
     };
+    gameSize: 12 | 18;
 }
