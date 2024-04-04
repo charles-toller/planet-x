@@ -21,8 +21,8 @@ import {
 } from "../Icons";
 import {Abc, RestartAlt, WifiFindTwoTone} from "@mui/icons-material";
 import {Game} from "../Game";
-import {useRecoilValue, useSetRecoilState} from "recoil";
-import {scoreState, sectorClamp, sectorState, theoriesState, verifyAllTheories} from "../atoms";
+import {useRecoilValue} from "recoil";
+import {scoreState, sectorClamp} from "../atoms";
 import {Theories} from "./Theories";
 import {Target} from "./Target";
 import {Survey} from "./Survey";
@@ -32,8 +32,9 @@ import {ReactComponent as PlanetXScoreSvg} from "../assets/planetxscore.svg";
 import produce from "immer";
 import {Bot} from "./Bot";
 import {Sector} from "../NoteWheel";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {recoilSectorStateSelector} from "../store/playerSectorPosition";
+import {verifyAllTheoriesAction} from "../store/theories";
 
 type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "theories" | "bot" | "resetGame";
 
@@ -79,10 +80,10 @@ function ResetGame(props: Pick<ActionsProps, 'resetGame'>) {
     const onPlanetXValueChange = useCallback((event: React.MouseEvent<HTMLElement>, newSelected: number | null) => {
         setPlanetXValue(newSelected ?? 0);
     }, []);
-    const setTheories = useSetRecoilState(theoriesState);
+    const dispatch = useDispatch();
     const verifyTheories = useCallback(() => {
-        setTheories(produce(verifyAllTheories));
-    }, []);
+        dispatch(verifyAllTheoriesAction());
+    }, [dispatch]);
     return (
         <div>
             {score && !score.gameOverReady && <Button onClick={verifyTheories}>Complete Game</Button>}

@@ -1,4 +1,4 @@
-import {ActionReducerMapBuilder, createAction, createSelector} from "@reduxjs/toolkit";
+import {ActionReducerMapBuilder, createAction, createSelector, current} from "@reduxjs/toolkit";
 import {ReduxGameState} from "./ReduxGameState";
 import {sectorClamp} from "../atoms";
 
@@ -33,12 +33,13 @@ function setPlayerPositionAction(state: ReduxGameState, action: ReturnType<typeo
         }
     }
 }
+export function adjustPlayerPositionReducer(state: ReduxGameState, action: ReturnType<typeof adjustPlayerPosition>): void {
+    setPlayerPositionAction(state, updatePlayerPosition([
+        action.payload[0],
+        action.payload[1] + state.playerSectorPosition.findIndex((item) => item.includes(action.payload[0])) + 1
+    ]));
+}
 export function registerPlayerSectorPosition(builder: ActionReducerMapBuilder<ReduxGameState>) {
-    builder.addCase(adjustPlayerPosition, (state, action) => {
-        setPlayerPositionAction(state, updatePlayerPosition([
-            action.payload[0],
-            action.payload[1] + state.playerSectorPosition.findIndex((item) => item.includes(action.payload[1])) + 1
-        ]));
-    });
+    builder.addCase(adjustPlayerPosition, adjustPlayerPositionReducer);
     builder.addCase(updatePlayerPosition, setPlayerPositionAction);
 }

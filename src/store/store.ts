@@ -2,6 +2,7 @@ import {configureStore, createAsyncThunk, createReducer} from "@reduxjs/toolkit"
 import {ReduxGameState} from "./ReduxGameState";
 import {fetchGame} from "../atoms";
 import {registerPlayerSectorPosition} from "./playerSectorPosition";
+import {registerTheoriesReducer} from "./theories";
 
 const initialState = {
     playerSectorPosition: [[0, 1, 2, 3]],
@@ -10,6 +11,7 @@ const initialState = {
         game: null,
     },
     gameSize: 18,
+    theories: [],
 } as ReduxGameState;
 
 export const setReduxGameId = createAsyncThunk(
@@ -30,6 +32,7 @@ const rootReducer = createReducer(initialState, (builder) => {
         };
     });
     registerPlayerSectorPosition(builder);
+    registerTheoriesReducer(builder);
 });
 
 export const store = configureStore({
