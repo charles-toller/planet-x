@@ -4,17 +4,21 @@ import NoteWheel from "./NoteWheel";
 import {ObjectTypes, ObjId} from "./GameTypes";
 import {Actions} from "./actions/Actions";
 import {RecoilRoot, useRecoilState, useRecoilValueLoadable} from "recoil";
-import {gameState, sectorsState} from "./atoms";
+import {sectorsState} from "./atoms";
 import {SetGameId} from "./SetGameId";
 import produce from "immer";
 import {Tables} from "./tables";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {resetPersistentAtoms} from "./persistentAtomEffect";
+import {Provider, useSelector} from "react-redux";
+import {store, RootState} from "./store/store";
 function AppWrapper() {
     return (
-        <RecoilRoot>
-            <App />
-        </RecoilRoot>
+        <Provider store={store}>
+            <RecoilRoot>
+                <App />
+            </RecoilRoot>
+        </Provider>
     )
 }
 
@@ -26,7 +30,7 @@ const theme = createTheme({
 
 function App() {
     const [sectors, setSectors] = useRecoilState(sectorsState);
-    const game = useRecoilValueLoadable(gameState).valueMaybe();
+    const game = useSelector((state: RootState) => state.game.game);
     const reset = useCallback(() => {
         resetPersistentAtoms();
     }, [resetPersistentAtoms]);

@@ -7,6 +7,7 @@ import {WritableDraft} from "immer/dist/types/types-external";
 
 import {topRowsState} from "./tableState";
 import {persistentAtomEffect} from "./persistentAtomEffect";
+import {store} from "./store/store";
 
 const extract = tar.extract;
 
@@ -78,7 +79,7 @@ export const gameIdState = atom({
     ]
 });
 
-function fetchGame(gameId: string): Promise<Game> {
+export function fetchGame(gameId: string): Promise<Game> {
     return new Promise((resolve) => {
         const e = extract();
         // @ts-ignore
@@ -112,13 +113,17 @@ function fetchGame(gameId: string): Promise<Game> {
     });
 }
 
-export const gameState = selector({
+export const gameState = atom<Game | null>({
     key: 'game',
-    get: ({get}) => {
-        const gameId = get(gameIdState);
-        if (gameId === null) return null;
-        return fetchGame(gameId);
-    }
+    default: null,
+    effects: [
+        ({setSelf}) => {
+            setSelf(store.getState().game.game);
+            return store.subscribe(() => {
+                setSelf(store.getState().game.game);
+            });
+        }
+    ]
 });
 
 export interface TheoryObj {
