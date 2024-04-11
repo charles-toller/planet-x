@@ -3,7 +3,7 @@ import {useCallback} from "react";
 import {Button} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {tickBotAction} from "../store/bot";
-export function Bot(props: {}) {
+export function Bot() {
     const dispatch = useDispatch();
     const onButtonClick = useCallback(() => {
         dispatch(tickBotAction());

@@ -23,8 +23,8 @@ export function registerBotReducer(builder: ActionReducerMapBuilder<ReduxGameSta
             return;
         }
         console.log(nextBotAction);
-        let botAdvance = 0;
-        let botRow = "";
+        let botAdvance: number;
+        let botRow: string;
         switch (nextBotAction.action) {
             case "T":
                 botRow = `Target ${nextBotAction.sector}`;

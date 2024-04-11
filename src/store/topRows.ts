@@ -19,7 +19,7 @@ function resolveText(textEntry: string, gameSize: number): {movement: number; en
             movement: 0,
         };
     }
-    let regMatch: RegExpExecArray | null = null;
+    let regMatch: RegExpExecArray | null;
     if ((regMatch = researchReg.exec(textEntry)) != null) {
         return {
             entry: `Research ${regMatch[1].toUpperCase()}`,

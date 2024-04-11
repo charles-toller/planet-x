@@ -7,7 +7,6 @@ import {
 } from "@mui/x-data-grid";
 import React, {SyntheticEvent, useCallback} from "react";
 import {Add, Remove} from "@mui/icons-material";
-import {surveyReg} from "./tableState";
 import {
     adjustPlayerPosition,
     recoilPlayerPositionStateSelector
@@ -58,25 +57,6 @@ const bottomColumnDefs: GridColDef[] = [
     {field: 'notes', flex: 1, headerName: "Research & Conference Notes"},
     {field: 'otherNotes', flex: 1, editable: true, headerName: "Other Notes"},
 ];
-
-const researchReg = /^\s*r\s*([abcdef])\s*$/i;
-const targetReg = /^\s*t\s*(\d+)\s*$/i;
-
-function formatActionValue(input: string): string {
-    const [, type, start, end] = surveyReg.exec(input) ?? [];
-    if (type && start && end) {
-        return `${type.toUpperCase()} ${start}-${end}`;
-    }
-    const [, researchType] = researchReg.exec(input) ?? [];
-    if (researchType) {
-        return `Research ${researchType.toUpperCase()}`;
-    }
-    const [, targetSector] = targetReg.exec(input) ?? [];
-    if (targetSector) {
-        return `Target ${targetSector}`;
-    }
-    return input;
-}
 
 export function Tables() {
     const topRows = useSelector(topRowsSelector);

@@ -3,7 +3,6 @@ import {useCallback} from "react";
 import {ConferenceKey} from "../Game";
 import {researchName} from "../Research";
 import {Button, ButtonGroup} from "@mui/material";
-import {ActionsProps} from "./Actions";
 import {useDispatch, useSelector} from "react-redux";
 import {setAction} from "../store/topRows";
 import {researchRevealAction} from "../store/bottomRows";
@@ -17,7 +16,7 @@ const researchNameSelector = createSelector([(state: ReduxGameState) => state.ga
     })) as {[key in ConferenceKey]: string};
 })
 
-export function Research(props: Pick<ActionsProps, 'game'>) {
+export function Research() {
     const dispatch = useDispatch();
     const researchName = useSelector(researchNameSelector);
     const research = useCallback((key: ConferenceKey) => {
