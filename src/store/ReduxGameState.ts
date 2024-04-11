@@ -1,6 +1,7 @@
 import {Game, ObjectType} from "../Game";
 import {BottomRowModel, TopRowModel} from "../tableState";
 import {Sector} from "../NoteWheel";
+import {WorkingTheoriesState} from "./workingTheories";
 
 export interface CompatTheoryObj {
     self: [sector: number, type: ObjectType, verified: boolean][];
@@ -32,4 +33,5 @@ export interface ReduxGameState {
     bottomRows: BottomRowModel[];
     map: Sector[];
     nextBotAction: number;
+    workingTheories: WorkingTheoriesState;
 }

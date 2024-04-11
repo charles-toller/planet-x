@@ -28,7 +28,9 @@ import {titlePluralWords} from "../Research";
 import {ActionsProps} from "./Actions";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    allowedSubmissionsSelector,
+    addFromWorkingTheoriesAction,
+    addTheoriesAction,
+    allowedSubmissionsSelector, invertAllowedTheories,
     legacyAddTheoriesAction,
     legacyTheoriesSelector,
     setTheoryTypeAction,
@@ -37,6 +39,9 @@ import {
     verifyTheoryAction
 } from "../store/theories";
 import {callNTimes, notNull} from "../util";
+import {setWorkingTheoryObjectType, setWorkingTheorySector, workingTheories} from "../store/workingTheories";
+import {guessTheoryFromMapSelector} from "../store/map";
+import {ReduxGameState} from "../store/ReduxGameState";
 
 interface CustomSelectProps<T> {
     value: T;
@@ -69,10 +74,10 @@ function TheorySelect(props: CustomSelectProps<ObjectType | null> & { bot: boole
         <FormControl sx={{minWidth: 60}}>
             <InputLabel><TheoryIcon/></InputLabel>
             <Select label="Sector" value={props.value === null ? "" : String(props.value)} onChange={onChange}>
-                {!props.bot && <MenuItem value={ObjectType.GAS_CLOUD}><GasCloudIcon fontSize="inherit"/></MenuItem>}
-                {!props.bot && <MenuItem value={ObjectType.DWARF_PLANET}><DwarfPlanetIcon fontSize="inherit"/></MenuItem>}
-                {!props.bot && <MenuItem value={ObjectType.ASTEROID}><AsteroidIcon fontSize="inherit"/></MenuItem>}
-                {!props.bot && <MenuItem value={ObjectType.COMET}><CometIcon fontSize="inherit"/></MenuItem>}
+                {!props.bot && <MenuItem value={ObjectType.GAS_CLOUD} disabled={props.prohibitedOptions?.includes(ObjectType.GAS_CLOUD) ?? false}><GasCloudIcon fontSize="inherit"/></MenuItem>}
+                {!props.bot && <MenuItem value={ObjectType.DWARF_PLANET} disabled={props.prohibitedOptions?.includes(ObjectType.DWARF_PLANET) ?? false}><DwarfPlanetIcon fontSize="inherit"/></MenuItem>}
+                {!props.bot && <MenuItem value={ObjectType.ASTEROID} disabled={props.prohibitedOptions?.includes(ObjectType.ASTEROID) ?? false}><AsteroidIcon fontSize="inherit"/></MenuItem>}
+                {!props.bot && <MenuItem value={ObjectType.COMET} disabled={props.prohibitedOptions?.includes(ObjectType.COMET) ?? false}><CometIcon fontSize="inherit"/></MenuItem>}
                 {props.bot && <MenuItem value={ObjectType.BOT}><BotIcon fontSize="inherit"/></MenuItem>}
                 {props.bot && <MenuItem value={ObjectType.PLAYER}><Person fontSize="inherit"/></MenuItem>}
             </Select>
@@ -80,46 +85,28 @@ function TheorySelect(props: CustomSelectProps<ObjectType | null> & { bot: boole
     )
 }
 
-interface LegacyWorkingTheories {
-    self: [number, ObjectType | null][];
-    p2: [number, ObjectType | null][];
-    p3: [number, ObjectType | null][];
-    p4: [number, ObjectType | null][];
-}
-
-const legacyInitialWorkingTheories: LegacyWorkingTheories = {
-    self: [],
-    p2: [],
-    p3: [],
-    p4: [],
-};
-
-function produceTheoryFromInput(input: Array<[number, ObjectType | null]>): Array<[number, ObjectType, boolean]> {
-    return input
-        .filter((input): input is [number, ObjectType] => !input.includes(null))
-        .map((input) => [...input, false]);
-}
-
 function playerIdToName(id: number): "self" | "p2" | "p3" | "p4" {
     return (["self", "p2", "p3", "p4"] as const)[id] ?? (String(id) as never);
 }
 
-export function Theories(props: Pick<ActionsProps, 'game' | 'sectors'>) {
+export function Theories() {
+    const game = useSelector((state: ReduxGameState) => state.game.game);
     const {theories, playerCount} = useSelector(theoriesSelector);
-    const [legacyNewTheories, setLegacyNewTheories] = useState<LegacyWorkingTheories>(legacyInitialWorkingTheories);
+    const newTheories = useSelector(workingTheories.selectSlice);
     const dispatch = useDispatch();
     const submitTheories = useCallback(() => {
-        dispatch(legacyAddTheoriesAction({
-            self: produceTheoryFromInput(legacyNewTheories.self),
-            p2: produceTheoryFromInput(legacyNewTheories.p2),
-            p3: produceTheoryFromInput(legacyNewTheories.p3),
-            p4: produceTheoryFromInput(legacyNewTheories.p4)
-        } satisfies TheoryObj));
-        setLegacyNewTheories(legacyInitialWorkingTheories);
-    }, [legacyNewTheories, dispatch]);
+        dispatch(addFromWorkingTheoriesAction());
+    }, [dispatch]);
     const verifyTheories = useCallback(() => {
         dispatch(verifyAllTheoriesAction());
     }, []);
+    const guessedTheoryFromMap = useSelector(guessTheoryFromMapSelector);
+    const setSector = useCallback((playerId: number, sector: number | null, theoryIdx: number) => {
+        dispatch(setWorkingTheorySector({playerId, sector, theoryIdx}));
+        if (sector != null && playerId === 0) {
+            dispatch(setWorkingTheoryObjectType({playerId, theoryIdx, objectType: guessedTheoryFromMap[sector]}));
+        }
+    }, [dispatch, guessedTheoryFromMap]);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const handleRightClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -129,17 +116,6 @@ export function Theories(props: Pick<ActionsProps, 'game' | 'sectors'>) {
         setAnchorEl(null);
     }, []);
     const allowedSubmissions = useSelector(allowedSubmissionsSelector);
-    const guessTheory = useCallback((sector: number): ObjectType | null => {
-        if (props.sectors[sector].o.length) {
-            const obj = objectTypeStringToEnum(props.sectors[sector].o[0]);
-            if (obj === 0 || obj > 8) {
-                // empty or invalid
-                return null;
-            }
-            return obj;
-        }
-        return null;
-    }, [props.sectors]);
     return <div>
         <TableContainer component={Paper}>
             <Table>
@@ -160,40 +136,35 @@ export function Theories(props: Pick<ActionsProps, 'game' | 'sectors'>) {
                                 if (theory.verified) {
                                     if (theory.type === ObjectType.PLAYER) {
                                         color = "primary";
-                                    } else if (props.game.obj[theory.sector] === theory.type) {
+                                    } else if (game?.obj[theory.sector] === theory.type) {
                                         color = "success"
                                     } else {
                                         color = "error"
                                     }
-                                    return (
-                                        <Chip data-theory={`${rowNumber},${playerIdToName(playerId)},${theoryIndex}`} onContextMenu={handleRightClick}
-                                              label={theory.sector} icon={<SectorIcon/>} color={color}/>
-                                    );
                                 }
+                                return (
+                                    <Chip data-theory={`${rowNumber},${playerId},${theoryIndex}`} onContextMenu={handleRightClick}
+                                          label={theory.sector} icon={<SectorIcon/>} color={color}/>
+                                );
                             })}
                         </TableCell>)}
                     </TableRow>)}
                     <TableRow>
                         {callNTimes(playerCount, (playerId) => <TableCell>
                             {callNTimes(2, (theoryIdx) => {
-                                const key = playerIdToName(playerId);
+                                const newTheory = newTheories[playerId]?.[theoryIdx] ?? {
+                                    sector: null,
+                                    type: null
+                                };
                                 return (
                                     <div>
-                                        <SectorSelect value={legacyNewTheories[playerIdToName(playerId)][theoryIdx]?.[0] ?? null} onChange={(value) => {
-                                            setLegacyNewTheories((produce((draft) => {
-                                                if (value !== null) {
-                                                    draft[key][theoryIdx] = [value, key === 'self' ? guessTheory(value - 1) : ObjectType.PLAYER];
-                                                } else {
-                                                    draft[key] = draft[key].slice(0, theoryIdx);
-                                                }
-                                            })))
+                                        <SectorSelect value={newTheory.sector} onChange={(value) => {
+                                            setSector(playerId, value, theoryIdx);
                                         }} prohibitedOptions={allowedSubmissions.map((a, i) => a.length === 0 ? i + 1 : null).filter(notNull)} />
-                                        <TheorySelect value={legacyNewTheories[key][theoryIdx]?.[1] ?? null}
+                                        <TheorySelect value={newTheory.type}
                                                       onChange={(value) => {
-                                                          setLegacyNewTheories((produce((draft) => {
-                                                              draft[key][theoryIdx] = [draft[key][theoryIdx]?.[0] ?? 1, value]
-                                                          })))
-                                                      }} bot={key !== "self"}/>
+                                                          dispatch(setWorkingTheoryObjectType({playerId, objectType: value, theoryIdx}));
+                                                      }} bot={playerId !== 0} prohibitedOptions={newTheory.sector == null ? [] : invertAllowedTheories(allowedSubmissions[newTheory.sector - 1])}/>
                                     </div>
                                 )
                             })}
@@ -204,7 +175,7 @@ export function Theories(props: Pick<ActionsProps, 'game' | 'sectors'>) {
         </TableContainer>
         <Button onClick={submitTheories}>Submit Theories</Button>
         <Button onClick={verifyTheories}>Verify All Theories</Button>
-        <TheoriesMenu anchorEl={anchorEl} onClose={onMenuClose} game={props.game} />
+        {game && <TheoriesMenu anchorEl={anchorEl} onClose={onMenuClose} game={game} />}
     </div>
 }
 
@@ -222,7 +193,7 @@ function TheoriesMenu({anchorEl, onClose, game}: {anchorEl: HTMLElement | null; 
     const [menuRow, menuSection, menuTheory] = useMemo(() => {
         const data = anchorEl?.dataset['theory']?.split(",");
         if (data === undefined) return [undefined, undefined, undefined];
-        return [Number(data[0]), data[1] as "self" | "p2" | "p3" | "p4", Number(data[2])];
+        return [Number(data[0]), playerIdToName(Number(data[1])), Number(data[2])];
     }, [anchorEl]);
     const menuTarget = useMemo(() => {
         if (menuRow == null || menuSection == null || menuTheory == null) return null;
