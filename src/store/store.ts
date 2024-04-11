@@ -8,6 +8,7 @@ import {BuilderProxy} from "./BuilderProxy";
 import {createInitialMap, registerMapReducer} from "./map";
 import {registerBotReducer} from "./bot";
 import {setReduxGameId} from "./setReduxGameId";
+import {localStorageEnhancer} from "./localStorageEnhancer";
 
 const initialState = {
     playerSectorPosition: [[0, 1, 2, 3]],
@@ -39,9 +40,10 @@ const rootReducer = createReducer(initialState, (builder) => {
     registerBotReducer(builderProxy);
     builderProxy.build();
 });
-
-export const store = configureStore({
-    reducer: rootReducer
-});
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export function createAppStore() {
+    return configureStore({
+        reducer: rootReducer,
+        enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat([localStorageEnhancer("planetXReduxData")])
+    });
+}
+export type AppDispatch = ReturnType<typeof createAppStore>['dispatch'];
