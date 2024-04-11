@@ -1,14 +1,15 @@
 import * as React from 'react';
 import {Button, Card, TextField} from "@mui/material";
-import {useRecoilState} from "recoil";
-import {gameIdState} from "./atoms";
 import {useCallback, useState} from "react";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "./store/store";
+import {setReduxGameId} from "./store/setReduxGameId";
 
 export function SetGameId() {
-    const [_, setGameId] = useRecoilState(gameIdState);
     const [tempGameId, setTempGameId] = useState("");
+    const dispatch = useDispatch<AppDispatch>();
     const cb = useCallback((e: React.FormEvent) => {
-        setGameId(tempGameId.toUpperCase());
+        dispatch(setReduxGameId(tempGameId.toUpperCase()));
         e.preventDefault()
     }, [tempGameId]);
     return (

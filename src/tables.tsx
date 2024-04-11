@@ -1,25 +1,33 @@
 import {Button, ButtonGroup, Card, Chip} from "@mui/material";
-import {DataGrid, GridColDef, GridRowModel, useGridApiRef} from "@mui/x-data-grid";
-import React, {useCallback} from "react";
-import {useRecoilState, useSetRecoilState} from "recoil";
-import {playerPositionState, sectorClamp} from "./atoms";
+import {
+    DataGrid,
+    GridColDef,
+    GridEventListener,
+    useGridApiRef
+} from "@mui/x-data-grid";
+import React, {SyntheticEvent, useCallback} from "react";
 import {Add, Remove} from "@mui/icons-material";
-import produce from "immer";
-import {BottomRowModel, bottomRowsState, getNewActions, surveyReg, TopRowModel, topRowsState} from "./tableState";
+import {
+    adjustPlayerPosition,
+    recoilPlayerPositionStateSelector
+} from "./store/playerSectorPosition";
+import {useDispatch, useSelector} from "react-redux";
+import {playerTextEnterAction, topRowsSelector} from "./store/topRows";
+import {bottomRowsSelector, setNotesAction} from "./store/bottomRows";
 
 const playerHeader = (playerNumber: number) => {
     return () => {
-        const [playerPositions, setPlayerPositions] = useRecoilState(playerPositionState);
+        const playerPositions = useSelector(recoilPlayerPositionStateSelector);
+        const dispatch = useDispatch();
+        const modifyPlayerPosition = useCallback((amount: number) => {
+            dispatch(adjustPlayerPosition([playerNumber - 1, amount]));
+        }, [dispatch, playerNumber]);
         const increasePlayerPositions = useCallback((e: React.MouseEvent) => {
-            setPlayerPositions(produce(draft => {
-                draft[playerNumber - 2] = sectorClamp(draft[playerNumber - 2] + 1);
-            }));
+            modifyPlayerPosition(1);
             e.stopPropagation();
         }, []);
         const decreasePlayerPositions = useCallback((e: React.MouseEvent) => {
-            setPlayerPositions(produce(draft => {
-                draft[playerNumber - 2] = sectorClamp(draft[playerNumber - 2] - 1);
-            }));
+            modifyPlayerPosition(-1);
             e.stopPropagation();
         }, []);
         return (
@@ -50,73 +58,48 @@ const bottomColumnDefs: GridColDef[] = [
     {field: 'otherNotes', flex: 1, editable: true, headerName: "Other Notes"},
 ];
 
-const researchReg = /^\s*r\s*([abcdef])\s*$/i;
-const targetReg = /^\s*t\s*(\d+)\s*$/i;
-
-function formatActionValue(input: string): string {
-    const [, type, start, end] = surveyReg.exec(input) ?? [];
-    if (type && start && end) {
-        return `${type.toUpperCase()} ${start}-${end}`;
-    }
-    const [, researchType] = researchReg.exec(input) ?? [];
-    if (researchType) {
-        return `Research ${researchType.toUpperCase()}`;
-    }
-    const [, targetSector] = targetReg.exec(input) ?? [];
-    if (targetSector) {
-        return `Target ${targetSector}`;
-    }
-    return input;
-}
-
 export function Tables() {
-    const [topRows, setTopRows] = useRecoilState(topRowsState);
-    const [bottomRows, setBottomRows] = useRecoilState(bottomRowsState);
-    const setPlayerPositions = useSetRecoilState(playerPositionState)
-    const apiRef = useGridApiRef();
-    const processTopRowUpdate = useCallback((updatedRow: GridRowModel<TopRowModel>, oldRow: GridRowModel<TopRowModel>) => {
-        const lastRowId = apiRef.current.getAllRowIds().map((a) => Number(a)).sort((a, b) => b - a)[0];
-        const lastRow = apiRef.current.getRow(lastRowId);
-        let addRow = false;
-        if ((updatedRow.id === lastRowId && Boolean(updatedRow.p2 || updatedRow.p3 || updatedRow.p4)) || Boolean(lastRow.p2 || lastRow.p3 || lastRow.p4)) {
-            addRow = true;
-        }
-        const formattedRow = {
-            ...updatedRow,
-            p2: formatActionValue(updatedRow.p2 ?? ""),
-            p3: formatActionValue(updatedRow.p3 ?? ""),
-            p4: formatActionValue(updatedRow.p4 ?? "")
-        };
-        setTopRows((topRows) => {
-            let formattedRows = topRows.map((row) => row.id === formattedRow.id ? formattedRow : row);
-            if (addRow) {
-                const newRowId = Math.max(...formattedRows.map((row) => row.id)) + 1;
-                formattedRows.push({
-                    id: newRowId,
-                    action: "",
-                    result: "",
-                    p2: "",
-                    p3: "",
-                    p4: "",
-                });
-            }
-            return formattedRows;
+    const topRows = useSelector(topRowsSelector);
+    const bottomRows = useSelector(bottomRowsSelector);
+    const dispatch = useDispatch();
+    const topApiRef = useGridApiRef();
+    const topCellEditStop = useCallback<GridEventListener<'cellEditStop'>>((params, event, details) => {
+        const action = playerTextEnterAction({
+            player: params.field as any,
+            text: ((event as SyntheticEvent).target as HTMLInputElement).value,
+            rowId: Number(params.id),
         });
-        const sectorCounts = getNewActions(oldRow, formattedRow);
-        setPlayerPositions((oldPlayerPositions) => [oldPlayerPositions[0] + (sectorCounts.p2 ?? 0), oldPlayerPositions[1] + (sectorCounts.p3 ?? 0), oldPlayerPositions[2] + (sectorCounts.p4 ?? 0)]);
-        return formattedRow;
-    }, [apiRef]);
-    const processBottomRowUpdate = useCallback((updatedRow: GridRowModel<BottomRowModel>) => {
-        setBottomRows((bottomRows) => bottomRows.map((row) => row.id === updatedRow.id ? updatedRow : row));
-        return updatedRow;
-    }, []);
+        event.defaultMuiPrevented = true;
+        topApiRef.current.stopCellEditMode({
+            ignoreModifications: true,
+            id: params.id,
+            field: params.field,
+            cellToFocusAfter: "none"
+        });
+        dispatch(action);
+    }, [topApiRef, dispatch]);
+    const bottomApiRef = useGridApiRef();
+    const bottomCellEditStop = useCallback<GridEventListener<'cellEditStop'>>((params, event, details) => {
+        const action = setNotesAction({
+            rowId: Number(params.id),
+            text: ((event as SyntheticEvent).target as HTMLInputElement).value,
+        });
+        event.defaultMuiPrevented = true;
+        bottomApiRef.current.stopCellEditMode({
+            ignoreModifications: true,
+            id: params.id,
+            field: params.field,
+            cellToFocusAfter: "none"
+        });
+        dispatch(action);
+    }, [dispatch]);
     return (
         <>
             <Card>
-                <DataGrid disableColumnMenu={true} autoHeight columns={topColumnDefs} rows={topRows} apiRef={apiRef} processRowUpdate={processTopRowUpdate} onProcessRowUpdateError={(err) => console.error(err)} hideFooter={true} />
+                <DataGrid disableColumnMenu={true} onCellEditStop={topCellEditStop} autoHeight columns={topColumnDefs} rows={topRows} apiRef={topApiRef} hideFooter={true} />
             </Card>
             <Card sx={{marginTop: "20px"}}>
-                <DataGrid disableColumnMenu={true} autoHeight columns={bottomColumnDefs} rows={bottomRows} hideFooter={true} processRowUpdate={processBottomRowUpdate} />
+                <DataGrid disableColumnMenu={true} autoHeight columns={bottomColumnDefs} rows={bottomRows} hideFooter={true} onCellEditStop={bottomCellEditStop} apiRef={bottomApiRef} />
             </Card>
         </>
     )

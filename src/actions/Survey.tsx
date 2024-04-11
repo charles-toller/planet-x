@@ -1,19 +1,19 @@
 import * as React from "react";
 import {useCallback, useState} from "react";
 import {ObjectType} from "../Game";
-import {useRecoilValue} from "recoil";
-import {availableSectors} from "../atoms";
 import {getNObjectsName, is, researchName} from "../Research";
 import {Button, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {AsteroidIcon, CometIcon, DwarfPlanetIcon, EmptySectorIcon, GasCloudIcon} from "../Icons";
 import {ActionsProps} from "./Actions";
-import {tableActions} from "../tableState";
+import {useDispatch, useSelector} from "react-redux";
+import {availableSectorsSelector} from "../store/playerSectorPosition";
+import {setAction} from "../store/topRows";
 
 export const sectorCountToTime: number[] = [4, 4, 4, 4, 3, 3, 3, 2, 2, 2];
 
 export function Survey(props: Pick<ActionsProps, 'game'>) {
     const [selectedType, setSelectedType] = useState<ObjectType | null>(ObjectType.ASTEROID);
-    const sectorArray = useRecoilValue(availableSectors);
+    const sectorArray = useSelector(availableSectorsSelector);
     const handleTypeChange = useCallback((event: React.MouseEvent<HTMLElement>, newSelected: ObjectType | null) => {
         setSelectedType(newSelected);
     }, []);
@@ -34,13 +34,17 @@ export function Survey(props: Pick<ActionsProps, 'game'>) {
         }
     }, [sectorRange, setSectors]);
     const [result, setResult] = useState<string | null>(null);
-    const {setAction} = useRecoilValue(tableActions);
+    const dispatch = useDispatch();
     const onSubmit = useCallback(() => {
         const count = Object.entries(props.game?.obj ?? {}).filter(([key, value]) => sectorRange.includes(Number(key)) && (selectedType === ObjectType.EMPTY ? value === ObjectType.EMPTY || value === ObjectType.PLANET_X : value === selectedType)).length;
         const min = sectorRange[0];
         const max = sectorRange[sectorRange.length - 1];
         setResult(`There ${is(count)} ${count} ${getNObjectsName(selectedType!, count)} in sectors ${min}-${max}.`);
-        setAction(`${researchName([selectedType!], true)} ${min}-${max}`, String(count), sectorCountToTime[sectorRange.length]);
+        dispatch(setAction({
+            action: `${researchName([selectedType!], true)} ${min}-${max}`,
+            result: String(count),
+            sectors: sectorCountToTime[sectorRange.length]
+        }));
         setSectors([]);
     }, [props.game, selectedType, sectorRange]);
     return (

@@ -21,17 +21,19 @@ import {
 } from "../Icons";
 import {Abc, RestartAlt, WifiFindTwoTone} from "@mui/icons-material";
 import {Game} from "../Game";
-import {useRecoilValue, useSetRecoilState} from "recoil";
-import {scoreState, sectorClamp, sectorState, theoriesState, verifyAllTheories} from "../atoms";
+import {sectorClamp} from "../atoms";
 import {Theories} from "./Theories";
 import {Target} from "./Target";
 import {Survey} from "./Survey";
 import {Research} from "./Research";
 import {LocatePlanetX} from "./LocatePlanetX";
 import {ReactComponent as PlanetXScoreSvg} from "../assets/planetxscore.svg";
-import produce from "immer";
 import {Bot} from "./Bot";
 import {Sector} from "../NoteWheel";
+import {useDispatch, useSelector} from "react-redux";
+import {recoilSectorStateSelector} from "../store/playerSectorPosition";
+import {verifyAllTheoriesAction} from "../store/theories";
+import {scoreSelector} from "../store/scoreSelector";
 
 type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "theories" | "bot" | "resetGame";
 
@@ -45,7 +47,7 @@ export function Actions(props: ActionsProps) {
     const handleChange = useCallback((event: React.MouseEvent<HTMLElement>, newSelected: ActionType | null) => {
         setSelected(newSelected);
     }, []);
-    const sector = useRecoilValue(sectorState);
+    const sector = useSelector(recoilSectorStateSelector);
     return (
         <Card sx={{marginBottom: "20px", padding: "0 0 20px 0"}}>
             <CardHeader title={`Sectors ${sector}-${sectorClamp(sector + 8)}`}/>
@@ -61,10 +63,10 @@ export function Actions(props: ActionsProps) {
             <div>
                 {selected === "resetGame" && <ResetGame resetGame={props.resetGame} />}
                 {selected === "survey" && <Survey game={props.game}/>}
-                {selected === "research" && <Research game={props.game} />}
+                {selected === "research" && <Research />}
                 {selected === "target" && <Target game={props.game} />}
                 {selected === "theories" && <Theories game={props.game} sectors={props.sectors} />}
-                {selected === "bot" && <Bot game={props.game}/>}
+                {selected === "bot" && <Bot />}
                 {selected === "locatePlanetX" && <LocatePlanetX game={props.game}/>}
             </div>
         </Card>
@@ -72,15 +74,15 @@ export function Actions(props: ActionsProps) {
 }
 
 function ResetGame(props: Pick<ActionsProps, 'resetGame'>) {
-    const score = useRecoilValue(scoreState);
+    const score = useSelector(scoreSelector);
     const [planetXValue, setPlanetXValue] = useState<number>(0);
     const onPlanetXValueChange = useCallback((event: React.MouseEvent<HTMLElement>, newSelected: number | null) => {
         setPlanetXValue(newSelected ?? 0);
     }, []);
-    const setTheories = useSetRecoilState(theoriesState);
+    const dispatch = useDispatch();
     const verifyTheories = useCallback(() => {
-        setTheories(produce(verifyAllTheories));
-    }, []);
+        dispatch(verifyAllTheoriesAction());
+    }, [dispatch]);
     return (
         <div>
             {score && !score.gameOverReady && <Button onClick={verifyTheories}>Complete Game</Button>}

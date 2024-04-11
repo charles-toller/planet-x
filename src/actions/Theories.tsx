@@ -22,11 +22,18 @@ import {
 } from "@mui/material";
 import {AsteroidIcon, BotIcon, CometIcon, DwarfPlanetIcon, GasCloudIcon, objectTypeToIcon, TheoryIcon} from "../Icons";
 import {Person} from "@mui/icons-material";
-import {useRecoilState} from "recoil";
-import {forwardVerifyTheories, theoriesState, theoryKeys, TheoryObj, verifyAllTheories} from "../atoms";
+import {theoryKeys, TheoryObj} from "../atoms";
 import produce from "immer";
 import {titlePluralWords} from "../Research";
 import {ActionsProps} from "./Actions";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    addTheoriesAction,
+    setTheoryTypeAction,
+    theoriesSelector,
+    verifyAllTheoriesAction,
+    verifyTheoryAction
+} from "../store/theories";
 
 interface CustomSelectProps<T> {
     value: T;
@@ -91,23 +98,20 @@ function produceTheoryFromInput(input: Array<[number, ObjectType | null]>): Arra
 }
 
 export function Theories(props: Pick<ActionsProps, 'game' | 'sectors'>) {
-    const [theories, setTheories] = useRecoilState(theoriesState);
+    const theories = useSelector(theoriesSelector);
     const [newTheories, setNewTheories] = useState<WorkingTheories>(initialWorkingTheories);
+    const dispatch = useDispatch();
     const submitTheories = useCallback(() => {
-        setTheories(produce((draft) => {
-            const newTheoryObj = {
-                self: produceTheoryFromInput(newTheories.self),
-                p2: produceTheoryFromInput(newTheories.p2),
-                p3: produceTheoryFromInput(newTheories.p3),
-                p4: produceTheoryFromInput(newTheories.p4),
-            } satisfies TheoryObj;
-            draft.push(newTheoryObj);
-            forwardVerifyTheories(props.game, draft);
-        }));
+        dispatch(addTheoriesAction({
+            self: produceTheoryFromInput(newTheories.self),
+            p2: produceTheoryFromInput(newTheories.p2),
+            p3: produceTheoryFromInput(newTheories.p3),
+            p4: produceTheoryFromInput(newTheories.p4)
+        } satisfies TheoryObj));
         setNewTheories(initialWorkingTheories);
-    }, [setTheories, newTheories, props.game]);
+    }, [newTheories, dispatch]);
     const verifyTheories = useCallback(() => {
-        setTheories(produce(verifyAllTheories));
+        dispatch(verifyAllTheoriesAction());
     }, []);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const handleRightClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
@@ -211,7 +215,8 @@ const fnLookup = {
 } as const;
 
 function TheoriesMenu({anchorEl, onClose, game}: {anchorEl: HTMLElement | null; onClose: () => unknown; game: Game}) {
-    const [theories, setTheories] = useRecoilState(theoriesState);
+    const theories = useSelector(theoriesSelector);
+    const dispatch = useDispatch();
     const menuOpen = Boolean(anchorEl);
     const [menuRow, menuSection, menuTheory] = useMemo(() => {
         const data = anchorEl?.dataset['theory']?.split(",");
@@ -224,20 +229,17 @@ function TheoriesMenu({anchorEl, onClose, game}: {anchorEl: HTMLElement | null; 
     }, [menuRow, menuSection, menuTheory, theories]);
     const handleClose = useMemo(() => {
         const setType = (type: ObjectType) => {
-            setTheories(produce((draft) => {
-                const target = draft[menuRow!][menuSection!][menuTheory!];
-                target[1] = type;
-                forwardVerifyTheories(game, draft);
+            dispatch(setTheoryTypeAction({
+                rowIndex: menuRow!,
+                player: menuSection!,
+                tIndex: menuTheory!,
+                type,
             }));
             onClose();
         };
         return {
             "verify": () => {
-                setTheories(produce((draft) => {
-                    const target = draft[menuRow!][menuSection!][menuTheory!];
-                    target[2] = true;
-                    forwardVerifyTheories(game, draft);
-                }));
+                dispatch(verifyTheoryAction({rowIndex: menuRow!, tIndex: menuTheory!, player: menuSection!}));
                 onClose();
             },
             "setGas": setType.bind(null, ObjectType.GAS_CLOUD),
@@ -248,7 +250,7 @@ function TheoriesMenu({anchorEl, onClose, game}: {anchorEl: HTMLElement | null; 
                 onClose();
             }
         };
-    }, [onClose, anchorEl, game]);
+    }, [onClose, anchorEl, game, dispatch]);
     const [wasMenuOpen, setWasMenuOpen] = useState<boolean>(false);
     if (!wasMenuOpen && menuOpen) {
         setWasMenuOpen(true);

@@ -2,7 +2,6 @@ import * as React from "react";
 import {useCallback, useState} from "react";
 import {ObjectType} from "../Game";
 import {sectorClamp} from "../atoms";
-import {useRecoilValue} from "recoil";
 import {
     Button,
     FormControl,
@@ -16,7 +15,8 @@ import {
 } from "@mui/material";
 import {AsteroidIcon, CometIcon, EmptySectorIcon, GasCloudIcon, PlanetXIcon} from "../Icons";
 import {ActionsProps} from "./Actions";
-import {tableActions} from "../tableState";
+import {useDispatch} from "react-redux";
+import {setAction} from "../store/topRows";
 
 function AdjacentSectorSelect({value, onUpdate, sectorNum}: {
     sectorNum: number;
@@ -69,15 +69,23 @@ export function LocatePlanetX(props: Pick<ActionsProps, 'game'>) {
         });
     }, []);
     const [result, setResult] = useState<string>("");
-    const {setAction} = useRecoilValue(tableActions);
+    const dispatch = useDispatch();
     const submit = useCallback(() => {
         if (sectorData == null) return;
         if (props.game.obj[sectorData.x] !== ObjectType.PLANET_X || props.game.obj[sectorData.left] !== leftObj || props.game.obj[sectorData.right] !== rightObj) {
             setResult("At least one piece of information is incorrect.");
-            setAction("Locate Planet X", "X", 5);
+            dispatch(setAction({
+                action: "Locate Planet X",
+                result: "X",
+                sectors: 5,
+            }));
         } else {
             setResult("You have located Planet X!");
-            setAction("Locate Planet X", "\u2713", 5);
+            dispatch(setAction({
+                action: "Locate Planet X",
+                result: "\u2713",
+                sectors: 5
+            }));
         }
     }, [leftObj, rightObj, sectorData]);
     return (
