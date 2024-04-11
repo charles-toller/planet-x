@@ -17,9 +17,9 @@ exports[`it accepts a new theory 1`] = `
 ]
 `;
 
-exports[`it verifies theories 1`] = `[]`;
+exports[`it verifies theories -- legacy 1`] = `[]`;
 
-exports[`it verifies theories 2`] = `
+exports[`it verifies theories -- legacy 2`] = `
 [
   {
     "p2": [],
@@ -36,7 +36,7 @@ exports[`it verifies theories 2`] = `
 ]
 `;
 
-exports[`it verifies theories 3`] = `
+exports[`it verifies theories -- legacy 3`] = `
 [
   {
     "p2": [],
@@ -65,7 +65,90 @@ exports[`it verifies theories 3`] = `
 ]
 `;
 
-exports[`it verifies theories 4`] = `
+exports[`it verifies theories -- legacy 4`] = `
+[
+  {
+    "p2": [],
+    "p3": [],
+    "p4": [],
+    "self": [
+      [
+        1,
+        1,
+        true,
+      ],
+    ],
+  },
+  {
+    "p2": [
+      [
+        1,
+        3,
+        true,
+      ],
+    ],
+    "p3": [],
+    "p4": [],
+    "self": [],
+  },
+  {
+    "p2": [],
+    "p3": [],
+    "p4": [],
+    "self": [],
+  },
+]
+`;
+
+exports[`it verifies theories -- new 1`] = `[]`;
+
+exports[`it verifies theories -- new 2`] = `
+[
+  {
+    "p2": [],
+    "p3": [],
+    "p4": [],
+    "self": [
+      [
+        1,
+        1,
+        false,
+      ],
+    ],
+  },
+]
+`;
+
+exports[`it verifies theories -- new 3`] = `
+[
+  {
+    "p2": [],
+    "p3": [],
+    "p4": [],
+    "self": [
+      [
+        1,
+        1,
+        false,
+      ],
+    ],
+  },
+  {
+    "p2": [
+      [
+        1,
+        3,
+        false,
+      ],
+    ],
+    "p3": [],
+    "p4": [],
+    "self": [],
+  },
+]
+`;
+
+exports[`it verifies theories -- new 4`] = `
 [
   {
     "p2": [],

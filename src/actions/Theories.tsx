@@ -28,7 +28,7 @@ import {titlePluralWords} from "../Research";
 import {ActionsProps} from "./Actions";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    addTheoriesAction,
+    legacyAddTheoriesAction,
     setTheoryTypeAction,
     theoriesSelector,
     verifyAllTheoriesAction,
@@ -102,7 +102,7 @@ export function Theories(props: Pick<ActionsProps, 'game' | 'sectors'>) {
     const [newTheories, setNewTheories] = useState<WorkingTheories>(initialWorkingTheories);
     const dispatch = useDispatch();
     const submitTheories = useCallback(() => {
-        dispatch(addTheoriesAction({
+        dispatch(legacyAddTheoriesAction({
             self: produceTheoryFromInput(newTheories.self),
             p2: produceTheoryFromInput(newTheories.p2),
             p3: produceTheoryFromInput(newTheories.p3),

@@ -18,13 +18,14 @@ function oldTheoryToNew(theory: CompatTheoryObj['self'][number]): Theory {
 
 export const theoriesSelector = createSelector([(state: ReduxGameState) => state.theories], (theories): CompatTheoryObj[] => {
     return theories.map((row) => ({
-        self: row[0].map(newTheoryToOld),
-        p2: row[1].map(newTheoryToOld),
-        p3: row[2].map(newTheoryToOld),
-        p4: row[3].map(newTheoryToOld),
+        self: row[0]?.map(newTheoryToOld) ?? [],
+        p2: row[1]?.map(newTheoryToOld) ?? [],
+        p3: row[2]?.map(newTheoryToOld) ?? [],
+        p4: row[3]?.map(newTheoryToOld) ?? [],
     }));
 });
-export const addTheoriesAction = createAction<TheoryObj>('theories/add');
+export const legacyAddTheoriesAction = createAction<TheoryObj>('theories/addLegacy');
+export const addTheoriesAction = createAction<Theory[][]>('theories/add');
 export const verifyTheoryAction = createAction<{rowIndex: number; tIndex: number; player: 'self' | 'p2' | 'p3' | 'p4'}>('theories/verify');
 export const verifyAllTheoriesAction = createAction('theories/verifyAll');
 export const setTheoryTypeAction = createAction<{rowIndex: number; tIndex: number; player: 'self' | 'p2' | 'p3' | 'p4'; type: ObjectType}>('theories/setType')
@@ -86,8 +87,12 @@ function verifyAllTheories(theoriesDraft: WritableDraft<Theory[][][]>, state: Re
 }
 
 export function registerTheoriesReducer(builder: ActionReducerMapBuilder<ReduxGameState>): void {
-    builder.addCase(addTheoriesAction, (state, action) => {
+    builder.addCase(legacyAddTheoriesAction, (state, action) => {
         state.theories.push(playerNames.map((playerName) => action.payload[playerName].map(oldTheoryToNew)));
+        reduxForwardVerifyTheories(state);
+    });
+    builder.addCase(addTheoriesAction, (state, action) => {
+        state.theories.push(action.payload);
         reduxForwardVerifyTheories(state);
     });
     builder.addCase(verifyAllTheoriesAction, (state) => {
