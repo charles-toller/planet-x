@@ -1,10 +1,9 @@
 import * as React from 'react';
 import {Button, Card, TextField} from "@mui/material";
 import {useCallback, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {AppDispatch} from "./store/store";
 import {setReduxGameId} from "./store/setReduxGameId";
-import {ReduxGameState} from "./store/ReduxGameState";
 
 export function SetGameId() {
     const [tempGameId, setTempGameId] = useState("");
