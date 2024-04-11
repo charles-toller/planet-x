@@ -41,7 +41,7 @@ export function Survey(props: Pick<ActionsProps, 'game'>) {
         const max = sectorRange[sectorRange.length - 1];
         setResult(`There ${is(count)} ${count} ${getNObjectsName(selectedType!, count)} in sectors ${min}-${max}.`);
         dispatch(setAction({
-            action: `${researchName([selectedType!]), true} ${min-max}`,
+            action: `${researchName([selectedType!], true)} ${min}-${max}`,
             result: String(count),
             sectors: sectorCountToTime[sectorRange.length]
         }));

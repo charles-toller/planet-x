@@ -1,5 +1,6 @@
 import {Game, ObjectType} from "../Game";
 import {BottomRowModel, TopRowModel} from "../tableState";
+import {Sector} from "../NoteWheel";
 
 export interface ReduxTheoryObj {
     self: [sector: number, type: ObjectType, verified: boolean][];
@@ -21,4 +22,5 @@ export interface ReduxGameState {
     theories: ReduxTheoryObj[];
     topRows: TopRowModel[];
     bottomRows: BottomRowModel[];
+    map: Sector[];
 }

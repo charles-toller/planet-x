@@ -1,4 +1,4 @@
-import {atom, DefaultValue, noWait, selector} from "recoil";
+import {atom, DefaultValue, selector} from "recoil";
 import {gameState, playerPositionState} from "./atoms";
 import {researchName} from "./Research";
 import {sectorCountToTime} from "./actions/Survey";

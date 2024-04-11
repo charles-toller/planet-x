@@ -3,15 +3,15 @@ import './App.css';
 import NoteWheel from "./NoteWheel";
 import {ObjectTypes, ObjId} from "./GameTypes";
 import {Actions} from "./actions/Actions";
-import {RecoilRoot, useRecoilState, useRecoilValueLoadable} from "recoil";
-import {sectorsState} from "./atoms";
+import {RecoilRoot} from "recoil";
 import {SetGameId} from "./SetGameId";
-import produce from "immer";
 import {Tables} from "./tables";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {resetPersistentAtoms} from "./persistentAtomEffect";
-import {Provider, useSelector} from "react-redux";
-import {store, RootState} from "./store/store";
+import {Provider, useDispatch, useSelector} from "react-redux";
+import {store} from "./store/store";
+import {clickAction, mapSelector} from "./store/map";
+import {ReduxGameState} from "./store/ReduxGameState";
 function AppWrapper() {
     return (
         <Provider store={store}>
@@ -29,27 +29,20 @@ const theme = createTheme({
 })
 
 function App() {
-    const [sectors, setSectors] = useRecoilState(sectorsState);
-    const game = useSelector((state: RootState) => state.game.game);
+    const sectors = useSelector(mapSelector);
+    const game = useSelector((state: ReduxGameState) => state.game.game);
     const reset = useCallback(() => {
         resetPersistentAtoms();
     }, [resetPersistentAtoms]);
+    const dispatch = useDispatch();
     const onObjectClick = useCallback((obj: ObjId) => {
-        const sectorIndex = parseInt(obj.slice(1)) - 1;
+        const sector = parseInt(obj.slice(1));
         const objType = obj.slice(0, 1) as ObjectTypes;
-        setSectors(produce((draft) => {
-            if (!draft[sectorIndex].x.includes(objType) && !draft[sectorIndex].o.includes(objType)) {
-                draft[sectorIndex].x.push(objType);
-            }
-            else if (draft[sectorIndex].x.includes(objType)) {
-                draft[sectorIndex].x = draft[sectorIndex].x.filter((a) => a !== objType);
-                draft[sectorIndex].o.push(objType);
-            }
-            else {
-                draft[sectorIndex].o = draft[sectorIndex].o.filter((a) => a !== objType);
-            }
+        dispatch(clickAction({
+            sector,
+            object: objType
         }));
-    }, [sectors, setSectors]);
+    }, [dispatch]);
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
