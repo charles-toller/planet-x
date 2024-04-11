@@ -1,9 +1,10 @@
-import {BottomRowModel} from "../tableState";
 import {ActionReducerMapBuilder, createAction} from "@reduxjs/toolkit";
 import {ReduxGameState} from "./ReduxGameState";
 import {ConferenceKey} from "../Game";
 import {researchLookup, researchName} from "../Research";
-import {setReduxGameId} from "./store";
+
+import {setReduxGameId} from "./setReduxGameId";
+import {BottomRowModel} from "../tableState";
 
 export const bottomInitialRows: () => BottomRowModel[] = () => [
     {id: 1, notes: "", otherNotes: "", researchId: "A", researchType: ""},

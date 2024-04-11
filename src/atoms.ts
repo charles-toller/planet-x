@@ -1,13 +1,7 @@
-import {atom, DefaultValue} from "recoil";
 import {inflate} from "pako";
 import * as tar from "tar-stream";
 import {Game, ObjectType} from "./Game";
 import {WritableDraft} from "immer/dist/types/types-external";
-import {store} from "./store/store";
-import {
-    recoilPlayerPositionStateSelector,
-    updatePlayerPosition
-} from "./store/playerSectorPosition";
 
 const extract = tar.extract;
 
@@ -16,27 +10,6 @@ export function sectorClamp(sector: number, size = 18): number {
     while (newSector <= 0) newSector += size;
     return newSector;
 }
-
-export const playerPositionState = atom<[number, number, number]>({
-    key: 'playerPosition',
-    default: [1, 1, 1],
-    effects: [
-        ({setSelf, onSet}) => {
-            setSelf(recoilPlayerPositionStateSelector(store.getState()));
-            onSet((newValue, oldValue) => {
-                newValue.forEach((playerPosition, i) => {
-                    const playerID = i + 1;
-                    if (oldValue instanceof DefaultValue || playerPosition !== oldValue[i]) {
-                        store.dispatch(updatePlayerPosition([playerID, playerPosition]));
-                    }
-                });
-            });
-            return store.subscribe(() => {
-                setSelf(recoilPlayerPositionStateSelector(store.getState()));
-            });
-        }
-    ]
-});
 
 export function fetchGame(gameId: string): Promise<Game> {
     return new Promise((resolve) => {
@@ -71,19 +44,6 @@ export function fetchGame(gameId: string): Promise<Game> {
         });
     });
 }
-
-export const gameState = atom<Game | null>({
-    key: 'game',
-    default: null,
-    effects: [
-        ({setSelf}) => {
-            setSelf(store.getState().game.game);
-            return store.subscribe(() => {
-                setSelf(store.getState().game.game);
-            });
-        }
-    ]
-});
 
 export interface TheoryObj {
     self: [sector: number, type: ObjectType, verified: boolean][];

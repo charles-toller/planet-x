@@ -3,13 +3,11 @@ import {
     DataGrid,
     GridColDef,
     GridEventListener,
-    GridRowModel,
     useGridApiRef
 } from "@mui/x-data-grid";
 import React, {SyntheticEvent, useCallback} from "react";
-import {useRecoilState} from "recoil";
 import {Add, Remove} from "@mui/icons-material";
-import {BottomRowModel, bottomRowsState, surveyReg} from "./tableState";
+import {surveyReg} from "./tableState";
 import {
     adjustPlayerPosition,
     recoilPlayerPositionStateSelector

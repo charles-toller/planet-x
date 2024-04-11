@@ -1,12 +1,13 @@
-import {configureStore, createAsyncThunk, createReducer} from "@reduxjs/toolkit";
+import {configureStore, createReducer} from "@reduxjs/toolkit";
 import {ReduxGameState} from "./ReduxGameState";
-import {fetchGame} from "../atoms";
 import {registerPlayerSectorPosition} from "./playerSectorPosition";
 import {registerTheoriesReducer} from "./theories";
 import {registerTopRowsReducer} from "./topRows";
 import {bottomInitialRows, registerBottomRowsReducer} from "./bottomRows";
 import {BuilderProxy} from "./BuilderProxy";
 import {createInitialMap, registerMapReducer} from "./map";
+import {registerBotReducer} from "./bot";
+import {setReduxGameId} from "./setReduxGameId";
 
 const initialState = {
     playerSectorPosition: [[0, 1, 2, 3]],
@@ -18,18 +19,9 @@ const initialState = {
     theories: [],
     topRows: [{action: "", p2: "", p3: "", p4: "", id: 1, result: ""}],
     bottomRows: bottomInitialRows(),
-    map: createInitialMap()
+    map: createInitialMap(),
+    nextBotAction: 0,
 } as ReduxGameState;
-
-export const setReduxGameId = createAsyncThunk(
-    "game/fetchGameStatus",
-    async (gameId: string, thunkAPI) => {
-        return {
-            game: await fetchGame(gameId),
-            gameId,
-        };
-    }
-);
 
 const rootReducer = createReducer(initialState, (builder) => {
     builder.addCase(setReduxGameId.fulfilled, (state, action) => {
@@ -44,6 +36,7 @@ const rootReducer = createReducer(initialState, (builder) => {
     registerTopRowsReducer(builderProxy);
     registerBottomRowsReducer(builderProxy);
     registerMapReducer(builderProxy);
+    registerBotReducer(builderProxy);
     builderProxy.build();
 });
 

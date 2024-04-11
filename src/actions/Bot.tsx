@@ -1,16 +1,12 @@
 import * as React from "react";
 import {useCallback} from "react";
-import {useSetRecoilState} from "recoil";
 import {Button} from "@mui/material";
-import {ActionsProps} from "./Actions";
-import {botState} from "../tableState";
-export function Bot(props: Pick<ActionsProps, 'game'>) {
-    const setBotTick = useSetRecoilState(botState);
+import {useDispatch} from "react-redux";
+import {tickBotAction} from "../store/bot";
+export function Bot(props: {}) {
+    const dispatch = useDispatch();
     const onButtonClick = useCallback(() => {
-        setBotTick((botState) => ({
-            ...botState,
-            nextAction: botState.nextAction + 1,
-        }));
+        dispatch(tickBotAction());
     }, []);
     return (
         <>

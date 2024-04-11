@@ -1,4 +1,4 @@
-import {ActionReducerMapBuilder, createAction} from "@reduxjs/toolkit";
+import {ActionReducerMapBuilder, createAction, Draft} from "@reduxjs/toolkit";
 import {ReduxGameState} from "./ReduxGameState";
 import {adjustPlayerPosition, adjustPlayerPositionReducer} from "./playerSectorPosition";
 import {playerNameToId} from "./theories";
@@ -61,18 +61,25 @@ function pushNewTopRow(draftTopRows: TopRowModel[]): void {
     });
 }
 
+export function playerTextEnterReducer(state: Draft<ReduxGameState>, action: ReturnType<typeof playerTextEnterAction>) {
+    const {player, text, rowId} = action.payload;
+    let rowIndex: number;
+    if (rowId === -1) {
+        rowIndex = state.topRows.findIndex((row) => row[player].trim() === "");
+    } else {
+        rowIndex = state.topRows.findIndex((row) => row.id === rowId);
+    }
+    let prevEntry = resolveText(state.topRows[rowIndex][player], state.gameSize);
+    let newEntry = resolveText(text, state.gameSize);
+    state.topRows[rowIndex][player] = newEntry.entry;
+    adjustPlayerPositionReducer(state, adjustPlayerPosition([playerNameToId[player], newEntry.movement - prevEntry.movement]));
+    if (state.topRows.findIndex((row) => row.p2.trim() === "" && row.p3.trim() === "" && row.p4.trim() === "") === -1) {
+        pushNewTopRow(state.topRows);
+    }
+}
+
 export function registerTopRowsReducer(builder: ActionReducerMapBuilder<ReduxGameState>): void {
-    builder.addCase(playerTextEnterAction, (state, action) => {
-        const {player, text, rowId} = action.payload;
-        const rowIndex = state.topRows.findIndex((row) => row.id === rowId);
-        let prevEntry = resolveText(state.topRows[rowIndex][player], state.gameSize);
-        let newEntry = resolveText(text, state.gameSize);
-        state.topRows[rowIndex][player] = newEntry.entry;
-        adjustPlayerPositionReducer(state, adjustPlayerPosition([playerNameToId[player], newEntry.movement - prevEntry.movement]));
-        if (state.topRows.findIndex((row) => row.p2.trim() === "" && row.p3.trim() === "" && row.p4.trim() === "") === -1) {
-            pushNewTopRow(state.topRows);
-        }
-    });
+    builder.addCase(playerTextEnterAction, playerTextEnterReducer);
     builder.addCase(setAction, (state, action) => {
         let targetIndex = state.topRows.findIndex((row) => row.action === "");
         if (targetIndex === -1) {

@@ -23,4 +23,5 @@ export interface ReduxGameState {
     topRows: TopRowModel[];
     bottomRows: BottomRowModel[];
     map: Sector[];
+    nextBotAction: number;
 }
