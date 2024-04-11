@@ -1,7 +1,8 @@
 import {createSelector} from "@reduxjs/toolkit";
-import {ReduxGameState, ReduxTheoryObj} from "./ReduxGameState";
+import {ReduxGameState, CompatTheoryObj} from "./ReduxGameState";
 import {ObjectType} from "../Game";
 import {theoryKeys} from "../atoms";
+import {theoriesSelector} from "./theories";
 
 interface Score {
     gameOverReady: boolean;
@@ -15,14 +16,14 @@ interface Score {
 }
 
 export const scoreSelector = createSelector([
-    (state: ReduxGameState) => state.theories,
+    theoriesSelector,
     (state: ReduxGameState) => state.topRows,
     (state: ReduxGameState) => state.game.game,
     (state: ReduxGameState) => state.gameSize,
 ], (theories, topRows, game, gameSize): Score | null => {
     if (game == null) return null;
     const outputScore: Score = {
-        gameOverReady: theories.every((theoryRow) => (Object.values(theoryRow) as ReduxTheoryObj[keyof ReduxTheoryObj][]).every((theorySet) => theorySet.every((theory) => theory[2]))),
+        gameOverReady: theories.every((theoryRow) => (Object.values(theoryRow) as CompatTheoryObj[keyof CompatTheoryObj][]).every((theorySet) => theorySet.every((theory) => theory[2]))),
         firstPlace: 0,
         asteroids: 0,
         comets: 0,

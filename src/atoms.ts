@@ -1,7 +1,6 @@
 import {inflate} from "pako";
 import * as tar from "tar-stream";
 import {Game, ObjectType} from "./Game";
-import {WritableDraft} from "immer/dist/types/types-external";
 
 const extract = tar.extract;
 
@@ -54,12 +53,3 @@ export interface TheoryObj {
 
 export const theoryKeys = ["self", "p2", "p3", "p4"] as const;
 
-export function verifyAllTheories(draft: WritableDraft<TheoryObj[]>) {
-    draft.forEach((row) => {
-        for (const key of theoryKeys) {
-            row[key].forEach((theory) => {
-                theory[2] = true;
-            });
-        }
-    });
-}
