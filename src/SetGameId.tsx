@@ -8,7 +8,6 @@ import {ReduxGameState} from "./store/ReduxGameState";
 
 export function SetGameId() {
     const [tempGameId, setTempGameId] = useState("");
-    const reduxGameId = useSelector((state: ReduxGameState) => state.game.gameId);
     const dispatch = useDispatch<AppDispatch>();
     const cb = useCallback((e: React.FormEvent) => {
         dispatch(setReduxGameId(tempGameId.toUpperCase()));
@@ -18,7 +17,7 @@ export function SetGameId() {
         <Card sx={{marginBottom: "20px", padding: "20px"}}>
             <form onSubmit={cb}>
                 <TextField variant="outlined"
-                           label={reduxGameId}
+                           label="Game ID"
                            value={tempGameId}
                            onChange={(e) => setTempGameId(e.target.value)}
                            InputProps={{endAdornment: <Button variant="outlined" onClick={cb}>Set</Button>}}/>
