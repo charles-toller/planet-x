@@ -16,6 +16,7 @@ const initialState = {
         gameId: null,
         game: null,
     },
+    playerCount: 4,
     gameSize: 18,
     theories: [],
     topRows: [{action: "", p2: "", p3: "", p4: "", id: 1, result: ""}],

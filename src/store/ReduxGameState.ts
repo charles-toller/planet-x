@@ -25,6 +25,7 @@ export interface ReduxGameState {
         gameId: null;
         game: null;
     };
+    playerCount: number;
     gameSize: 12 | 18;
     theories: TheoryRow[];
     topRows: TopRowModel[];

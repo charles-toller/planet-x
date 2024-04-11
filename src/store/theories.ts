@@ -4,6 +4,7 @@ import {CompatTheoryObj, ReduxGameState, Theory} from "./ReduxGameState";
 import {ObjectType} from "../Game";
 import {adjustPlayerPosition, adjustPlayerPositionReducer} from "./playerSectorPosition";
 import {WritableDraft} from "immer/dist/types/types-external";
+import {cometSectors} from "../GameTypes";
 
 function newTheoryToOld(theory: Theory): CompatTheoryObj['self'][number] {
     return [theory.sector, theory.type, theory.verified];
@@ -16,7 +17,7 @@ function oldTheoryToNew(theory: CompatTheoryObj['self'][number]): Theory {
     };
 }
 
-export const theoriesSelector = createSelector([(state: ReduxGameState) => state.theories], (theories): CompatTheoryObj[] => {
+export const legacyTheoriesSelector = createSelector([(state: ReduxGameState) => state.theories], (theories): CompatTheoryObj[] => {
     return theories.map((row) => ({
         self: row[0]?.map(newTheoryToOld) ?? [],
         p2: row[1]?.map(newTheoryToOld) ?? [],
@@ -24,6 +25,59 @@ export const theoriesSelector = createSelector([(state: ReduxGameState) => state
         p4: row[3]?.map(newTheoryToOld) ?? [],
     }));
 });
+export const theoriesSelector = createSelector(
+    [(state: ReduxGameState) => state.theories, (state: ReduxGameState) => state.playerCount],
+    (theories, playerCount) => ({
+        theories,
+        playerCount
+    })
+);
+/**
+ * Returns a list of which objects are permitted for each sector for Player 0
+ */
+export const allowedSubmissionsSelector = createSelector(
+    [(state: ReduxGameState) => state.theories, (state: ReduxGameState) => state.gameSize, (state: ReduxGameState) => state.game],
+    (theories, gameSize, game): ObjectType[][] => {
+    const returnValue: Array<Set<ObjectType>> = new Array(gameSize).fill(null).map((_, i) => new Set([
+        ObjectType.ASTEROID,
+        ...(cometSectors.includes(i + 1) ? [ObjectType.COMET] : []),
+        ObjectType.DWARF_PLANET,
+        ObjectType.GAS_CLOUD
+    ]));
+    if (game.game == null) {
+        return returnValue.map((set) => [...set]);
+    }
+    let remaining: {[key in ObjectType]: number} = {
+        [ObjectType.ASTEROID]: 4,
+        [ObjectType.COMET]: 2,
+        [ObjectType.DWARF_PLANET]: gameSize === 12 ? 1 : 4,
+        [ObjectType.GAS_CLOUD]: 2,
+    } as never;
+    theories.forEach((theoryRow) => {
+        theoryRow[0].forEach((theory) => {
+            remaining[theory.type]--;
+            // If theory not verified or theory verified correct, don't allow submission
+            if (!theory.verified || theory.type === game.game.obj[theory.sector]) {
+                returnValue[theory.sector] = new Set();
+            }
+        });
+        theoryRow.slice(1).forEach((playerTheories) => {
+            playerTheories.forEach((theory) => {
+                if (theory.verified && theory.type === game.game.obj[theory.sector]) {
+                    // Other player verified correct, don't allow submission
+                    returnValue[theory.sector] = new Set();
+                }
+            });
+        });
+    });
+    Object.entries(remaining).forEach(([objectType, value]) => {
+        if (value === 0) {
+            returnValue.forEach((set) => set.delete(Number(objectType) as ObjectType));
+        }
+    });
+    return returnValue.map((set) => [...set]);
+});
+
 export const legacyAddTheoriesAction = createAction<TheoryObj>('theories/addLegacy');
 export const addTheoriesAction = createAction<Theory[][]>('theories/add');
 export const verifyTheoryAction = createAction<{rowIndex: number; tIndex: number; player: 'self' | 'p2' | 'p3' | 'p4'}>('theories/verify');
@@ -92,6 +146,9 @@ export function registerTheoriesReducer(builder: ActionReducerMapBuilder<ReduxGa
         reduxForwardVerifyTheories(state);
     });
     builder.addCase(addTheoriesAction, (state, action) => {
+        while (action.payload.length < state.playerCount) {
+            action.payload.push([]);
+        }
         state.theories.push(action.payload);
         reduxForwardVerifyTheories(state);
     });

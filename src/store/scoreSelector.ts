@@ -2,7 +2,7 @@ import {createSelector} from "@reduxjs/toolkit";
 import {ReduxGameState, CompatTheoryObj} from "./ReduxGameState";
 import {ObjectType} from "../Game";
 import {theoryKeys} from "../atoms";
-import {theoriesSelector} from "./theories";
+import {legacyTheoriesSelector} from "./theories";
 
 interface Score {
     gameOverReady: boolean;
@@ -16,7 +16,7 @@ interface Score {
 }
 
 export const scoreSelector = createSelector([
-    theoriesSelector,
+    legacyTheoriesSelector,
     (state: ReduxGameState) => state.topRows,
     (state: ReduxGameState) => state.game.game,
     (state: ReduxGameState) => state.gameSize,
