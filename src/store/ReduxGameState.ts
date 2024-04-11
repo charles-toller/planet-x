@@ -1,4 +1,5 @@
 import {Game, ObjectType} from "../Game";
+import {TopRowModel} from "../tableState";
 
 export interface ReduxTheoryObj {
     self: [sector: number, type: ObjectType, verified: boolean][];
@@ -18,4 +19,5 @@ export interface ReduxGameState {
     };
     gameSize: 12 | 18;
     theories: ReduxTheoryObj[];
+    topRows: TopRowModel[];
 }

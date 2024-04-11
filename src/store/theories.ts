@@ -11,7 +11,7 @@ export const verifyAllTheoriesAction = createAction('theories/verifyAll');
 export const setTheoryTypeAction = createAction<{rowIndex: number; tIndex: number; player: 'self' | 'p2' | 'p3' | 'p4'; type: ObjectType}>('theories/setType')
 
 const playerNames: Array<'self' | 'p2' | 'p3' | 'p4'> = ["self", "p2", "p3", "p4"];
-const playerNameToId: {[key in 'self' | 'p2' | 'p3' | 'p4']: number} = {
+export const playerNameToId: {[key in 'self' | 'p2' | 'p3' | 'p4']: number} = {
     self: 0,
     p2: 1,
     p3: 2,

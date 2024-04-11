@@ -21,20 +21,19 @@ import {
 } from "../Icons";
 import {Abc, RestartAlt, WifiFindTwoTone} from "@mui/icons-material";
 import {Game} from "../Game";
-import {useRecoilValue} from "recoil";
-import {scoreState, sectorClamp} from "../atoms";
+import {sectorClamp} from "../atoms";
 import {Theories} from "./Theories";
 import {Target} from "./Target";
 import {Survey} from "./Survey";
 import {Research} from "./Research";
 import {LocatePlanetX} from "./LocatePlanetX";
 import {ReactComponent as PlanetXScoreSvg} from "../assets/planetxscore.svg";
-import produce from "immer";
 import {Bot} from "./Bot";
 import {Sector} from "../NoteWheel";
 import {useDispatch, useSelector} from "react-redux";
 import {recoilSectorStateSelector} from "../store/playerSectorPosition";
 import {verifyAllTheoriesAction} from "../store/theories";
+import {scoreSelector} from "../store/scoreSelector";
 
 type ActionType = "survey" | "target" | "research" | "locatePlanetX" | "theories" | "bot" | "resetGame";
 
@@ -75,7 +74,7 @@ export function Actions(props: ActionsProps) {
 }
 
 function ResetGame(props: Pick<ActionsProps, 'resetGame'>) {
-    const score = useRecoilValue(scoreState);
+    const score = useSelector(scoreSelector);
     const [planetXValue, setPlanetXValue] = useState<number>(0);
     const onPlanetXValueChange = useCallback((event: React.MouseEvent<HTMLElement>, newSelected: number | null) => {
         setPlanetXValue(newSelected ?? 0);

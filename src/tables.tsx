@@ -1,6 +1,13 @@
 import {Button, ButtonGroup, Card, Chip} from "@mui/material";
-import {DataGrid, GridColDef, GridRowModel, useGridApiRef} from "@mui/x-data-grid";
-import React, {useCallback} from "react";
+import {
+    DataGrid,
+    GridColDef,
+    GridEventListener,
+    GridRowModel,
+    useGridApiEventHandler,
+    useGridApiRef
+} from "@mui/x-data-grid";
+import React, {SyntheticEvent, useCallback} from "react";
 import {useRecoilState} from "recoil";
 import {Add, Remove} from "@mui/icons-material";
 import {BottomRowModel, bottomRowsState, getNewActions, surveyReg, TopRowModel, topRowsState} from "./tableState";
@@ -9,6 +16,7 @@ import {
     recoilPlayerPositionStateSelector
 } from "./store/playerSectorPosition";
 import {useDispatch, useSelector} from "react-redux";
+import {playerTextEnterAction, topRowsSelector} from "./store/topRows";
 
 const playerHeader = (playerNumber: number) => {
     return () => {
@@ -73,44 +81,25 @@ function formatActionValue(input: string): string {
 }
 
 export function Tables() {
-    const [topRows, setTopRows] = useRecoilState(topRowsState);
+    const topRows = useSelector(topRowsSelector);
     const [bottomRows, setBottomRows] = useRecoilState(bottomRowsState);
     const dispatch = useDispatch();
-    const apiRef = useGridApiRef();
-    const processTopRowUpdate = useCallback((updatedRow: GridRowModel<TopRowModel>, oldRow: GridRowModel<TopRowModel>) => {
-        const lastRowId = apiRef.current.getAllRowIds().map((a) => Number(a)).sort((a, b) => b - a)[0];
-        const lastRow = apiRef.current.getRow(lastRowId);
-        let addRow = false;
-        if ((updatedRow.id === lastRowId && Boolean(updatedRow.p2 || updatedRow.p3 || updatedRow.p4)) || Boolean(lastRow.p2 || lastRow.p3 || lastRow.p4)) {
-            addRow = true;
-        }
-        const formattedRow = {
-            ...updatedRow,
-            p2: formatActionValue(updatedRow.p2 ?? ""),
-            p3: formatActionValue(updatedRow.p3 ?? ""),
-            p4: formatActionValue(updatedRow.p4 ?? "")
-        };
-        setTopRows((topRows) => {
-            let formattedRows = topRows.map((row) => row.id === formattedRow.id ? formattedRow : row);
-            if (addRow) {
-                const newRowId = Math.max(...formattedRows.map((row) => row.id)) + 1;
-                formattedRows.push({
-                    id: newRowId,
-                    action: "",
-                    result: "",
-                    p2: "",
-                    p3: "",
-                    p4: "",
-                });
-            }
-            return formattedRows;
+    const topApiRef = useGridApiRef();
+    const topCellEditStop = useCallback<GridEventListener<'cellEditStop'>>((params, event, details) => {
+        const action = playerTextEnterAction({
+            player: params.field as any,
+            text: ((event as SyntheticEvent).target as HTMLInputElement).value,
+            rowId: Number(params.id),
         });
-        const sectorCounts = getNewActions(oldRow, formattedRow);
-        dispatch(adjustPlayerPosition([1, sectorCounts.p2 ?? 0]));
-        dispatch(adjustPlayerPosition([2, sectorCounts.p3 ?? 0]));
-        dispatch(adjustPlayerPosition([3, sectorCounts.p4 ?? 0]));
-        return formattedRow;
-    }, [apiRef]);
+        event.defaultMuiPrevented = true;
+        topApiRef.current.stopCellEditMode({
+            ignoreModifications: true,
+            id: params.id,
+            field: params.field,
+            cellToFocusAfter: "none"
+        });
+        dispatch(action);
+    }, [dispatch]);
     const processBottomRowUpdate = useCallback((updatedRow: GridRowModel<BottomRowModel>) => {
         setBottomRows((bottomRows) => bottomRows.map((row) => row.id === updatedRow.id ? updatedRow : row));
         return updatedRow;
@@ -118,7 +107,7 @@ export function Tables() {
     return (
         <>
             <Card>
-                <DataGrid disableColumnMenu={true} autoHeight columns={topColumnDefs} rows={topRows} apiRef={apiRef} processRowUpdate={processTopRowUpdate} onProcessRowUpdateError={(err) => console.error(err)} hideFooter={true} />
+                <DataGrid disableColumnMenu={true} onCellEditStop={topCellEditStop} autoHeight columns={topColumnDefs} rows={topRows} apiRef={topApiRef} onProcessRowUpdateError={(err) => console.error(err)} hideFooter={true} />
             </Card>
             <Card sx={{marginTop: "20px"}}>
                 <DataGrid disableColumnMenu={true} autoHeight columns={bottomColumnDefs} rows={bottomRows} hideFooter={true} processRowUpdate={processBottomRowUpdate} />

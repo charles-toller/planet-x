@@ -6,6 +6,8 @@ import {sectorCountToTime} from "./actions/Survey";
 import produce from "immer";
 import {ConferenceKey} from "./Game";
 import {persistentAtomEffect} from "./persistentAtomEffect";
+import {store} from "./store/store";
+import {setAction as reduxSetAction} from "./store/topRows";
 
 export interface TopRowModel {
     id: number;
@@ -37,10 +39,18 @@ const bottomInitialRows: GridRowsProp<BottomRowModel> = [
     {id: 7, notes: "", otherNotes: "", researchId: "X1", researchType: ""},
     {id: 8, notes: "", otherNotes: "", researchId: "X2", researchType: ""},
 ];
-export const topRowsState = atom({
+export const topRowsState = atom<TopRowModel[]>({
     key: 'topRows',
     effects: [
-        persistentAtomEffect('topRows', topInitialRows),
+        ({setSelf, onSet}) => {
+            setSelf(store.getState().topRows);
+            onSet(() => {
+                throw new Error("readonly");
+            });
+            return store.subscribe(() => {
+                setSelf(store.getState().topRows);
+            });
+        }
     ],
 });
 const baseBottomRowsState = atom({
@@ -83,23 +93,9 @@ function pushNewTopRow(draftTopRows: TopRowModel[]): void {
 export const tableActions = selector({
     key: 'tableActions',
     get: ({getCallback}) => {
-        const setAction = getCallback(({set}) => async (action: string, result: string, sectors: number) => {
-            set(sectorState, (currentSector) => sectorClamp(currentSector + sectors));
-            set(topRowsState, (topRows) => {
-                const newTopRows = [...topRows];
-                let index = newTopRows.findIndex((row) => row.action === "");
-                if (index === -1) {
-                    pushNewTopRow(newTopRows);
-                    index = newTopRows.length - 1;
-                }
-                newTopRows[index] = {
-                    ...newTopRows[index],
-                    action,
-                    result,
-                };
-                return newTopRows;
-            });
-        });
+        const setAction = async (action: string, result: string, sectors: number) => {
+            store.dispatch(reduxSetAction({action, result, sectors}));
+        };
         const setResearch = getCallback(({set}) => async (researchKey: ConferenceKey, research: string) => {
             set(bottomRowsState, (bottomRows) => bottomRows.map((row) => row.researchId === researchKey ? {
                 ...row,
