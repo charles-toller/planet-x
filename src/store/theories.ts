@@ -4,7 +4,7 @@ import {ReduxGameState} from "./ReduxGameState";
 import {ObjectType} from "../Game";
 import {adjustPlayerPosition, adjustPlayerPositionReducer} from "./playerSectorPosition";
 
-export const theoriesSelector = createSelector([(state: ReduxGameState) => state.theories], (theories) => theories);
+export const theoriesSelector = createSelector([(state: ReduxGameState) => state], (state) => state.theories);
 export const addTheoriesAction = createAction<TheoryObj>('theories/add');
 export const verifyTheoryAction = createAction<{rowIndex: number; tIndex: number; player: 'self' | 'p2' | 'p3' | 'p4'}>('theories/verify');
 export const verifyAllTheoriesAction = createAction('theories/verifyAll');

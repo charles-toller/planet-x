@@ -12,28 +12,31 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.0.3",
     "@types/node": "^16.11.17",
     "@types/pako": "^2.0.0",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
     "immer": "^9.0.21",
+    "jsdom": "^24.0.0",
     "pako": "^2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.0",
     "tar-stream": "npm:tar-stream-browser@^3.0.0",
+    "ts-node": "^10.9.2",
     "typescript": "^4.5.4",
     "vite": "^4.2.0",
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-svgr": "^2.4.0",
+    "vitest": "^1.4.0",
     "web-vitals": "^2.1.2"
   },
   "scripts": {
     "start": "vite serve",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "eslintConfig": {
     "extends": [
