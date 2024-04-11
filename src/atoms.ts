@@ -1,4 +1,4 @@
-import {atom, DefaultValue, selector} from "recoil";
+import {atom, DefaultValue} from "recoil";
 import {Sector} from "./NoteWheel";
 import {inflate} from "pako";
 import * as tar from "tar-stream";
@@ -9,7 +9,6 @@ import {persistentAtomEffect} from "./persistentAtomEffect";
 import {store} from "./store/store";
 import {
     recoilPlayerPositionStateSelector,
-    recoilSectorStateSelector,
     updatePlayerPosition
 } from "./store/playerSectorPosition";
 
@@ -20,22 +19,6 @@ export function sectorClamp(sector: number, size = 18): number {
     while (newSector <= 0) newSector += size;
     return newSector;
 }
-
-export const sectorState = atom<number>({
-    key: 'sector',
-    default: 1,
-    effects: [
-        ({setSelf, onSet}) => {
-            setSelf(recoilSectorStateSelector(store.getState()));
-            onSet((newValue) => {
-                store.dispatch(updatePlayerPosition([0, newValue]));
-            });
-            return store.subscribe(() => {
-                setSelf(recoilSectorStateSelector(store.getState()));
-            });
-        }
-    ]
-});
 
 const baseSectors: Sector[] = new Array(18).fill(null).map((_) => ({
     x: [],

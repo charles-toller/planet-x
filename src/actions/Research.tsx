@@ -1,28 +1,39 @@
-import {useRecoilValue} from "recoil";
 import * as React from "react";
 import {useCallback} from "react";
 import {ConferenceKey} from "../Game";
-import {researchLookup, researchName} from "../Research";
+import {researchName} from "../Research";
 import {Button, ButtonGroup} from "@mui/material";
 import {ActionsProps} from "./Actions";
-import {tableActions} from "../tableState";
+import {useDispatch, useSelector} from "react-redux";
+import {setAction} from "../store/topRows";
+import {researchRevealAction} from "../store/bottomRows";
+import {createSelector} from "@reduxjs/toolkit";
+import {ReduxGameState} from "../store/ReduxGameState";
+
+const researchNameSelector = createSelector([(state: ReduxGameState) => state.game], (game): {[key in ConferenceKey]: string} | null => {
+    if (game.game == null) return null;
+    return Object.fromEntries(Object.entries(game.game.conf).map(([key, val]): [ConferenceKey, string] => {
+        return [key as ConferenceKey, researchName(val.title)];
+    })) as {[key in ConferenceKey]: string};
+})
 
 export function Research(props: Pick<ActionsProps, 'game'>) {
-    const {setResearch, setAction} = useRecoilValue(tableActions);
+    const dispatch = useDispatch();
+    const researchName = useSelector(researchNameSelector);
     const research = useCallback((key: ConferenceKey) => {
-        const info = props.game?.conf[key];
-        if (info === undefined) return;
-        setResearch(key, researchLookup[info.body.type](info.body as any) + ".");
-        if (!key.startsWith("X")) {
-            setAction(`Research ${key}`, "", 1);
-        }
-    }, [setResearch, props.game]);
+        dispatch(setAction({
+            action: `Research ${key}`,
+            result: "",
+            sectors: 1,
+        }));
+        dispatch(researchRevealAction({research: key}));
+    }, [dispatch]);
     return (
         <>
             <ButtonGroup orientation="vertical">
-                {Object.entries(props.game?.conf ?? {}).map(([key, val]) => (
+                {researchName && Object.entries(researchName).map(([key, val]) => (
                     <Button variant="outlined" onClick={research.bind(null, key as ConferenceKey)}
-                            key={key}>{key}: {researchName(val.title)}</Button>
+                            key={key}>{key}: {val}</Button>
                 ))}
             </ButtonGroup>
         </>

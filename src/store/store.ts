@@ -4,6 +4,8 @@ import {fetchGame} from "../atoms";
 import {registerPlayerSectorPosition} from "./playerSectorPosition";
 import {registerTheoriesReducer} from "./theories";
 import {registerTopRowsReducer} from "./topRows";
+import {bottomInitialRows, registerBottomRowsReducer} from "./bottomRows";
+import {BuilderProxy} from "./BuilderProxy";
 
 const initialState = {
     playerSectorPosition: [[0, 1, 2, 3]],
@@ -13,7 +15,8 @@ const initialState = {
     },
     gameSize: 18,
     theories: [],
-    topRows: [{action: "", p2: "", p3: "", p4: "", id: 1, result: ""}]
+    topRows: [{action: "", p2: "", p3: "", p4: "", id: 1, result: ""}],
+    bottomRows: bottomInitialRows()
 } as ReduxGameState;
 
 export const setReduxGameId = createAsyncThunk(
@@ -33,9 +36,12 @@ const rootReducer = createReducer(initialState, (builder) => {
             game: action.payload,
         };
     });
-    registerPlayerSectorPosition(builder);
-    registerTheoriesReducer(builder);
-    registerTopRowsReducer(builder);
+    const builderProxy = new BuilderProxy(builder);
+    registerPlayerSectorPosition(builderProxy);
+    registerTheoriesReducer(builderProxy);
+    registerTopRowsReducer(builderProxy);
+    registerBottomRowsReducer(builderProxy);
+    builderProxy.build();
 });
 
 export const store = configureStore({

@@ -61,20 +61,26 @@ export function researchName(types: ObjectType[], letters = false) {
         return titlePluralWords[type]
     }).join(letters ? ' + ' : " & ");
 }
+function yArticle(data: {X: ObjectType; Y: ObjectType; N: number}): string {
+    if (data.X === data.Y) {
+        return "another";
+    }
+    return article[data.Y];
+}
 export const researchLookup: {[key: string]: ((data: {X: ObjectType; Y: ObjectType; N: number}) => string)} = {
-    confClue1PlusXAdjacentY: (data) => `At least one ${singularWord[data.X]} is adjacent to ${article[data.Y]} ${singularWord[data.Y]}`,
-    confClue9WithinNY: (data) => `Planet X is within ${data.N} sector${s(data.N)} of ${article[data.Y]} ${singularWord[data.Y]}`,
+    confClue1PlusXAdjacentY: (data) => `At least one ${singularWord[data.X]} is adjacent to ${yArticle(data)} ${singularWord[data.Y]}`,
+    confClue9WithinNY: (data) => `Planet X is within ${data.N} sector${s(data.N)} of ${yArticle(data)} ${singularWord[data.Y]}`,
     confClueNXConsecutive: (data) => `There ${is(data.N)} ${data.N} ${getNObjectsName(data.X, data.N)} in consecutive sectors`,
-    confClueNoXWithinNY: (data) => `No ${singularWord[data.X]} is within ${data.N} sector${s(data.N)} of ${article[data.Y]} ${singularWord[data.Y]}`,
-    confClue1PlusXOppositeY: (data) => `At least one ${singularWord[data.X]} is directly opposite ${article[data.Y]} ${singularWord[data.Y]}`,
-    confClue9NotOppositeY: (data) => `Planet X is not directly opposite ${article[data.Y]} ${singularWord[data.Y]}`,
-    confClueAllXWithinNY: (data) => `Every ${singularWord[data.X]} is within ${data.N} sector${s(data.N)} of ${article[data.Y]} ${singularWord[data.Y]}`,
-    confClueNoXOppositeY: (data) => `No ${singularWord[data.X]} is directly opposite ${article[data.Y]} ${singularWord[data.Y]}`,
+    confClueNoXWithinNY: (data) => `No ${singularWord[data.X]} is within ${data.N} sector${s(data.N)} of ${yArticle(data)} ${singularWord[data.Y]}`,
+    confClue1PlusXOppositeY: (data) => `At least one ${singularWord[data.X]} is directly opposite ${yArticle(data)} ${singularWord[data.Y]}`,
+    confClue9NotOppositeY: (data) => `Planet X is not directly opposite ${yArticle(data)} ${singularWord[data.Y]}`,
+    confClueAllXWithinNY: (data) => `Every ${singularWord[data.X]} is within ${data.N} sector${s(data.N)} of ${yArticle(data)} ${singularWord[data.Y]}`,
+    confClueNoXOppositeY: (data) => `No ${singularWord[data.X]} is directly opposite ${yArticle(data)} ${singularWord[data.Y]}`,
     confClueAllXWithinN: (data) => `All the ${pluralWord[data.X]} are in a band of ${data.N} sector${s(data.N)} or less`,
-    confClueNoXWithin1Y: (data) => `No ${singularWord[data.X]} is adjacent to ${article[data.Y]} ${singularWord[data.Y]}`,
-    confClue9NotWithin1Y: (data) => `Planet X is not adjacent to ${article[data.Y]} ${singularWord[data.Y]}`,
-    confClue9NotWithinNY: (data) => `Planet X is not within ${data.N} sector${s(data.N)} of ${article[data.Y]} ${singularWord[data.Y]}`,
-    confClueAllXOppositeY: (data) => `Every ${singularWord[data.X]} is directly opposite ${article[data.Y]} ${singularWord[data.Y]}`,
-    confClueAllXWithin1Y: (data) => `Every ${singularWord[data.X]} is adjacent to ${article[data.Y]} ${singularWord[data.Y]}`,
+    confClueNoXWithin1Y: (data) => `No ${singularWord[data.X]} is adjacent to ${yArticle(data)} ${singularWord[data.Y]}`,
+    confClue9NotWithin1Y: (data) => `Planet X is not adjacent to ${yArticle(data)} ${singularWord[data.Y]}`,
+    confClue9NotWithinNY: (data) => `Planet X is not within ${data.N} sector${s(data.N)} of ${yArticle(data)} ${singularWord[data.Y]}`,
+    confClueAllXOppositeY: (data) => `Every ${singularWord[data.X]} is directly opposite ${yArticle(data)} ${singularWord[data.Y]}`,
+    confClueAllXWithin1Y: (data) => `Every ${singularWord[data.X]} is adjacent to ${yArticle(data)} ${singularWord[data.Y]}`,
     confClueAllXConsecutive: (data) => `All the ${pluralWord[data.X]} are in consecutive sectors`
 };

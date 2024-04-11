@@ -4,19 +4,19 @@ import {
     GridColDef,
     GridEventListener,
     GridRowModel,
-    useGridApiEventHandler,
     useGridApiRef
 } from "@mui/x-data-grid";
 import React, {SyntheticEvent, useCallback} from "react";
 import {useRecoilState} from "recoil";
 import {Add, Remove} from "@mui/icons-material";
-import {BottomRowModel, bottomRowsState, getNewActions, surveyReg, TopRowModel, topRowsState} from "./tableState";
+import {BottomRowModel, bottomRowsState, surveyReg} from "./tableState";
 import {
     adjustPlayerPosition,
     recoilPlayerPositionStateSelector
 } from "./store/playerSectorPosition";
 import {useDispatch, useSelector} from "react-redux";
 import {playerTextEnterAction, topRowsSelector} from "./store/topRows";
+import {bottomRowsSelector, setNotesAction} from "./store/bottomRows";
 
 const playerHeader = (playerNumber: number) => {
     return () => {
@@ -82,7 +82,7 @@ function formatActionValue(input: string): string {
 
 export function Tables() {
     const topRows = useSelector(topRowsSelector);
-    const [bottomRows, setBottomRows] = useRecoilState(bottomRowsState);
+    const bottomRows = useSelector(bottomRowsSelector);
     const dispatch = useDispatch();
     const topApiRef = useGridApiRef();
     const topCellEditStop = useCallback<GridEventListener<'cellEditStop'>>((params, event, details) => {
@@ -99,18 +99,29 @@ export function Tables() {
             cellToFocusAfter: "none"
         });
         dispatch(action);
+    }, [topApiRef, dispatch]);
+    const bottomApiRef = useGridApiRef();
+    const bottomCellEditStop = useCallback<GridEventListener<'cellEditStop'>>((params, event, details) => {
+        const action = setNotesAction({
+            rowId: Number(params.id),
+            text: ((event as SyntheticEvent).target as HTMLInputElement).value,
+        });
+        event.defaultMuiPrevented = true;
+        bottomApiRef.current.stopCellEditMode({
+            ignoreModifications: true,
+            id: params.id,
+            field: params.field,
+            cellToFocusAfter: "none"
+        });
+        dispatch(action);
     }, [dispatch]);
-    const processBottomRowUpdate = useCallback((updatedRow: GridRowModel<BottomRowModel>) => {
-        setBottomRows((bottomRows) => bottomRows.map((row) => row.id === updatedRow.id ? updatedRow : row));
-        return updatedRow;
-    }, []);
     return (
         <>
             <Card>
-                <DataGrid disableColumnMenu={true} onCellEditStop={topCellEditStop} autoHeight columns={topColumnDefs} rows={topRows} apiRef={topApiRef} onProcessRowUpdateError={(err) => console.error(err)} hideFooter={true} />
+                <DataGrid disableColumnMenu={true} onCellEditStop={topCellEditStop} autoHeight columns={topColumnDefs} rows={topRows} apiRef={topApiRef} hideFooter={true} />
             </Card>
             <Card sx={{marginTop: "20px"}}>
-                <DataGrid disableColumnMenu={true} autoHeight columns={bottomColumnDefs} rows={bottomRows} hideFooter={true} processRowUpdate={processBottomRowUpdate} />
+                <DataGrid disableColumnMenu={true} autoHeight columns={bottomColumnDefs} rows={bottomRows} hideFooter={true} onCellEditStop={bottomCellEditStop} apiRef={bottomApiRef} />
             </Card>
         </>
     )
