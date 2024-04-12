@@ -1,8 +1,7 @@
 import {createSelector} from "@reduxjs/toolkit";
-import {ReduxGameState, CompatTheoryObj} from "./ReduxGameState";
+import {ReduxGameState} from "./ReduxGameState";
 import {ObjectType} from "../Game";
-import {theoryKeys} from "../atoms";
-import {legacyTheoriesSelector} from "./theories";
+import {theoriesSelector} from "./theories";
 
 interface Score {
     gameOverReady: boolean;
@@ -16,14 +15,14 @@ interface Score {
 }
 
 export const scoreSelector = createSelector([
-    legacyTheoriesSelector,
+    theoriesSelector,
     (state: ReduxGameState) => state.topRows,
     (state: ReduxGameState) => state.game.game,
     (state: ReduxGameState) => state.gameSize,
-], (theories, topRows, game, gameSize): Score | null => {
+], ({theories}, topRows, game, gameSize): Score | null => {
     if (game == null) return null;
     const outputScore: Score = {
-        gameOverReady: theories.every((theoryRow) => (Object.values(theoryRow) as CompatTheoryObj[keyof CompatTheoryObj][]).every((theorySet) => theorySet.every((theory) => theory[2]))),
+        gameOverReady: theories.every((theoryRow) => theoryRow.every((playerRow) => playerRow.every((theory) => theory.verified))),
         firstPlace: 0,
         asteroids: 0,
         comets: 0,
@@ -33,15 +32,15 @@ export const scoreSelector = createSelector([
         subtotal: 0
     };
     theories.forEach((theoryRow, rowNumber) => {
-        theoryRow.self.forEach((theory) => {
-            if (!theory[2]) return;
-            if (game.obj[theory[0]] === theory[1]) {
+        theoryRow[0].forEach((theory) => {
+            if (!theory.verified) return;
+            if (game.obj[theory.sector] === theory.type) {
                 // Theory correct
-                if (theories.findIndex((theoryRow) => theoryKeys.some((key) => theoryRow[key].some((other) => theory[0] === other[0] && theory[1] === other[1]))) >= rowNumber) {
+                if (rowNumber === theories.findIndex((theoryRow) => theoryRow.some((playerRow) => playerRow.some((oTheory) => oTheory.sector === theory.sector && oTheory.type === game.obj[theory.sector])))) {
                     // First place (or tied for such)
                     outputScore.firstPlace++;
                 }
-                switch (theory[1]) {
+                switch (theory.type) {
                     case ObjectType.ASTEROID:
                         outputScore.asteroids += 2;
                         break;

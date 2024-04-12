@@ -1,6 +1,6 @@
 import {createAppStore} from "./store";
 import {expect, test} from 'vitest';
-import {addTheoriesAction, legacyTheoriesSelector} from "./theories";
+import {addTheoriesAction, theoriesSelector} from "./theories";
 import {ObjectType} from "../Game";
 import {loadTestGameAction} from "../test/helpers";
 
@@ -16,13 +16,13 @@ test("it accepts a new theory", () => {
         sector: 1,
         verified: false,
     }]]));
-    expect(legacyTheoriesSelector(store.getState())).toMatchSnapshot();
+    expect(theoriesSelector(store.getState())).toMatchSnapshot();
 });
 
 test("it verifies theories -- new", () => {
     const store = createAppStore();
     store.dispatch(loadTestGameAction());
-    expect(legacyTheoriesSelector(store.getState())).toMatchSnapshot();
+    expect(theoriesSelector(store.getState())).toMatchSnapshot();
     store.dispatch(addTheoriesAction([[
         {
             sector: 1,
@@ -30,7 +30,7 @@ test("it verifies theories -- new", () => {
             verified: false,
         }
     ]]));
-    expect(legacyTheoriesSelector(store.getState())).toMatchSnapshot();
+    expect(theoriesSelector(store.getState())).toMatchSnapshot();
     store.dispatch(addTheoriesAction([[], [
         {
             sector: 1,
@@ -38,9 +38,9 @@ test("it verifies theories -- new", () => {
             verified: false,
         }
     ]]));
-    expect(legacyTheoriesSelector(store.getState())).toMatchSnapshot();
+    expect(theoriesSelector(store.getState())).toMatchSnapshot();
     store.dispatch(addTheoriesAction([]));
-    expect(legacyTheoriesSelector(store.getState())).toMatchSnapshot();
+    expect(theoriesSelector(store.getState())).toMatchSnapshot();
     // Player 1 should have moved forward a sector as a penalty
     expect(store.getState().playerSectorPosition[0]).to.include(0);
     expect(store.getState().playerSectorPosition[1]).to.include(1);

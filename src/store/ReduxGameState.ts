@@ -3,13 +3,6 @@ import {BottomRowModel, TopRowModel} from "../tableState";
 import {Sector} from "../NoteWheel";
 import {WorkingTheoriesState} from "./workingTheories";
 
-export interface CompatTheoryObj {
-    self: [sector: number, type: ObjectType, verified: boolean][];
-    p2: [sector: number, type: ObjectType, verified: boolean][];
-    p3: [sector: number, type: ObjectType, verified: boolean][];
-    p4: [sector: number, type: ObjectType, verified: boolean][];
-}
-
 export interface Theory {
     sector: number;
     type: ObjectType;

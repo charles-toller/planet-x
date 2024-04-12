@@ -44,5 +44,3 @@ export function fetchGame(gameId: string): Promise<Game> {
     });
 }
 
-export const theoryKeys = ["self", "p2", "p3", "p4"] as const;
-

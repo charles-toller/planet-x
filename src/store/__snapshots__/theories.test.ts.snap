@@ -1,101 +1,118 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`it accepts a new theory 1`] = `
-[
-  {
-    "p2": [],
-    "p3": [],
-    "p4": [],
-    "self": [
+{
+  "playerCount": 4,
+  "theories": [
+    [
       [
-        1,
-        3,
-        false,
+        {
+          "sector": 1,
+          "type": 3,
+          "verified": false,
+        },
       ],
+      [],
+      [],
+      [],
     ],
-  },
-]
+  ],
+}
 `;
 
-exports[`it verifies theories -- new 1`] = `[]`;
+exports[`it verifies theories -- new 1`] = `
+{
+  "playerCount": 4,
+  "theories": [],
+}
+`;
 
 exports[`it verifies theories -- new 2`] = `
-[
-  {
-    "p2": [],
-    "p3": [],
-    "p4": [],
-    "self": [
+{
+  "playerCount": 4,
+  "theories": [
+    [
       [
-        1,
-        1,
-        false,
+        {
+          "sector": 1,
+          "type": 1,
+          "verified": false,
+        },
       ],
+      [],
+      [],
+      [],
     ],
-  },
-]
+  ],
+}
 `;
 
 exports[`it verifies theories -- new 3`] = `
-[
-  {
-    "p2": [],
-    "p3": [],
-    "p4": [],
-    "self": [
+{
+  "playerCount": 4,
+  "theories": [
+    [
       [
-        1,
-        1,
-        false,
+        {
+          "sector": 1,
+          "type": 1,
+          "verified": false,
+        },
       ],
+      [],
+      [],
+      [],
     ],
-  },
-  {
-    "p2": [
+    [
+      [],
       [
-        1,
-        3,
-        false,
+        {
+          "sector": 1,
+          "type": 3,
+          "verified": false,
+        },
       ],
+      [],
+      [],
     ],
-    "p3": [],
-    "p4": [],
-    "self": [],
-  },
-]
+  ],
+}
 `;
 
 exports[`it verifies theories -- new 4`] = `
-[
-  {
-    "p2": [],
-    "p3": [],
-    "p4": [],
-    "self": [
+{
+  "playerCount": 4,
+  "theories": [
+    [
       [
-        1,
-        1,
-        true,
+        {
+          "sector": 1,
+          "type": 1,
+          "verified": true,
+        },
       ],
+      [],
+      [],
+      [],
     ],
-  },
-  {
-    "p2": [
+    [
+      [],
       [
-        1,
-        3,
-        true,
+        {
+          "sector": 1,
+          "type": 3,
+          "verified": true,
+        },
       ],
+      [],
+      [],
     ],
-    "p3": [],
-    "p4": [],
-    "self": [],
-  },
-  {
-    "p2": [],
-    "p3": [],
-    "p4": [],
-    "self": [],
-  },
-]
+    [
+      [],
+      [],
+      [],
+      [],
+    ],
+  ],
+}
 `;

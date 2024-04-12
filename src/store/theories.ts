@@ -1,5 +1,5 @@
 import {ActionReducerMapBuilder, createAction, createSelector, weakMapMemoize} from "@reduxjs/toolkit";
-import {CompatTheoryObj, ReduxGameState, Theory} from "./ReduxGameState";
+import {ReduxGameState, Theory} from "./ReduxGameState";
 import {ObjectType} from "../Game";
 import {adjustPlayerPosition, adjustPlayerPositionReducer} from "./playerSectorPosition";
 import {WritableDraft} from "immer/dist/types/types-external";
@@ -7,18 +7,6 @@ import {cometSectors} from "../GameTypes";
 import {workingTheories} from "./workingTheories";
 import {CombineMatchers} from "./helpers";
 
-function newTheoryToOld(theory: Theory): CompatTheoryObj['self'][number] {
-    return [theory.sector, theory.type, theory.verified];
-}
-
-export const legacyTheoriesSelector = createSelector([(state: ReduxGameState) => state.theories], (theories): CompatTheoryObj[] => {
-    return theories.map((row) => ({
-        self: row[0]?.map(newTheoryToOld) ?? [],
-        p2: row[1]?.map(newTheoryToOld) ?? [],
-        p3: row[2]?.map(newTheoryToOld) ?? [],
-        p4: row[3]?.map(newTheoryToOld) ?? [],
-    }));
-});
 export const theoriesSelector = createSelector(
     [(state: ReduxGameState) => state.theories, (state: ReduxGameState) => state.playerCount],
     (theories, playerCount) => ({

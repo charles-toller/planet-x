@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import {AsteroidIcon, BotIcon, CometIcon, DwarfPlanetIcon, GasCloudIcon, objectTypeToIcon, TheoryIcon} from "../Icons";
 import {Person} from "@mui/icons-material";
-import {researchName, singularWord, titlePluralWords} from "../Research";
+import {singularWord, titlePluralWords} from "../Research";
 import {useDispatch, useSelector} from "react-redux";
 import {
     addFromWorkingTheoriesAction,
