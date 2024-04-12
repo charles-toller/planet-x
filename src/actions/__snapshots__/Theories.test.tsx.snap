@@ -55,8 +55,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 1 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r0:"
                   >
                     Sector
                   </label>
@@ -66,6 +68,7 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r0:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -111,8 +114,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 1 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r1:"
                   >
                     <svg
                       aria-hidden="true"
@@ -134,6 +139,7 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r1:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -181,8 +187,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 2 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r2:"
                   >
                     Sector
                   </label>
@@ -192,6 +200,7 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r2:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -237,8 +246,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 2 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r3:"
                   >
                     <svg
                       aria-hidden="true"
@@ -260,262 +271,7 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
-            >
-              <div>
-                <div
-                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    Sector
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-                <div
-                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="TheoryIcon"
-                      focusable="false"
-                      viewBox="-1.25 0 11.500555 11.500555"
-                    >
-                      <path
-                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
-                        id="path1159"
-                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
-                      />
-                    </svg>
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div
-                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    Sector
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-                <div
-                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="TheoryIcon"
-                      focusable="false"
-                      viewBox="-1.25 0 11.500555 11.500555"
-                    >
-                      <path
-                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
-                        id="path1159"
-                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
-                      />
-                    </svg>
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
+                      aria-labelledby=":r3:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -567,8 +323,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 1 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r4:"
                   >
                     Sector
                   </label>
@@ -578,6 +336,7 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r4:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -623,8 +382,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 1 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r5:"
                   >
                     <svg
                       aria-hidden="true"
@@ -646,6 +407,7 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r5:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -693,8 +455,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 2 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r6:"
                   >
                     Sector
                   </label>
@@ -704,6 +468,7 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r6:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -749,8 +514,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 2 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r7:"
                   >
                     <svg
                       aria-hidden="true"
@@ -772,6 +539,7 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r7:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -823,8 +591,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 1 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r8:"
                   >
                     Sector
                   </label>
@@ -834,6 +604,7 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r8:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -879,8 +650,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 1 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r9:"
                   >
                     <svg
                       aria-hidden="true"
@@ -902,6 +675,7 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r9:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -949,8 +723,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 2 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":ra:"
                   >
                     Sector
                   </label>
@@ -960,6 +736,7 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":ra:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -1005,8 +782,10 @@ exports[`theories render 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 2 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":rb:"
                   >
                     <svg
                       aria-hidden="true"
@@ -1028,6 +807,275 @@ exports[`theories render 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":rb:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              <div>
+                <div
+                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 1 Sector Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":rc:"
+                  >
+                    Sector
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":rc:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+                <div
+                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 1 Object Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":rd:"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      data-testid="TheoryIcon"
+                      focusable="false"
+                      viewBox="-1.25 0 11.500555 11.500555"
+                    >
+                      <path
+                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
+                        id="path1159"
+                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
+                      />
+                    </svg>
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":rd:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 2 Sector Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":re:"
+                  >
+                    Sector
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":re:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+                <div
+                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 2 Object Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":rf:"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      data-testid="TheoryIcon"
+                      focusable="false"
+                      viewBox="-1.25 0 11.500555 11.500555"
+                    >
+                      <path
+                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
+                        id="path1159"
+                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
+                      />
+                    </svg>
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":rf:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -1150,6 +1198,7 @@ exports[`theories render with selected theories 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
             >
               <div
+                aria-label="Theory by Player 1: Sector 1 is a comet"
                 class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorError MuiChip-filledError css-xb328r-MuiChip-root"
                 data-theory="0,0,0"
               >
@@ -1190,6 +1239,7 @@ exports[`theories render with selected theories 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
             >
               <div
+                aria-label="Theory by Player 1: Sector 1 is a comet"
                 class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorError MuiChip-filledError css-xb328r-MuiChip-root"
                 data-theory="1,0,0"
               >
@@ -1234,8 +1284,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 1 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="true"
+                    id=":r10:"
                   >
                     Sector
                   </label>
@@ -1245,6 +1297,7 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r10:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -1286,8 +1339,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 1 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r11:"
                   >
                     <svg
                       aria-hidden="true"
@@ -1309,6 +1364,7 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r11:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -1356,8 +1412,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 2 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r12:"
                   >
                     Sector
                   </label>
@@ -1367,6 +1425,7 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r12:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -1412,8 +1471,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 2 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r13:"
                   >
                     <svg
                       aria-hidden="true"
@@ -1435,262 +1496,7 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
-            >
-              <div>
-                <div
-                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    Sector
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-                <div
-                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="TheoryIcon"
-                      focusable="false"
-                      viewBox="-1.25 0 11.500555 11.500555"
-                    >
-                      <path
-                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
-                        id="path1159"
-                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
-                      />
-                    </svg>
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div
-                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    Sector
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-                <div
-                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="TheoryIcon"
-                      focusable="false"
-                      viewBox="-1.25 0 11.500555 11.500555"
-                    >
-                      <path
-                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
-                        id="path1159"
-                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
-                      />
-                    </svg>
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
+                      aria-labelledby=":r13:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -1742,8 +1548,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 1 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r14:"
                   >
                     Sector
                   </label>
@@ -1753,6 +1561,7 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r14:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -1798,8 +1607,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 1 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r15:"
                   >
                     <svg
                       aria-hidden="true"
@@ -1821,6 +1632,7 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r15:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -1868,8 +1680,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 2 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r16:"
                   >
                     Sector
                   </label>
@@ -1879,6 +1693,7 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r16:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -1924,8 +1739,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 2 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r17:"
                   >
                     <svg
                       aria-hidden="true"
@@ -1947,6 +1764,7 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r17:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -1998,8 +1816,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 1 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r18:"
                   >
                     Sector
                   </label>
@@ -2009,6 +1829,7 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r18:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -2054,8 +1875,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 1 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r19:"
                   >
                     <svg
                       aria-hidden="true"
@@ -2077,6 +1900,7 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r19:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -2124,8 +1948,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 2 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r1a:"
                   >
                     Sector
                   </label>
@@ -2135,6 +1961,7 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r1a:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -2180,8 +2007,10 @@ exports[`theories render with selected theories 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 2 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":r1b:"
                   >
                     <svg
                       aria-hidden="true"
@@ -2203,6 +2032,275 @@ exports[`theories render with selected theories 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":r1b:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              <div>
+                <div
+                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 1 Sector Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":r1c:"
+                  >
+                    Sector
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":r1c:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+                <div
+                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 1 Object Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":r1d:"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      data-testid="TheoryIcon"
+                      focusable="false"
+                      viewBox="-1.25 0 11.500555 11.500555"
+                    >
+                      <path
+                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
+                        id="path1159"
+                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
+                      />
+                    </svg>
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":r1d:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 2 Sector Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":r1e:"
+                  >
+                    Sector
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":r1e:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+                <div
+                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 2 Object Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":r1f:"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      data-testid="TheoryIcon"
+                      focusable="false"
+                      viewBox="-1.25 0 11.500555 11.500555"
+                    >
+                      <path
+                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
+                        id="path1159"
+                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
+                      />
+                    </svg>
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":r1f:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -2325,6 +2423,7 @@ exports[`theories render with theory states 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
             >
               <div
+                aria-label="Theory by Player 1: Sector 1 is a asteroid"
                 class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSuccess MuiChip-filledSuccess css-1rq9bu9-MuiChip-root"
                 data-theory="0,0,0"
               >
@@ -2352,6 +2451,7 @@ exports[`theories render with theory states 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
             >
               <div
+                aria-label="Theory by Player 2: Sector 1 is a Player"
                 class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorPrimary MuiChip-filledPrimary css-1sz23ua-MuiChip-root"
                 data-theory="0,1,0"
               >
@@ -2377,6 +2477,7 @@ exports[`theories render with theory states 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
             >
               <div
+                aria-label="Theory by Player 3: Sector 1 is a comet"
                 class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorError MuiChip-filledError css-xb328r-MuiChip-root"
                 data-theory="0,2,0"
               >
@@ -2415,8 +2516,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 1 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":rg:"
                   >
                     Sector
                   </label>
@@ -2426,6 +2529,7 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":rg:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -2471,8 +2575,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 1 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":rh:"
                   >
                     <svg
                       aria-hidden="true"
@@ -2494,6 +2600,7 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":rh:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -2541,8 +2648,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 2 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":ri:"
                   >
                     Sector
                   </label>
@@ -2552,6 +2661,7 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":ri:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -2597,8 +2707,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 1 Theory 2 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":rj:"
                   >
                     <svg
                       aria-hidden="true"
@@ -2620,262 +2732,7 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
-            >
-              <div>
-                <div
-                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    Sector
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-                <div
-                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="TheoryIcon"
-                      focusable="false"
-                      viewBox="-1.25 0 11.500555 11.500555"
-                    >
-                      <path
-                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
-                        id="path1159"
-                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
-                      />
-                    </svg>
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div
-                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    Sector
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </div>
-                    <input
-                      aria-hidden="true"
-                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                      tabindex="-1"
-                      value=""
-                    />
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                      data-testid="ArrowDropDownIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-yjsfm1"
-                      >
-                        <span>
-                          Sector
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-                <div
-                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="TheoryIcon"
-                      focusable="false"
-                      viewBox="-1.25 0 11.500555 11.500555"
-                    >
-                      <path
-                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
-                        id="path1159"
-                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
-                      />
-                    </svg>
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
-                  >
-                    <div
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
+                      aria-labelledby=":rj:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -2927,8 +2784,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 1 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":rk:"
                   >
                     Sector
                   </label>
@@ -2938,6 +2797,7 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":rk:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -2983,8 +2843,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 1 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":rl:"
                   >
                     <svg
                       aria-hidden="true"
@@ -3006,6 +2868,7 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":rl:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -3053,8 +2916,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 2 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":rm:"
                   >
                     Sector
                   </label>
@@ -3064,6 +2929,7 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":rm:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -3109,8 +2975,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 2 Theory 2 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":rn:"
                   >
                     <svg
                       aria-hidden="true"
@@ -3132,6 +3000,7 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":rn:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -3183,8 +3052,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 1 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":ro:"
                   >
                     Sector
                   </label>
@@ -3194,6 +3065,7 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":ro:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -3239,8 +3111,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 1 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":rp:"
                   >
                     <svg
                       aria-hidden="true"
@@ -3262,6 +3136,7 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":rp:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -3309,8 +3184,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 2 Sector Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":rq:"
                   >
                     Sector
                   </label>
@@ -3320,6 +3197,7 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":rq:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
@@ -3365,8 +3243,10 @@ exports[`theories render with theory states 1`] = `
                   class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
                 >
                   <label
+                    aria-label="Player 3 Theory 2 Object Select"
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
+                    id=":rr:"
                   >
                     <svg
                       aria-hidden="true"
@@ -3388,6 +3268,275 @@ exports[`theories render with theory states 1`] = `
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-labelledby=":rr:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              <div>
+                <div
+                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 1 Sector Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":rs:"
+                  >
+                    Sector
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":rs:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+                <div
+                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 1 Object Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":rt:"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      data-testid="TheoryIcon"
+                      focusable="false"
+                      viewBox="-1.25 0 11.500555 11.500555"
+                    >
+                      <path
+                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
+                        id="path1159"
+                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
+                      />
+                    </svg>
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":rt:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="MuiFormControl-root css-pe0pe4-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 2 Sector Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":ru:"
+                  >
+                    Sector
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":ru:"
+                      class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-yjsfm1"
+                      >
+                        <span>
+                          Sector
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+                <div
+                  class="MuiFormControl-root css-1ve8w8w-MuiFormControl-root"
+                >
+                  <label
+                    aria-label="Player 4 Theory 2 Object Select"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="false"
+                    id=":rv:"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      data-testid="TheoryIcon"
+                      focusable="false"
+                      viewBox="-1.25 0 11.500555 11.500555"
+                    >
+                      <path
+                        d="M 5.81731,0 H 0 V 11.500555 H 9.05228 V 3.234972 Z M 6.02192,1.622778 7.43303,3.033889 H 6.02192 Z M 1.00189,10.495139 V 1.005417 h 4.15925 v 2.875138 h 2.88925 v 6.614584 z M 4.12045,3.305528 H 2.08139 V 2.599972 H 4.12045 Z M 6.97089,5.319889 H 2.08139 V 4.614333 h 4.8895 z m 0,2.014361 H 2.08139 V 6.628694 h 4.8895 z m 0,2.014361 H 2.08139 V 8.643056 h 4.8895 z"
+                        id="path1159"
+                        style="fill-opacity: 1; fill-rule: nonzero; stroke: none; stroke-width: 0.352778;"
+                      />
+                    </svg>
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      aria-labelledby=":rv:"
                       class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                       role="button"
                       tabindex="0"
