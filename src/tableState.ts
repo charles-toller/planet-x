@@ -16,5 +16,3 @@ export interface BottomRowModel {
     researchId: ConferenceKey;
     researchType: string;
 }
-
-export const surveyReg = /^\s*([egdac])\s*(\d+)\s*-\s*(\d+)\s*$/i;

@@ -1,21 +1,14 @@
 import {ActionReducerMapBuilder, createAction, createSelector, weakMapMemoize} from "@reduxjs/toolkit";
-import {TheoryObj} from "../atoms";
 import {CompatTheoryObj, ReduxGameState, Theory} from "./ReduxGameState";
 import {ObjectType} from "../Game";
 import {adjustPlayerPosition, adjustPlayerPositionReducer} from "./playerSectorPosition";
 import {WritableDraft} from "immer/dist/types/types-external";
 import {cometSectors} from "../GameTypes";
 import {workingTheories} from "./workingTheories";
+import {CombineMatchers} from "./helpers";
 
 function newTheoryToOld(theory: Theory): CompatTheoryObj['self'][number] {
     return [theory.sector, theory.type, theory.verified];
-}
-function oldTheoryToNew(theory: CompatTheoryObj['self'][number]): Theory {
-    return {
-        sector: theory[0],
-        type: theory[1],
-        verified: theory[2]
-    };
 }
 
 export const legacyTheoriesSelector = createSelector([(state: ReduxGameState) => state.theories], (theories): CompatTheoryObj[] => {
@@ -86,14 +79,13 @@ export const allowedSubmissionsSelector = createSelector(
     return returnValue.map((set) => [...set]);
 });
 
-export const legacyAddTheoriesAction = createAction<TheoryObj>('theories/addLegacy');
 export const addTheoriesAction = createAction<Theory[][]>('theories/add');
 export const addFromWorkingTheoriesAction = createAction('theories/addFromWorking');
-export const verifyTheoryAction = createAction<{rowIndex: number; tIndex: number; player: 'self' | 'p2' | 'p3' | 'p4'}>('theories/verify');
+export const verifyTheoryAction = createAction<{rowIndex: number; tIndex: number; playerId: number}>('theories/verify');
 export const verifyAllTheoriesAction = createAction('theories/verifyAll');
-export const setTheoryTypeAction = createAction<{rowIndex: number; tIndex: number; player: 'self' | 'p2' | 'p3' | 'p4'; type: ObjectType}>('theories/setType')
+export const setTheoryTypeAction = createAction<{rowIndex: number; tIndex: number; playerId: number; type: ObjectType}>('theories/setType')
 
-const playerNames: Array<'self' | 'p2' | 'p3' | 'p4'> = ["self", "p2", "p3", "p4"];
+
 export const playerNameToId: {[key in 'self' | 'p2' | 'p3' | 'p4']: number} = {
     self: 0,
     p2: 1,
@@ -150,16 +142,15 @@ function verifyAllTheories(theoriesDraft: WritableDraft<Theory[][][]>, state: Re
 }
 
 export function registerTheoriesReducer(builder: ActionReducerMapBuilder<ReduxGameState>): void {
-    builder.addCase(legacyAddTheoriesAction, (state, action) => {
-        state.theories.push(playerNames.map((playerName) => action.payload[playerName].map(oldTheoryToNew)));
-        reduxForwardVerifyTheories(state);
-    });
-    builder.addMatcher((action) => addTheoriesAction.match(action) || addFromWorkingTheoriesAction.match(action), (state, action) => {
-        let toAdd: Theory[][] = [];
+    const anyAddTheoryAction = new CombineMatchers()
+        .addMatcher(addTheoriesAction.match)
+        .addMatcher(addFromWorkingTheoriesAction.match);
+    builder.addMatcher(anyAddTheoryAction.match, (state, action) => {
+        let toAdd: Theory[][];
         if (addFromWorkingTheoriesAction.match(action)) {
             toAdd = workingTheories.selectors.toAddTheoriesInput(state);
             state.workingTheories = workingTheories.getInitialState();
-        } else if (addTheoriesAction.match(action)) {
+        } else {
             toAdd = action.payload;
         }
         while (toAdd.length < state.playerCount) {
@@ -172,27 +163,27 @@ export function registerTheoriesReducer(builder: ActionReducerMapBuilder<ReduxGa
         verifyAllTheories(state.theories, state);
     });
     builder.addCase(setTheoryTypeAction, (state, action) => {
-        const {rowIndex, tIndex, player, type} = action.payload;
-        const target = state.theories[rowIndex][playerNameToId[player]][tIndex];
+        const {rowIndex, tIndex, type, playerId} = action.payload;
+        const target = state.theories[rowIndex][playerId][tIndex];
         if (target.verified) {
             const correct = state.game.game!.obj[target.sector];
             if (target.type === correct && type !== correct) {
                 // Now invalid
-                adjustPlayerPositionReducer(state, adjustPlayerPosition([playerNameToId[player], 1]));
-            } else if (target.type !== correct && type === correct) {
+                adjustPlayerPositionReducer(state, adjustPlayerPosition([playerId, 1]));
+            } else if (target.type !== correct && target.type !== ObjectType.PLAYER && type === correct) {
                 // Now valid
-                adjustPlayerPositionReducer(state, adjustPlayerPosition([playerNameToId[player], -1]));
+                adjustPlayerPositionReducer(state, adjustPlayerPosition([playerId, -1]));
             }
         }
         target.type = type;
         reduxForwardVerifyTheories(state);
     });
     builder.addCase(verifyTheoryAction, (state, action) => {
-        const {rowIndex, tIndex, player} = action.payload;
-        const target = state.theories[rowIndex][playerNameToId[player]][tIndex];
+        const {rowIndex, tIndex, playerId} = action.payload;
+        const target = state.theories[rowIndex][playerId][tIndex];
         target.verified = true;
         if ([ObjectType.PLAYER, ObjectType.BOT].includes(target.type) && target.type !== state.game.game!.obj[target.sector]) {
-            adjustPlayerPositionReducer(state, adjustPlayerPosition([playerNameToId[player], 1]));
+            adjustPlayerPositionReducer(state, adjustPlayerPosition([playerId, 1]));
         }
         reduxForwardVerifyTheories(state);
     });

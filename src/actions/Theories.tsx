@@ -1,6 +1,6 @@
-import {Game, ObjectType, objectTypeStringToEnum} from "../Game";
+import {ObjectType} from "../Game";
 import * as React from "react";
-import {useCallback, useMemo, useState} from "react";
+import {useCallback, useId, useMemo, useState} from "react";
 import {
     Button,
     Chip,
@@ -22,17 +22,12 @@ import {
 } from "@mui/material";
 import {AsteroidIcon, BotIcon, CometIcon, DwarfPlanetIcon, GasCloudIcon, objectTypeToIcon, TheoryIcon} from "../Icons";
 import {Person} from "@mui/icons-material";
-import {TheoryObj} from "../atoms";
-import produce from "immer";
-import {titlePluralWords} from "../Research";
-import {ActionsProps} from "./Actions";
+import {researchName, singularWord, titlePluralWords} from "../Research";
 import {useDispatch, useSelector} from "react-redux";
 import {
     addFromWorkingTheoriesAction,
-    addTheoriesAction,
-    allowedSubmissionsSelector, invertAllowedTheories,
-    legacyAddTheoriesAction,
-    legacyTheoriesSelector,
+    allowedSubmissionsSelector,
+    invertAllowedTheories,
     setTheoryTypeAction,
     theoriesSelector,
     verifyAllTheoriesAction,
@@ -47,19 +42,21 @@ interface CustomSelectProps<T> {
     value: T;
     onChange: (newValue: T) => unknown;
     prohibitedOptions?: T[];
+    name: string;
 }
 
 function SectorSelect(props: CustomSelectProps<number | null>) {
     const onChange = useCallback((event: SelectChangeEvent) => {
         props.onChange(event.target.value === "" ? null : Number(event.target.value));
     }, [props.onChange]);
+    const id = useId();
     return (
         <FormControl sx={{minWidth: 120}}>
-            <InputLabel>Sector</InputLabel>
-            <Select value={props.value === null ? "" : String(props.value)} onChange={onChange} label="Sector">
+            <InputLabel id={id} aria-label={props.name}>Sector</InputLabel>
+            <Select value={props.value === null ? "" : String(props.value)} onChange={onChange} label="Sector" labelId={id}>
                 <MenuItem value=""><em>None</em></MenuItem>
                 {new Array(18).fill(0).map((_, i) => (
-                    <MenuItem disabled={props.prohibitedOptions?.includes(i + 1) ?? false} value={i + 1}>{i + 1}</MenuItem>
+                    <MenuItem key={i} disabled={props.prohibitedOptions?.includes(i + 1) ?? false} value={i + 1}>{i + 1}</MenuItem>
                 ))}
             </Select>
         </FormControl>
@@ -70,23 +67,20 @@ function TheorySelect(props: CustomSelectProps<ObjectType | null> & { bot: boole
     const onChange = useCallback((event: SelectChangeEvent) => {
         props.onChange(event.target.value === "" ? null : Number(event.target.value));
     }, [props.onChange]);
+    const id = useId();
     return (
         <FormControl sx={{minWidth: 60}}>
-            <InputLabel><TheoryIcon/></InputLabel>
-            <Select label="Sector" value={props.value === null ? "" : String(props.value)} onChange={onChange}>
-                {!props.bot && <MenuItem value={ObjectType.GAS_CLOUD} disabled={props.prohibitedOptions?.includes(ObjectType.GAS_CLOUD) ?? false}><GasCloudIcon fontSize="inherit"/></MenuItem>}
-                {!props.bot && <MenuItem value={ObjectType.DWARF_PLANET} disabled={props.prohibitedOptions?.includes(ObjectType.DWARF_PLANET) ?? false}><DwarfPlanetIcon fontSize="inherit"/></MenuItem>}
-                {!props.bot && <MenuItem value={ObjectType.ASTEROID} disabled={props.prohibitedOptions?.includes(ObjectType.ASTEROID) ?? false}><AsteroidIcon fontSize="inherit"/></MenuItem>}
-                {!props.bot && <MenuItem value={ObjectType.COMET} disabled={props.prohibitedOptions?.includes(ObjectType.COMET) ?? false}><CometIcon fontSize="inherit"/></MenuItem>}
-                {props.bot && <MenuItem value={ObjectType.BOT}><BotIcon fontSize="inherit"/></MenuItem>}
-                {props.bot && <MenuItem value={ObjectType.PLAYER}><Person fontSize="inherit"/></MenuItem>}
+            <InputLabel id={id} aria-label={props.name}><TheoryIcon/></InputLabel>
+            <Select labelId={id} label="Sector" value={props.value === null ? "" : String(props.value)} onChange={onChange}>
+                {!props.bot && <MenuItem aria-label="Gas Cloud" value={ObjectType.GAS_CLOUD} disabled={props.prohibitedOptions?.includes(ObjectType.GAS_CLOUD) ?? false}><GasCloudIcon fontSize="inherit"/></MenuItem>}
+                {!props.bot && <MenuItem aria-label="Dwarf Planet" value={ObjectType.DWARF_PLANET} disabled={props.prohibitedOptions?.includes(ObjectType.DWARF_PLANET) ?? false}><DwarfPlanetIcon fontSize="inherit"/></MenuItem>}
+                {!props.bot && <MenuItem aria-label="Asteroid" value={ObjectType.ASTEROID} disabled={props.prohibitedOptions?.includes(ObjectType.ASTEROID) ?? false}><AsteroidIcon fontSize="inherit"/></MenuItem>}
+                {!props.bot && <MenuItem aria-label="Comet" value={ObjectType.COMET} disabled={props.prohibitedOptions?.includes(ObjectType.COMET) ?? false}><CometIcon fontSize="inherit"/></MenuItem>}
+                {props.bot && <MenuItem aria-label="Bot" value={ObjectType.BOT}><BotIcon fontSize="inherit"/></MenuItem>}
+                {props.bot && <MenuItem aria-label="Player" value={ObjectType.PLAYER}><Person fontSize="inherit"/></MenuItem>}
             </Select>
         </FormControl>
     )
-}
-
-function playerIdToName(id: number): "self" | "p2" | "p3" | "p4" {
-    return (["self", "p2", "p3", "p4"] as const)[id] ?? (String(id) as never);
 }
 
 export function Theories() {
@@ -104,7 +98,9 @@ export function Theories() {
     const setSector = useCallback((playerId: number, sector: number | null, theoryIdx: number) => {
         dispatch(setWorkingTheorySector({playerId, sector, theoryIdx}));
         if (sector != null && playerId === 0) {
-            dispatch(setWorkingTheoryObjectType({playerId, theoryIdx, objectType: guessedTheoryFromMap[sector]}));
+            dispatch(setWorkingTheoryObjectType({playerId, theoryIdx, objectType: guessedTheoryFromMap[sector - 1]}));
+        } else if (sector != null) {
+            dispatch(setWorkingTheoryObjectType({playerId, theoryIdx, objectType: ObjectType.PLAYER}));
         }
     }, [dispatch, guessedTheoryFromMap]);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -128,8 +124,8 @@ export function Theories() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {theories.map((theoryRow, rowNumber) => <TableRow>
-                        {theoryRow.map((playerTheories, playerId) => <TableCell>
+                    {theories.map((theoryRow, rowNumber) => <TableRow key={rowNumber}>
+                        {theoryRow.map((playerTheories, playerId) => <TableCell key={playerId}>
                             {playerTheories.map((theory, theoryIndex) => {
                                 const SectorIcon = objectTypeToIcon[theory.type];
                                 let color: "error" | "success" | "primary" | undefined = undefined;
@@ -144,27 +140,27 @@ export function Theories() {
                                 }
                                 return (
                                     <Chip data-theory={`${rowNumber},${playerId},${theoryIndex}`} onContextMenu={handleRightClick}
-                                          label={theory.sector} icon={<SectorIcon/>} color={color}/>
+                                          label={theory.sector} icon={<SectorIcon/>} color={color} key={theoryIndex} aria-label={`Theory by Player ${playerId + 1}: Sector ${theory.sector} is a ${singularWord[theory.type]}`}/>
                                 );
                             })}
                         </TableCell>)}
                     </TableRow>)}
                     <TableRow>
-                        {callNTimes(playerCount, (playerId) => <TableCell>
+                        {callNTimes(playerCount, (playerId) => <TableCell key={playerId}>
                             {callNTimes(2, (theoryIdx) => {
                                 const newTheory = newTheories[playerId]?.[theoryIdx] ?? {
                                     sector: null,
                                     type: null
                                 };
                                 return (
-                                    <div>
-                                        <SectorSelect value={newTheory.sector} onChange={(value) => {
+                                    <div key={theoryIdx}>
+                                        <SectorSelect value={newTheory.sector} name={`Player ${playerId + 1} Theory ${theoryIdx + 1} Sector Select`} onChange={(value) => {
                                             setSector(playerId, value, theoryIdx);
-                                        }} prohibitedOptions={allowedSubmissions.map((a, i) => a.length === 0 ? i + 1 : null).filter(notNull)} />
-                                        <TheorySelect value={newTheory.type}
+                                        }} prohibitedOptions={playerId !== 0 ? [] : allowedSubmissions.map((a, i) => a.length === 0 ? i + 1 : null).filter(notNull)} />
+                                        <TheorySelect value={newTheory.type} name={`Player ${playerId + 1} Theory ${theoryIdx + 1} Object Select`}
                                                       onChange={(value) => {
                                                           dispatch(setWorkingTheoryObjectType({playerId, objectType: value, theoryIdx}));
-                                                      }} bot={playerId !== 0} prohibitedOptions={newTheory.sector == null ? [] : invertAllowedTheories(allowedSubmissions[newTheory.sector - 1])}/>
+                                                      }} bot={playerId !== 0} prohibitedOptions={newTheory.sector == null || playerId !== 0 ? [] : invertAllowedTheories(allowedSubmissions[newTheory.sector - 1])}/>
                                     </div>
                                 )
                             })}
@@ -175,7 +171,7 @@ export function Theories() {
         </TableContainer>
         <Button onClick={submitTheories}>Submit Theories</Button>
         <Button onClick={verifyTheories}>Verify All Theories</Button>
-        {game && <TheoriesMenu anchorEl={anchorEl} onClose={onMenuClose} game={game} />}
+        <TheoriesMenu anchorEl={anchorEl} onClose={onMenuClose} />
     </div>
 }
 
@@ -186,14 +182,14 @@ const fnLookup = {
     [ObjectType.COMET]: "setComet",
 } as const;
 
-function TheoriesMenu({anchorEl, onClose, game}: {anchorEl: HTMLElement | null; onClose: () => unknown; game: Game}) {
-    const theories = useSelector(legacyTheoriesSelector);
+function TheoriesMenu({anchorEl, onClose}: {anchorEl: HTMLElement | null; onClose: () => unknown}) {
+    const {theories} = useSelector(theoriesSelector);
     const dispatch = useDispatch();
     const menuOpen = Boolean(anchorEl);
     const [menuRow, menuSection, menuTheory] = useMemo(() => {
         const data = anchorEl?.dataset['theory']?.split(",");
         if (data === undefined) return [undefined, undefined, undefined];
-        return [Number(data[0]), playerIdToName(Number(data[1])), Number(data[2])];
+        return [Number(data[0]), Number(data[1]), Number(data[2])];
     }, [anchorEl]);
     const menuTarget = useMemo(() => {
         if (menuRow == null || menuSection == null || menuTheory == null) return null;
@@ -201,17 +197,17 @@ function TheoriesMenu({anchorEl, onClose, game}: {anchorEl: HTMLElement | null; 
     }, [menuRow, menuSection, menuTheory, theories]);
     const handleClose = useMemo(() => {
         const setType = (type: ObjectType) => {
+            onClose();
             dispatch(setTheoryTypeAction({
                 rowIndex: menuRow!,
-                player: menuSection!,
+                playerId: menuSection!,
                 tIndex: menuTheory!,
                 type,
             }));
-            onClose();
         };
         return {
             "verify": () => {
-                dispatch(verifyTheoryAction({rowIndex: menuRow!, tIndex: menuTheory!, player: menuSection!}));
+                dispatch(verifyTheoryAction({rowIndex: menuRow!, tIndex: menuTheory!, playerId: menuSection!}));
                 onClose();
             },
             "setGas": setType.bind(null, ObjectType.GAS_CLOUD),
@@ -222,16 +218,17 @@ function TheoriesMenu({anchorEl, onClose, game}: {anchorEl: HTMLElement | null; 
                 onClose();
             }
         };
-    }, [onClose, anchorEl, game, dispatch]);
+    }, [onClose, anchorEl, dispatch]);
     const [wasMenuOpen, setWasMenuOpen] = useState<boolean>(false);
     if (!wasMenuOpen && menuOpen) {
         setWasMenuOpen(true);
     }
-    const children = useMemo(() => (
-        <>
-            {menuSection !== "self" && ([ObjectType.GAS_CLOUD, ObjectType.DWARF_PLANET, ObjectType.ASTEROID, ObjectType.COMET] as const).map((objectType) => {
+    const children: Array<JSX.Element> = useMemo(() => {
+        const arr: JSX.Element[] = [];
+        if (menuSection !== 0) {
+            arr.push(...([ObjectType.GAS_CLOUD, ObjectType.DWARF_PLANET, ObjectType.ASTEROID, ObjectType.COMET] as const).map((objectType) => {
                 const IconType = objectTypeToIcon[objectType];
-                return <MenuItem onClick={handleClose[fnLookup[objectType]]}>
+                return <MenuItem onClick={handleClose[fnLookup[objectType]]} key={objectType}>
                     <ListItemIcon>
                         <IconType fontSize="small"/>
                     </ListItemIcon>
@@ -239,11 +236,14 @@ function TheoriesMenu({anchorEl, onClose, game}: {anchorEl: HTMLElement | null; 
                         Set {titlePluralWords[objectType]}
                     </ListItemText>
                 </MenuItem>;
-            })}
-            {menuTarget?.[2] === false && <MenuItem onClick={handleClose["verify"]}>Verify</MenuItem>}
-            <MenuItem onClick={handleClose["noAction"]}>Cancel</MenuItem>
-        </>
-    ), [menuOpen || wasMenuOpen]);
+            }));
+        }
+        if (!menuTarget?.verified) {
+            arr.push(<MenuItem onClick={handleClose["verify"]} key="verify">Verify</MenuItem>);
+        }
+        arr.push(<MenuItem onClick={handleClose["noAction"]} key="cancel">Cancel</MenuItem>);
+        return arr;
+    }, [menuOpen || wasMenuOpen]);
     return (
         <Menu
             anchorEl={anchorEl}

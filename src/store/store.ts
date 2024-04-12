@@ -35,7 +35,6 @@ const initialState = {
 } as ReduxGameState;
 
 function registerSliceReducer<SliceState, SliceName extends string, OverallState extends {[key in SliceName]: SliceState}>(slice: Slice<SliceState, SliceCaseReducers<SliceState>, SliceName>, builder: ActionReducerMapBuilder<OverallState>) {
-    let temp: SliceState;
     builder.addMatcher(() => true, (draftState, action) => {
         // @ts-ignore
         const state: OverallState = original(draftState);
