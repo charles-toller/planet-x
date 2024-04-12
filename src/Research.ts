@@ -1,6 +1,6 @@
 import {ObjectType} from "./Game";
 
-const singularWord: {[key in ObjectType]: string} = {
+export const singularWord: {[key in ObjectType]: string} = {
     [ObjectType.EMPTY]: "empty sector",
     [ObjectType.ASTEROID]: "asteroid",
     [ObjectType.DWARF_PLANET]: "dwarf planet",

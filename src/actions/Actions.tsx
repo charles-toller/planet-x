@@ -65,7 +65,7 @@ export function Actions(props: ActionsProps) {
                 {selected === "survey" && <Survey game={props.game}/>}
                 {selected === "research" && <Research />}
                 {selected === "target" && <Target game={props.game} />}
-                {selected === "theories" && <Theories game={props.game} sectors={props.sectors} />}
+                {selected === "theories" && <Theories />}
                 {selected === "bot" && <Bot />}
                 {selected === "locatePlanetX" && <LocatePlanetX game={props.game}/>}
             </div>

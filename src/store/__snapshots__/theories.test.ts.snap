@@ -1,0 +1,118 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`it accepts a new theory 1`] = `
+{
+  "playerCount": 4,
+  "theories": [
+    [
+      [
+        {
+          "sector": 1,
+          "type": 3,
+          "verified": false,
+        },
+      ],
+      [],
+      [],
+      [],
+    ],
+  ],
+}
+`;
+
+exports[`it verifies theories -- new 1`] = `
+{
+  "playerCount": 4,
+  "theories": [],
+}
+`;
+
+exports[`it verifies theories -- new 2`] = `
+{
+  "playerCount": 4,
+  "theories": [
+    [
+      [
+        {
+          "sector": 1,
+          "type": 1,
+          "verified": false,
+        },
+      ],
+      [],
+      [],
+      [],
+    ],
+  ],
+}
+`;
+
+exports[`it verifies theories -- new 3`] = `
+{
+  "playerCount": 4,
+  "theories": [
+    [
+      [
+        {
+          "sector": 1,
+          "type": 1,
+          "verified": false,
+        },
+      ],
+      [],
+      [],
+      [],
+    ],
+    [
+      [],
+      [
+        {
+          "sector": 1,
+          "type": 3,
+          "verified": false,
+        },
+      ],
+      [],
+      [],
+    ],
+  ],
+}
+`;
+
+exports[`it verifies theories -- new 4`] = `
+{
+  "playerCount": 4,
+  "theories": [
+    [
+      [
+        {
+          "sector": 1,
+          "type": 1,
+          "verified": true,
+        },
+      ],
+      [],
+      [],
+      [],
+    ],
+    [
+      [],
+      [
+        {
+          "sector": 1,
+          "type": 3,
+          "verified": true,
+        },
+      ],
+      [],
+      [],
+    ],
+    [
+      [],
+      [],
+      [],
+      [],
+    ],
+  ],
+}
+`;
